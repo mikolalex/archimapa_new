@@ -1,0 +1,59 @@
+@font-face {
+  font-family: "Proxima Nova Lt";
+  src: url("../src/fonts/ProximaNova-Semibold.ttf");
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "GT Eesti Pro Display";
+  src: url("../src/fonts/GTEestiProDisplay-Light.ttf");
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Proxima Nova Rg";
+  src: url("../src/fonts/ProximaNova-Regular.ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.button-style {
+  margin-left: 24px;
+  background: none;
+  border: none;
+  padding: 8px 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Proxima Nova Lt";
+  font-size: 18px;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 750px) {
+  .headerRoot{
+    justify-content: center;
+    flex-direction: column;
+  }
+  .button {
+    font-size: 16px !important;
+  }
+  .mapRoot {
+    width: 100%;
+  }
+  .filtersRoot {
+    width: 100% !important;
+
+    .all-filters {
+
+      height:fit-content !important;
+    }
+  }
+}
+
+.accent {
+  color: #ff7a00;
+}
