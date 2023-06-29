@@ -7,7 +7,6 @@
   align-items: center;
   padding: 10px;
   border: 1px solid #d6d6d6;
-  // flex-wrap: wrap;
 
   .header-logo-block {
     margin: 14px;
@@ -25,39 +24,14 @@
     align-items: center;
     margin: 14px;
 
-    .button {
-      .button-style();
+    .outlined {
+      .button-outlined();
     }
-    .add-object-button {
-      color: #302f2d;
-      border: 2px solid #302f2d;
-      margin: 0;
-      &:hover {
-        border: 2px solid #ff7a00;
-        color: #ff7a00;
-        cursor: pointer;
-      }
+    .contained {
+      .button-contained();
     }
-
-    .sign-up-button {
-      background: #000000;
-      color: #ffffff;
-      border: 2px solid #000000;
-      &:hover {
-        color: #000000;
-        border: 2px solid #ff7a00;
-        background: #ff7a00;
-        cursor: pointer;
-      }
-    }
-    .sign-in-button {
-      padding: 0;
-      &:hover {
-        cursor: pointer;
-        color: #ff7a00;
-
-
-      }
+    .text {
+      .button-text();
     }
     .login-icon {
       margin-right: 8px;

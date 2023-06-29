@@ -10,16 +10,12 @@ const Header = () => {
         <p className="logo-text">Мапа архітектурних об'єктів України</p>
       </div>
       <div className="header-buttons-block ">
-        <Button style="add-object-button button" text="Add Object" />
-        <Button style="sign-up-button button" text="Sign Up" />
-        <Button
-          style="sign-in-button button"
-          text="Sign In"
-          icon={
-            <img src="log-in.png" alt="login_icon" className="login-icon" />
-          }
-        />
- 
+        <Button type="outlined">Add Object</Button>
+        <Button type="contained">Sign Up</Button>
+        <Button type="text">
+          {<img src="log-in.png" alt="login_icon" className="login-icon" />}
+          Sign In
+        </Button>
       </div>
     </div>
   );

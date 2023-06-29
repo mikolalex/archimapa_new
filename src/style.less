@@ -33,8 +33,42 @@
   cursor: pointer;
 }
 
+.button-outlined {
+  .button-style();
+  color: #302f2d;
+  border: 2px solid #302f2d;
+  margin: 0;
+  &:hover {
+    border: 2px solid #ff7a00;
+    color: #ff7a00;
+    cursor: pointer;
+  }
+}
+
+.button-contained {
+  .button-style();
+  background: #000000;
+  color: #ffffff;
+  border: 2px solid #000000;
+  &:hover {
+    color: #000000;
+    border: 2px solid #ff7a00;
+    background: #ff7a00;
+    cursor: pointer;
+  }
+}
+
+.button-text {
+  .button-style();
+  padding: 0;
+  &:hover {
+    cursor: pointer;
+    color: #ff7a00;
+  }
+}
+
 @media screen and (max-width: 750px) {
-  .headerRoot{
+  .headerRoot {
     justify-content: center;
     flex-direction: column;
   }
@@ -48,8 +82,7 @@
     width: 100% !important;
 
     .all-filters {
-
-      height:fit-content !important;
+      height: fit-content !important;
     }
   }
 }
