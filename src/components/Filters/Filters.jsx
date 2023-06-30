@@ -1,5 +1,6 @@
-import "./Filters.less"
+import "./Filters.less";
 import React from "react";
+import YearFilter from "./YearFilter";
 
 const Filters = () => {
   return (
@@ -18,23 +19,20 @@ const Filters = () => {
           <p className="filters-title">Фільтри</p>
         </div>
         <div className="filters-list">
-          <div className="year-filter">
-            <button className="filter-button button">
-              Рік Побудови <img src="+.png" alt="add_img" />
-            </button>
-          </div>
+          <YearFilter />
+
           <div className="type-filter">
-            <button className="filter-button button">
+            <button className="filter-button">
               Тип Будівлі <img src="+.png" alt="add_img" />
             </button>
           </div>
           <div className="style-filter">
-            <button className="filter-button button">
+            <button className="filter-button">
               Стиль <img src="+.png" alt="add_img" />
             </button>
           </div>
           <div className="architect-filter">
-            <button className="filter-button button">
+            <button className="filter-button">
               Архітектор <img src="+.png" alt="add_img" />
             </button>
           </div>
