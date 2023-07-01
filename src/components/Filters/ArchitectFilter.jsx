@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import "./ArchitectFilter.less"
+import "./ArchitectFilter.less";
 
 const ArchitectFilter = () => {
   const [isArchitectFilterOpen, setIsArchitectFilterOpen] = useState(false);
@@ -15,7 +15,7 @@ const ArchitectFilter = () => {
         }
         onClick={() => setIsArchitectFilterOpen((prev) => !prev)}
       >
-        Тип Будівлі
+       Архітектор
         <img src={isArchitectFilterOpen ? "-.png" : "+.png"} alt="add_img" />
       </div>
       <div

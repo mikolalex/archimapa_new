@@ -7,12 +7,11 @@ import ArchitectFilter from "./ArchitectFilter";
 import { useState } from "react";
 
 const Filters = () => {
+  const [clearFiltersButton, setClearFiltersButton] = useState(false);
 
-  const [clearFiltersButton, setClearFiltersButton] = useState(false)
-
-const filterOnChangeHandler = () => {
-  clearFiltersButton?null:setClearFiltersButton(true);
-}
+  const filterOnChangeHandler = () => {
+    clearFiltersButton ? null : setClearFiltersButton(true);
+  };
 
   return (
     <div className="filtersRoot">
@@ -28,7 +27,12 @@ const filterOnChangeHandler = () => {
       <div className="all-filters">
         <div className="filters-title-block">
           <p className="filters-title">Фільтри</p>
-          <button className={clearFiltersButton?"clear-filters-button":"none"} onClick={()=>setClearFiltersButton(false)}>Очистити</button>
+          <button
+            className={clearFiltersButton ? "clear-filters-button" : "none"}
+            onClick={() => setClearFiltersButton(false)}
+          >
+            Очистити
+          </button>
         </div>
         <div className="filters-list">
           <YearFilter filterOnChangeHandler={filterOnChangeHandler} />
