@@ -18,8 +18,6 @@ function App() {
           <Map />
           <Filters />
         </main>
-
-
       </div>
     </>
   );

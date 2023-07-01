@@ -1,8 +1,19 @@
 import "./Filters.less";
 import React from "react";
 import YearFilter from "./YearFilter";
+import TypeFilter from "./TypeFilter";
+import StyleFilter from "./StyleFilter";
+import ArchitectFilter from "./ArchitectFilter";
+import { useState } from "react";
 
 const Filters = () => {
+
+  const [clearFiltersButton, setClearFiltersButton] = useState(false)
+
+const filterOnChangeHandler = () => {
+  clearFiltersButton?null:setClearFiltersButton(true);
+}
+
   return (
     <div className="filtersRoot">
       <div className="objects">
@@ -17,25 +28,13 @@ const Filters = () => {
       <div className="all-filters">
         <div className="filters-title-block">
           <p className="filters-title">Фільтри</p>
+          <button className={clearFiltersButton?"clear-filters-button":"none"} onClick={()=>setClearFiltersButton(false)}>Очистити</button>
         </div>
         <div className="filters-list">
-          <YearFilter />
-
-          <div className="type-filter">
-            <button className="filter-button">
-              Тип Будівлі <img src="+.png" alt="add_img" />
-            </button>
-          </div>
-          <div className="style-filter">
-            <button className="filter-button">
-              Стиль <img src="+.png" alt="add_img" />
-            </button>
-          </div>
-          <div className="architect-filter">
-            <button className="filter-button">
-              Архітектор <img src="+.png" alt="add_img" />
-            </button>
-          </div>
+          <YearFilter filterOnChangeHandler={filterOnChangeHandler} />
+          <TypeFilter />
+          <StyleFilter />
+          <ArchitectFilter />
         </div>
       </div>
     </div>

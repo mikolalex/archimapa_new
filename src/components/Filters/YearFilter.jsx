@@ -4,7 +4,7 @@ import "./YearFilter.less";
 // import Nouislider from "nouislider-react";
 // import '../../../node_modules/nouislider-react/node_modules/nouislider/distribute/nouislider.css'
 
-const YearFilter = () => {
+const YearFilter = ({filterOnChangeHandler}) => {
   const [rangeYearFrom, setRangeYearFrom] = useState(1650);
   const [rangeYearTill, setRangeYearTill] = useState(1650);
 
@@ -30,7 +30,7 @@ const YearFilter = () => {
             type="range"
             min={1650}
             max={2023}
-            onChange={(e) => setRangeYearFrom(e.target.value)}
+            onChange={(e) => (setRangeYearFrom(e.target.value), filterOnChangeHandler())}
           />
           <p>{rangeYearFrom}</p>
         </div>

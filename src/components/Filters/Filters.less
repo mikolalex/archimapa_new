@@ -46,11 +46,26 @@
     height: 550px;
 
     .filters-title-block {
-      padding: 24px;
+      padding: 14px 24px;
       color: #ffffff;
       font-size: 24px;
       font-family: "GT Eesti Pro Display";
       border-bottom: 1px solid #000000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+
+      .filters-title {
+        margin: 16px 10px 16px 0;
+      }
+      .clear-filters-button {
+        .button-outlined();
+        color: #d6d6d6;
+        border: 2px solid #d6d6d6;
+        font-size: 16px;
+        margin: 10px 0;
+      }
     }
     .filter-button {
       border: none;
