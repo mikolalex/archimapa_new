@@ -21,7 +21,7 @@ const Filters = () => {
         </p>
         <p className="navigation-search-block">
           <input type="text" placeholder="Введіть назву" />
-          <img src="vector.png" alt="vector_img" />
+          <img src="icons/vector.png" alt="vector_img" />
         </p>
       </div>
       <div className="all-filters">
@@ -36,9 +36,9 @@ const Filters = () => {
         </div>
         <div className="filters-list">
           <YearFilter filterOnChangeHandler={filterOnChangeHandler} />
-          <TypeFilter />
-          <StyleFilter />
-          <ArchitectFilter />
+          <TypeFilter filterOnChangeHandler={filterOnChangeHandler} />
+          <StyleFilter filterOnChangeHandler={filterOnChangeHandler} />
+          <ArchitectFilter  filterOnChangeHandler={filterOnChangeHandler}/>
         </div>
       </div>
     </div>

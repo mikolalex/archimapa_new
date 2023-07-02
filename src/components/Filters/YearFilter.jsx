@@ -21,7 +21,10 @@ const YearFilter = ({ filterOnChangeHandler }) => {
         onClick={() => setIsYearFilterOpen((prev) => !prev)}
       >
         Рік Побудови{" "}
-        <img src={isYearFilterOpen ? "-.png" : "+.png"} alt="add_img" />
+        <img
+          src={isYearFilterOpen ? "icons/-.png" : "icons/+.png"}
+          alt="add_img"
+        />
       </div>
       <div className={isYearFilterOpen ? "filter-year-range-block" : "none"}>
         <div className="filter-range-from-year">
@@ -42,7 +45,9 @@ const YearFilter = ({ filterOnChangeHandler }) => {
             type="range"
             min={1650}
             max={2023}
-            onChange={(e) => setRangeYearTill(e.target.value)}
+            onChange={(e) => (
+              setRangeYearTill(e.target.value), filterOnChangeHandler()
+            )}
           />
           <p>{rangeYearTill}</p>
         </div>

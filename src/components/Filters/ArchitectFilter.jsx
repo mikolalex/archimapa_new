@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import "./ArchitectFilter.less";
 
-const ArchitectFilter = () => {
+const ArchitectFilter = ({ filterOnChangeHandler }) => {
   const [isArchitectFilterOpen, setIsArchitectFilterOpen] = useState(false);
 
   return (
@@ -15,15 +15,19 @@ const ArchitectFilter = () => {
         }
         onClick={() => setIsArchitectFilterOpen((prev) => !prev)}
       >
-       Архітектор
-        <img src={isArchitectFilterOpen ? "-.png" : "+.png"} alt="add_img" />
+        Архітектор
+        <img
+          src={isArchitectFilterOpen ? "icons/-.png" : "icons/+.png"}
+          alt="add_img"
+        />
       </div>
       <div
         className={
           isArchitectFilterOpen ? "filter-architect-selector-block" : "none"
         }
       >
-        <select name="" id="">
+        <select name="" id="" onChange={() => filterOnChangeHandler()}>
+          <option value="">Обрати</option>
           <option value="">Франческо Растреллі</option>
           <option value="">Йосип Каракіс</option>
         </select>

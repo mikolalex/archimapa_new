@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import "./TypeFilter.less";
 
-const TypeFilter = () => {
+const TypeFilter = ({ filterOnChangeHandler }) => {
   const [isTypeFilterOpen, setIsTypeFilterOpen] = useState(false);
 
   return (
@@ -15,21 +15,48 @@ const TypeFilter = () => {
         }
         onClick={() => setIsTypeFilterOpen((prev) => !prev)}
       >
-        Тип Будівлі{" "}
-        <img src={isTypeFilterOpen ? "-.png" : "+.png"} alt="add_img" />
+        Тип Будівлі
+        <img
+          src={isTypeFilterOpen ? "icons/-.png" : "icons/+.png"}
+          alt="add_img"
+        />
       </div>
       <div className={isTypeFilterOpen ? "filter-type-checkbox-block" : "none"}>
         <div className="type-checkbox">
-          <input type="checkbox" name="" id="" /> Житлова
+          <input
+            type="checkbox"
+            name=""
+            id=""
+            onChange={() => filterOnChangeHandler()}
+          />
+          Житлова
         </div>
         <div className="type-checkbox">
-          <input type="checkbox" name="" id="" /> Промислова
+          <input
+            type="checkbox"
+            name=""
+            id=""
+            onChange={() => filterOnChangeHandler()}
+          />
+          Промислова
         </div>
         <div className="type-checkbox">
-          <input type="checkbox" name="" id="" /> Громадська
+          <input
+            type="checkbox"
+            name=""
+            id=""
+            onChange={() => filterOnChangeHandler()}
+          />
+          Громадська
         </div>
         <div className="type-checkbox">
-          <input type="checkbox" name="" id="" /> Інше
+          <input
+            type="checkbox"
+            name=""
+            id=""
+            onChange={() => filterOnChangeHandler()}
+          />
+          Інше
         </div>
       </div>
     </div>
