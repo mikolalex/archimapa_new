@@ -5,8 +5,8 @@ import React from "react";
 const SignUpSecondStep = () => {
   return (
     <div className="SignUpSecondRoot">
-      <div className="sign-up-head">
-        <h2 className="sign-up-title">Sign Up</h2>
+      <div className="form-head">
+        <h2 className="form-title">Sign Up</h2>
         <img src="icons/close.png" alt="" />
       </div>
 
@@ -22,11 +22,11 @@ const SignUpSecondStep = () => {
           <input type="text" placeholder="Repeat password" />
           <img src="icons/eye.png" alt="" />
         </div>
-        <button type="submit" className="sign-up-submit-button">
+        <button type="submit" className="form-submit-button">
           Continue
         </button>
       </form>
-      <div className="sign-up-details-block">
+      <div className="form-details-block">
         <div className="notice">
           By joining I agree to receive emails from Arhimapa
         </div>

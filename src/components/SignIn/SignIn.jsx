@@ -4,8 +4,8 @@ import "./SignIn.less";
 const SignIn = () => {
   return (
     <div className="SignInRoot">
-      <div className="sign-in-head">
-        <h2 className="sign-in-title">Sign In</h2>
+      <div className="form-head">
+        <h2 className="form-title">Sign In</h2>
         <img src="icons/close.png" alt="" />
       </div>
 
@@ -25,11 +25,11 @@ const SignIn = () => {
           <input type="text" placeholder="Password" />
           <img src="icons/eye.png" alt="" />
         </div>
-        <button type="submit" className="sign-in-submit-button">
+        <button type="submit" className="form-submit-button">
           Continue
         </button>
       </form>
-      <div className="sign-in-details-block">
+      <div className="form-details-block">
         <div className="notice">
           <input type="checkbox" name="" id="" />
           Remember me
