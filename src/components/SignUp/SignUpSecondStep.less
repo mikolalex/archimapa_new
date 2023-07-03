@@ -1,6 +1,6 @@
 @import "../../style.less";
 
-.SignInRoot {
+.SignUpSecondRoot {
   position: absolute;
   background: #fff;
   box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.16);
@@ -12,7 +12,7 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  .sign-in-head {
+  .sign-up-head {
     position: relative;
     width: 100%;
     text-align: center;
@@ -23,39 +23,10 @@
       cursor: pointer;
     }
   }
-  .sign-in-title {
+  .sign-up-title {
     margin-bottom: 32px;
     font-family: "GT Eesti Pro Display";
     font-size: 24px;
-  }
-  .google-button {
-    .button-style();
-    border-radius: 4px;
-    border: 1px solid #979797;
-    color: #302f2d;
-    letter-spacing: 0.5px;
-    font-family: "Proxima Nova Lt";
-    font-size: 18px;
-    margin: 0;
-    margin-bottom: 24px;
-    padding: 12px 24px;
-    width: 100%;
-    img {
-      margin-right: 8px;
-    }
-  }
-  .or-block {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: "Proxima Nova Lt";
-    font-size: 18px;
-    letter-spacing: 0.5px;
-    color: #979797;
-    margin-bottom: 24px;
-    p {
-      margin: 0 16px;
-    }
   }
 
   form {
@@ -76,7 +47,6 @@
         font-size: 16px;
       }
     }
-
     .password-input-block {
       position: relative;
 
@@ -87,7 +57,7 @@
         cursor: pointer;
       }
     }
-    .sign-in-submit-button {
+    .sign-up-submit-button {
       .button-style();
       background: #ff7a00;
       color: #fff;
@@ -98,7 +68,7 @@
       margin-top: 8px;
     }
   }
-  .sign-in-details-block {
+  .sign-up-details-block {
     padding: 24px 0;
     margin-bottom: 24px;
     width: 100%;
@@ -109,17 +79,13 @@
     font-size: 14px;
     color: #302f2d;
     border-bottom: 1px solid #d6d6d6;
-    .notice{
+    .notice {
       display: flex;
       justify-content: center;
       align-items: center;
       input {
         margin-right: 12px;
       }
-    }
-    .forgot-password-block {
-      .accent();
-      cursor: pointer;
     }
   }
   .redirect {

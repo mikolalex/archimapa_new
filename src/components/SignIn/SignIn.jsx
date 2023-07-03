@@ -30,15 +30,15 @@ const SignIn = () => {
         </button>
       </form>
       <div className="sign-in-details-block">
-        <div className="remember-me-block">
+        <div className="notice">
           <input type="checkbox" name="" id="" />
           Remember me
         </div>
         <div className="forgot-password-block">Forgot password?</div>
       </div>
-      <div className="join-now-block">
+      <div className="redirect">
         <p>
-          Not a member yet? <span className="join-now">Join now </span>{" "}
+          Not a member yet? <span className="redirect-link">Join now </span>{" "}
         </p>
       </div>
     </div>

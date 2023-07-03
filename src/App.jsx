@@ -3,6 +3,8 @@ import Header from "./components/Header/Header";
 import Map from "./components/Map/Map";
 import Filters from "./components/Filters/Filters";
 import SignIn from "./components/SignIn/SignIn";
+import SignUpFirstStep from "./components/SignUp/SignUpFirstStep";
+import SignUpSecondStep from "./components/SignUp/SignUpSecondStep";
 
 
 
@@ -22,6 +24,8 @@ function App() {
           <Filters />
         </main>
       {/* <SignIn/> */}
+      {/* <SignUpFirstStep/> */}
+      {/* <SignUpSecondStep/> */}
 
       </div>
     </>
