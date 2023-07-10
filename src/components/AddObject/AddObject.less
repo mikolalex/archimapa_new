@@ -1,17 +1,18 @@
 @import "../../style.less";
 
-.SignUpFirstRoot {
+.AddObjectRoot {
   position: absolute;
   background: #fff;
   box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.16);
-  top: 60%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   padding: 24px 32px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   flex-direction: column;
+  width: 384px;
+  overflow: auto;
+  max-height: 560px;
+  z-index: 100;
   .form-head {
     position: relative;
     width: 100%;
@@ -28,42 +29,72 @@
     font-family: "GT Eesti Pro Display";
     font-size: 24px;
   }
-  .google-button {
-    .google-button();
-  }
-  .or-block {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: "Proxima Nova Lt";
-    font-size: 18px;
-    letter-spacing: 0.5px;
-    color: #979797;
-    margin-bottom: 24px;
-    p {
-      margin: 0 16px;
-    }
-  }
 
   form {
     width: 100%;
-    input {
+    input,
+    textarea,
+    select {
       border-radius: 4px;
       border: 1px solid #979797;
       padding: 12px 8px;
       margin-bottom: 24px;
-      width: 100%;
       font-family: "Proxima Nova Rg";
       font-size: 16px;
       color: #979797;
       outline: none;
+      width: 320px;
       ::placeholder {
         color: #979797;
         font-family: "Proxima Nova Rg";
         font-size: 16px;
       }
     }
+    .description-textarea {
+      height: 120px;
+      resize: none;
+    }
 
+    .coordinates-input-block,
+    .details-form-block {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      :first-child {
+        margin-right: 16px;
+      }
+      input,
+      select {
+        width: 152px;
+      }
+    }
+    .notice {
+      width: 100%;
+      display: flex;
+      justify-content: flex-start;
+      align-items: flex-start;
+      font-family: "Proxima Nova Rg";
+      font-size: 14px;
+      color: #302f2d;
+      margin-bottom: 8px;
+    }
+    .or-block {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: "Proxima Nova Lt";
+      font-size: 18px;
+      letter-spacing: 0.5px;
+      color: #979797;
+      margin-bottom: 24px;
+      p {
+        margin: 0 16px;
+      }
+    }
+    .google-button {
+      .google-button();
+    }
     .form-submit-button {
       .button-style();
       background: #ff7a00;
@@ -73,37 +104,6 @@
       letter-spacing: 0.5px;
       font-size: 18px;
       margin-top: 8px;
-    }
-  }
-  .form-details-block {
-    padding: 24px 0;
-    margin-bottom: 24px;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-family: "Proxima Nova Rg";
-    font-size: 14px;
-    color: #302f2d;
-    border-bottom: 1px solid #d6d6d6;
-    .notice {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-  }
-  .redirect {
-    margin-bottom: 24px;
-    width: 100%;
-    font-family: "Proxima Nova Rg";
-    font-size: 14px;
-    color: #302f2d;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    .redirect-link {
-      .accent();
-      cursor: pointer;
     }
   }
 }

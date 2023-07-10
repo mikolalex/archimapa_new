@@ -6,6 +6,7 @@ import SignIn from "./components/SignIn/SignIn";
 import SignUpFirstStep from "./components/SignUp/SignUpFirstStep";
 import SignUpSecondStep from "./components/SignUp/SignUpSecondStep";
 import AddObjectWarning from "./components/AddObject/AddObjectWarning";
+import AddObject from "./components/AddObject/AddObject";
 
 function App() {
   // const [filters, setFilters] = useState({});
@@ -22,6 +23,7 @@ function App() {
         {/* <SignUpFirstStep/> */}
         {/* <SignUpSecondStep/> */}
         {/* <AddObjectWarning/> */}
+        <AddObject/>
       </div>
     </>
   );
