@@ -10,10 +10,6 @@ const SignIn = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    // const email = e.target.form[0].value;
-    // const password = e.target.form[1].value;
-
-    // console.log(email.current.value);
 
     if (!(email.current.value && password.current.value)) {
       setWarning(true);

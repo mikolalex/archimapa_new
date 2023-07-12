@@ -9,18 +9,6 @@ import AddObjectWarning from "./components/AddObject/AddObjectWarning";
 import AddObject from "./components/AddObject/AddObject";
 
 function App() {
-
-const isEmailValid = (email) => {
-
-  const emailRegExp = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu;
-
-  return emailRegExp.test(email)
-
-}
-
-
-
-
   return (
     <>
       <div className="App">
@@ -30,8 +18,8 @@ const isEmailValid = (email) => {
           <Filters />
         </main>
         {/* <SignIn/> */}
-        <SignUpFirstStep isEmailValid={isEmailValid}/>
-        {/* <SignUpSecondStep/> */}
+        {/* <SignUpFirstStep/> */}
+        {/* <SignUpSecondStep /> */}
         {/* <AddObjectWarning/> */}
         {/* <AddObject/> */}
       </div>

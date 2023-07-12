@@ -2,13 +2,19 @@ import "./SignUpFirstStep.less";
 import React from "react";
 import { useState, useRef } from "react";
 
-const SignUpFirstStep = ({ isEmailValid }) => {
+const SignUpFirstStep = () => {
   const [warning, setWarning] = useState(false);
 
   const email = useRef(null);
 
   const submitHandler = (e) => {
     e.preventDefault();
+
+    const isEmailValid = (email) => {
+      const emailRegExp =
+        /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu;
+      return emailRegExp.test(email);
+    };
 
     if (!isEmailValid(email.current.value)) {
       setWarning(true);
