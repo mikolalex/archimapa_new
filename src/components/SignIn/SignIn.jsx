@@ -1,7 +1,6 @@
 import React from "react";
 import "./SignIn.less";
-import { useState } from "react";
-import { useRef } from "react";
+import { useState, useRef } from "react";
 
 const SignIn = () => {
   const [warning, setWarning] = useState(false);

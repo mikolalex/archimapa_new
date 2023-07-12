@@ -1,8 +1,23 @@
 import "./SignUpFirstStep.less";
-
 import React from "react";
+import { useState, useRef } from "react";
 
-const SignUpFirstStep = () => {
+const SignUpFirstStep = ({ isEmailValid }) => {
+  const [warning, setWarning] = useState(false);
+
+  const email = useRef(null);
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+
+    if (!isEmailValid(email.current.value)) {
+      setWarning(true);
+    } else {
+      setWarning(false);
+      email.current.value = "";
+    }
+  };
+
   return (
     <div className="SignUpFirstRoot">
       <div className="form-head">
@@ -20,9 +35,16 @@ const SignUpFirstStep = () => {
       </div>
       <form action="submit">
         <div className="email-input-block">
-          <input type="text" placeholder="Email" />
+          <input type="text" placeholder="Email" ref={email} />
         </div>
-        <button type="submit" className="form-submit-button">
+        <div className={warning ? "warning" : "none"}>Email is not valid</div>
+        <button
+          type="submit"
+          className="form-submit-button"
+          onClick={(e) => {
+            submitHandler(e);
+          }}
+        >
           Continue
         </button>
       </form>
