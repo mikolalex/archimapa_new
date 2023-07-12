@@ -1,7 +1,30 @@
 import React from "react";
 import "./SignIn.less";
+import { useState } from "react";
+import { useRef } from "react";
 
 const SignIn = () => {
+  const [warning, setWarning] = useState(false);
+
+  const email = useRef(null);
+  const password = useRef(null);
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    // const email = e.target.form[0].value;
+    // const password = e.target.form[1].value;
+
+    // console.log(email.current.value);
+
+    if (!(email.current.value && password.current.value)) {
+      setWarning(true);
+    } else {
+      setWarning(false);
+      email.current.value = "";
+      password.current.value = "";
+    }
+  };
+
   return (
     <div className="SignInRoot">
       <div className="form-head">
@@ -19,16 +42,26 @@ const SignIn = () => {
       </div>
       <form action="submit">
         <div className="email-input-block">
-          <input type="text" placeholder="Email" />
+          <input type="text" placeholder="Email" ref={email} />
         </div>
         <div className="password-input-block">
-          <input type="text" placeholder="Password" />
+          <input type="text" placeholder="Password" ref={password} />
           <img src="icons/eye.png" alt="" />
         </div>
-        <button type="submit" className="form-submit-button">
+        <div className={warning ? "warning" : "none"}>
+          Please fill in all fields
+        </div>
+        <button
+          type="submit"
+          className="form-submit-button"
+          onClick={(e) => {
+            submitHandler(e);
+          }}
+        >
           Continue
         </button>
       </form>
+
       <div className="form-details-block">
         <div className="notice">
           <input type="checkbox" name="" id="" />

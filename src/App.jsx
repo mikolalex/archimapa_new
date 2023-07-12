@@ -19,11 +19,11 @@ function App() {
           <Map />
           <Filters />
         </main>
-        {/* <SignIn/> */}
+        <SignIn/>
         {/* <SignUpFirstStep/> */}
         {/* <SignUpSecondStep/> */}
         {/* <AddObjectWarning/> */}
-        <AddObject/>
+        {/* <AddObject/> */}
       </div>
     </>
   );
