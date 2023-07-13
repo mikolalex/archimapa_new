@@ -19,7 +19,7 @@ function App() {
         </main>
         {/* <SignIn/> */}
         {/* <SignUpFirstStep/> */}
-        {/* <SignUpSecondStep /> */}
+        <SignUpSecondStep />
         {/* <AddObjectWarning/> */}
         {/* <AddObject/> */}
       </div>
