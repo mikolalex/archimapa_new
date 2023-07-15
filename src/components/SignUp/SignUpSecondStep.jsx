@@ -1,88 +1,26 @@
 import "./SignUpSecondStep.less";
 import React from "react";
-import { useState, useRef } from "react";
+import { useUsernameFormError } from "../../hooks/useUsernameFormError";
+import { usePasswordFormError } from "../../hooks/usePasswordFormError";
 
 const SignUpSecondStep = () => {
-  const [warning, setWarning] = useState({
-    usernameLength: {
-      error: false,
-      text: "Username must be no shorter than 6 characters",
-    },
-    usernameSymbols: {
-      error: false,
-      text: "Username must consist only of letters, numbers and _.",
-    },
-    passwordLength: {
-      error: false,
-      text: "Password must be no shorter than 6 characters",
-    },
-    passwordMatch: {
-      error: false,
-      text: "Passwords do not match",
-    },
-  });
+  const [usernameValue, setUsernameValue, validateUsername, usernameError] =
+    useUsernameFormError("");
+  const [
+    passwordValue,
+    setPasswordValue,
+    passwordCheckValue,
+    setPasswordCheckValue,
+    validatePassword,
+    passwordError,
+  ] = usePasswordFormError("", "");
 
-  const clearAllWarnings = () => {
-    setWarning((prev) => ({
-      ...prev,
-      usernameLength: { ...prev.usernameLength, error: false },
-      usernameSymbols: { ...prev.usernameSymbols, error: false },
-      passwordLength: { ...prev.passwordLength, error: false },
-      passwordMatch: { ...prev.passwordMatch, error: false },
-    }));
-  };
-
-  const usernameValue = useRef(null);
-  const passwordValue = useRef(null);
-  const passwordCheckValue = useRef(null);
-
-  const submitHandler = (e) => {
+  const onSubmit = (e) => {
     e.preventDefault();
-
-    clearAllWarnings();
-
-    const regExp = /^[0-9a-zа-я_]+$/i;
-
-    // username symbols check
-    if (!regExp.test(usernameValue.current.value)) {
-      setWarning((prev) => ({
-        ...prev,
-        usernameSymbols: { ...prev.usernameSymbols, error: true },
-      }));
-    }
-    // username length check
-    else if (
-      usernameValue.current.value.length < 6 ||
-      !usernameValue.current.value
-    ) {
-      setWarning((prev) => ({
-        ...prev,
-        usernameLength: { ...prev.usernameLength, error: true },
-      }));
-    }
-    // password length check
-    else if (
-      passwordValue.current.value.length < 6 ||
-      !passwordValue.current.value
-    ) {
-      setWarning((prev) => ({
-        ...prev,
-        passwordLength: { ...prev.passwordLength, error: true },
-      }));
-    }
-    // password match check
-    else if (passwordValue.current.value !== passwordCheckValue.current.value) {
-      setWarning((prev) => ({
-        ...prev,
-        passwordMatch: { ...prev.passwordMatch, error: true },
-      }));
-    }
-    //all good
-    else {
-      clearAllWarnings();
-      usernameValue.current.value = "";
-      passwordValue.current.value = "";
-      passwordCheckValue.current.value = "";
+    if (validateUsername() && validatePassword()) {
+      setUsernameValue("");
+      setPasswordValue("");
+      setPasswordCheckValue("");
     }
   };
 
@@ -95,36 +33,38 @@ const SignUpSecondStep = () => {
 
       <form action="submit">
         <div className="email-input-block">
-          <input type="text" placeholder="Username" ref={usernameValue} />
-          <div className={warning.usernameLength.error ? "warning" : "none"}>
-            {warning.usernameLength.text}
-          </div>
-          <div className={warning.usernameSymbols.error ? "warning" : "none"}>
-            {warning.usernameSymbols.text}
-          </div>
+          <input
+            type="text"
+            placeholder="Username"
+            value={usernameValue}
+            onChange={(e) => setUsernameValue(e.target.value)}
+          />
+          {usernameError && <div className="warning">{usernameError}</div>}
         </div>
         <div className="password-input-block">
-          <input type="text" placeholder="Password" ref={passwordValue} />
+          <input
+            type="text"
+            placeholder="Password"
+            value={passwordValue}
+            onChange={(e) => setPasswordValue(e.target.value)}
+          />
           <img src="icons/eye.png" alt="" />
         </div>
         <div className="password-input-block">
           <input
             type="text"
             placeholder="Repeat password"
-            ref={passwordCheckValue}
+            value={passwordCheckValue}
+            onChange={(e) => setPasswordCheckValue(e.target.value)}
           />
           <img src="icons/eye.png" alt="" />
+          {passwordError && <div className="warning">{passwordError}</div>}
         </div>
-        <div className={warning.passwordLength.error ? "warning" : "none"}>
-          {warning.passwordLength.text}
-        </div>
-        <div className={warning.passwordMatch.error ? "warning" : "none"}>
-          {warning.passwordMatch.text}
-        </div>
+
         <button
           type="submit"
           className="form-submit-button"
-          onClick={(e) => submitHandler(e)}
+          onClick={(e) => onSubmit(e)}
         >
           Continue
         </button>
