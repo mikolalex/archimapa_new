@@ -1,27 +1,39 @@
 import "./SignUpSecondStep.less";
 import React from "react";
-import { useUsernameFormError } from "../../hooks/useUsernameFormError";
-import { usePasswordFormError } from "../../hooks/usePasswordFormError";
+import useValidation from "../../hooks/useValidation";
 
 const SignUpSecondStep = () => {
-  const [usernameValue, setUsernameValue, validateUsername, usernameError] =
-    useUsernameFormError("");
+  const [username, setUsername, validateUsername, usernameError] =
+    useValidation("");
+
   const [
-    passwordValue,
-    setPasswordValue,
-    passwordCheckValue,
-    setPasswordCheckValue,
+    password,
+    setPassword,
     validatePassword,
     passwordError,
-  ] = usePasswordFormError("", "");
+    passwordCheck,
+    setPasswordCheck,
+  ] = useValidation("");
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if (validateUsername() && validatePassword()) {
-      setUsernameValue("");
-      setPasswordValue("");
-      setPasswordCheckValue("");
-    }
+    const regExp = /^[0-9a-zа-я_]+$/i;
+
+    !validateUsername(
+      !regExp.test(username),
+      "Username must consist only of letters, numbers and _."
+    )
+      ? !validateUsername(
+          username.length < 6 || !username,
+          "Username must be no shorter than 6 characters"
+        )
+      : null;
+    !validatePassword(
+      password.length < 6 || !password,
+      "Password must be no shorter than 6 characters"
+    )
+      ? !validatePassword(password !== passwordCheck, "Passwords do not match")
+      : null;
   };
 
   return (
@@ -36,8 +48,8 @@ const SignUpSecondStep = () => {
           <input
             type="text"
             placeholder="Username"
-            value={usernameValue}
-            onChange={(e) => setUsernameValue(e.target.value)}
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
           />
           {usernameError && <div className="warning">{usernameError}</div>}
         </div>
@@ -45,8 +57,8 @@ const SignUpSecondStep = () => {
           <input
             type="text"
             placeholder="Password"
-            value={passwordValue}
-            onChange={(e) => setPasswordValue(e.target.value)}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
           <img src="icons/eye.png" alt="" />
         </div>
@@ -54,8 +66,8 @@ const SignUpSecondStep = () => {
           <input
             type="text"
             placeholder="Repeat password"
-            value={passwordCheckValue}
-            onChange={(e) => setPasswordCheckValue(e.target.value)}
+            value={passwordCheck}
+            onChange={(e) => setPasswordCheck(e.target.value)}
           />
           <img src="icons/eye.png" alt="" />
           {passwordError && <div className="warning">{passwordError}</div>}
