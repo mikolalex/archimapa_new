@@ -3,8 +3,18 @@ import React from "react";
 import useValidation from "../../hooks/useValidation";
 
 const SignUpSecondStep = () => {
+  const regExp = /^[0-9a-zа-я_]+$/i;
+
   const [username, setUsername, validateUsername, usernameError] =
-    useValidation("");
+    useValidation("", (value) => {
+      if (!regExp.test(username)) {
+        return "Username must consist only of letters, numbers and _.";
+      }
+      if (value.length < 6 || !value) {
+        return "Username must be no shorter than 6 characters";
+      }
+      return false;
+    });
 
   const [
     password,
@@ -13,27 +23,20 @@ const SignUpSecondStep = () => {
     passwordError,
     passwordCheck,
     setPasswordCheck,
-  ] = useValidation("");
+  ] = useValidation("", (value, value2) => {
+    if (value.length < 6 || !value) {
+      return "Password must be no shorter than 6 characters";
+    }
+    if (value !== value2) {
+      return "Passwords do not match";
+    }
+    return false;
+  });
 
   const onSubmit = (e) => {
     e.preventDefault();
-    const regExp = /^[0-9a-zа-я_]+$/i;
-
-    !validateUsername(
-      !regExp.test(username),
-      "Username must consist only of letters, numbers and _."
-    )
-      ? !validateUsername(
-          username.length < 6 || !username,
-          "Username must be no shorter than 6 characters"
-        )
-      : null;
-    !validatePassword(
-      password.length < 6 || !password,
-      "Password must be no shorter than 6 characters"
-    )
-      ? !validatePassword(password !== passwordCheck, "Passwords do not match")
-      : null;
+    validateUsername();
+    validatePassword();
   };
 
   return (
