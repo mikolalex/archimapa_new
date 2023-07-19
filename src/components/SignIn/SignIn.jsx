@@ -1,22 +1,32 @@
 import React from "react";
 import "./SignIn.less";
-import { useState, useRef } from "react";
+import useValidation from "../../hooks/useValidation";
 
 const SignIn = () => {
-  const [warning, setWarning] = useState(false);
+  const [email, setEmail, validateEmail, emailError] = useValidation(
+    "",
+    (value) => {
+      if (!value) {
+        return "Please enter the email";
+      }
+      return false;
+    }
+  );
 
-  const email = useRef(null);
-  const password = useRef(null);
+  const [password, setPassword, validatePassword, passwordError] =
+    useValidation("", (value) => {
+      if (!value) {
+        return "Please enter the password";
+      }
+      return false;
+    });
 
   const submitHandler = (e) => {
     e.preventDefault();
 
-    if (!(email.current.value && password.current.value)) {
-      setWarning(true);
-    } else {
-      setWarning(false);
-      email.current.value = "";
-      password.current.value = "";
+    if (!validateEmail() && !validatePassword()) {
+      setEmail("");
+      setPassword("");
     }
   };
 
@@ -37,15 +47,25 @@ const SignIn = () => {
       </div>
       <form action="submit">
         <div className="email-input-block">
-          <input type="text" placeholder="Email" ref={email} />
+          <input
+            type="text"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          {emailError && <div className="warning">{emailError}</div>}
         </div>
         <div className="password-input-block">
-          <input type="text" placeholder="Password" ref={password} />
+          <input
+            type="text"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
           <img src="icons/eye.png" alt="" />
+          {passwordError && <div className="warning">{passwordError}</div>}
         </div>
-        <div className={warning ? "warning" : "none"}>
-          Please fill in all fields
-        </div>
+
         <button
           type="submit"
           className="form-submit-button"

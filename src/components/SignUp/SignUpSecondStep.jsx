@@ -1,9 +1,12 @@
 import "./SignUpSecondStep.less";
 import React from "react";
 import useValidation from "../../hooks/useValidation";
+import { useState } from "react";
 
 const SignUpSecondStep = () => {
   const regExp = /^[0-9a-zа-я_]+$/i;
+
+  const [passwordCheck, setPasswordCheck] = useState("");
 
   const [username, setUsername, validateUsername, usernameError] =
     useValidation("", (value) => {
@@ -16,27 +19,25 @@ const SignUpSecondStep = () => {
       return false;
     });
 
-  const [
-    password,
-    setPassword,
-    validatePassword,
-    passwordError,
-    passwordCheck,
-    setPasswordCheck,
-  ] = useValidation("", (value, value2) => {
-    if (value.length < 6 || !value) {
-      return "Password must be no shorter than 6 characters";
-    }
-    if (value !== value2) {
-      return "Passwords do not match";
-    }
-    return false;
-  });
+  const [password, setPassword, validatePassword, passwordError] =
+    useValidation("", (value) => {
+      if (value.length < 6 || !value) {
+        return "Password must be no shorter than 6 characters";
+      }
+      if (value !== passwordCheck) {
+        return "Passwords do not match";
+      }
+      return false;
+    });
 
   const onSubmit = (e) => {
     e.preventDefault();
-    validateUsername();
-    validatePassword();
+
+    if (!validateUsername() && !validatePassword()) {
+      setUsername("");
+      setPassword("");
+      setPasswordCheck("");
+    }
   };
 
   return (
