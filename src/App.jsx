@@ -9,8 +9,6 @@ import AddObjectWarning from "./components/AddObject/AddObjectWarning";
 import AddObject from "./components/AddObject/AddObject";
 
 function App() {
-  // const [filters, setFilters] = useState({});
-
   return (
     <>
       <div className="App">
@@ -21,9 +19,9 @@ function App() {
         </main>
         {/* <SignIn/> */}
         {/* <SignUpFirstStep/> */}
-        {/* <SignUpSecondStep/> */}
+        <SignUpSecondStep />
         {/* <AddObjectWarning/> */}
-        <AddObject/>
+        {/* <AddObject/> */}
       </div>
     </>
   );

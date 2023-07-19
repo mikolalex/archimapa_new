@@ -1,8 +1,24 @@
 import "./SignUpFirstStep.less";
-
 import React from "react";
+import { useState, useRef } from "react";
+import useValidation from "../../hooks/useValidation";
 
 const SignUpFirstStep = () => {
+  const emailRegExp =
+    /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu;
+
+  const [email, setEmail, validateEmail, emailError] = useValidation(
+    "",
+    (value) => 
+      emailRegExp.test(value) ? false : "Email is not valid"
+    
+  );
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    validateEmail() ? setEmail("") : null;
+  };
+
   return (
     <div className="SignUpFirstRoot">
       <div className="form-head">
@@ -20,9 +36,15 @@ const SignUpFirstStep = () => {
       </div>
       <form action="submit">
         <div className="email-input-block">
-          <input type="text" placeholder="Email" />
+          <input
+            type="text"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
         </div>
-        <button type="submit" className="form-submit-button">
+        {emailError && <div className="warning">{emailError}</div>}
+        <button type="submit" className="form-submit-button" onClick={onSubmit}>
           Continue
         </button>
       </form>

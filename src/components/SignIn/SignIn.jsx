@@ -1,7 +1,25 @@
 import React from "react";
 import "./SignIn.less";
+import useValidation from "../../hooks/useValidation";
 
 const SignIn = () => {
+  const [email, setEmail, validateEmail, emailError] = useValidation(
+    "",
+    (value) => (value ? false : "Please enter the email")
+  );
+
+  const [password, setPassword, validatePassword, passwordError] =
+    useValidation("", (value) => (value ? false : "Please enter the password"));
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+
+    if (validateEmail() && validatePassword()) {
+      setEmail("");
+      setPassword("");
+    }
+  };
+
   return (
     <div className="SignInRoot">
       <div className="form-head">
@@ -19,16 +37,34 @@ const SignIn = () => {
       </div>
       <form action="submit">
         <div className="email-input-block">
-          <input type="text" placeholder="Email" />
+          <input
+            type="text"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          {emailError && <div className="warning">{emailError}</div>}
         </div>
         <div className="password-input-block">
-          <input type="text" placeholder="Password" />
+          <input
+            type="text"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
           <img src="icons/eye.png" alt="" />
+          {passwordError && <div className="warning">{passwordError}</div>}
         </div>
-        <button type="submit" className="form-submit-button">
+
+        <button
+          type="submit"
+          className="form-submit-button"
+          onClick={onSubmit}
+        >
           Continue
         </button>
       </form>
+
       <div className="form-details-block">
         <div className="notice">
           <input type="checkbox" name="" id="" />
