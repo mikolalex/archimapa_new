@@ -1,15 +1,16 @@
 import { useState } from "react";
 
-function useValidation(initialValue, func) {
+function useValidation(initialValue, checkingFunction) {
   const [value, setValue] = useState(initialValue);
   const [error, setError] = useState("");
 
   const validate = () => {
-    setError(func(value));
-    return func(value)
+    const errorValue = checkingFunction(value);
+    setError(errorValue);
+    return errorValue ? false : true;
   };
 
-  return [value, setValue, validate, error, setError];
+  return [value, setValue, validate, error];
 }
 
 export default useValidation;

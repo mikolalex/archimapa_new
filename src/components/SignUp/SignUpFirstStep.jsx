@@ -9,17 +9,14 @@ const SignUpFirstStep = () => {
 
   const [email, setEmail, validateEmail, emailError] = useValidation(
     "",
-    (value) => {
-      if (!emailRegExp.test(value)) {
-        return "Email is not valid";
-      }
-      return false;
-    }
+    (value) => 
+      emailRegExp.test(value) ? false : "Email is not valid"
+    
   );
 
-  const submitHandler = (e) => {
+  const onSubmit = (e) => {
     e.preventDefault();
-    validateEmail() ? null : setEmail("");
+    validateEmail() ? setEmail("") : null;
   };
 
   return (
@@ -47,13 +44,7 @@ const SignUpFirstStep = () => {
           />
         </div>
         {emailError && <div className="warning">{emailError}</div>}
-        <button
-          type="submit"
-          className="form-submit-button"
-          onClick={(e) => {
-            submitHandler(e);
-          }}
-        >
+        <button type="submit" className="form-submit-button" onClick={onSubmit}>
           Continue
         </button>
       </form>

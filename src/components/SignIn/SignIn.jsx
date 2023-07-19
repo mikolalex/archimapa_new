@@ -5,26 +5,16 @@ import useValidation from "../../hooks/useValidation";
 const SignIn = () => {
   const [email, setEmail, validateEmail, emailError] = useValidation(
     "",
-    (value) => {
-      if (!value) {
-        return "Please enter the email";
-      }
-      return false;
-    }
+    (value) => (value ? false : "Please enter the email")
   );
 
   const [password, setPassword, validatePassword, passwordError] =
-    useValidation("", (value) => {
-      if (!value) {
-        return "Please enter the password";
-      }
-      return false;
-    });
+    useValidation("", (value) => (value ? false : "Please enter the password"));
 
-  const submitHandler = (e) => {
+  const onSubmit = (e) => {
     e.preventDefault();
 
-    if (!validateEmail() && !validatePassword()) {
+    if (validateEmail() && validatePassword()) {
       setEmail("");
       setPassword("");
     }
@@ -69,9 +59,7 @@ const SignIn = () => {
         <button
           type="submit"
           className="form-submit-button"
-          onClick={(e) => {
-            submitHandler(e);
-          }}
+          onClick={onSubmit}
         >
           Continue
         </button>

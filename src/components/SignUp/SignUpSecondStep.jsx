@@ -33,7 +33,7 @@ const SignUpSecondStep = () => {
   const onSubmit = (e) => {
     e.preventDefault();
 
-    if (!validateUsername() && !validatePassword()) {
+    if (validateUsername() && validatePassword()) {
       setUsername("");
       setPassword("");
       setPasswordCheck("");
@@ -80,7 +80,7 @@ const SignUpSecondStep = () => {
         <button
           type="submit"
           className="form-submit-button"
-          onClick={(e) => onSubmit(e)}
+          onClick={onSubmit}
         >
           Continue
         </button>
