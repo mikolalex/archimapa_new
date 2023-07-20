@@ -7,21 +7,28 @@ import SignUpFirstStep from "./components/SignUp/SignUpFirstStep";
 import SignUpSecondStep from "./components/SignUp/SignUpSecondStep";
 import AddObjectWarning from "./components/AddObject/AddObjectWarning";
 import AddObject from "./components/AddObject/AddObject";
+import { Routes, Route } from "react-router-dom";
+import ObjectPage from "./components/ObjectPage/ObjectPage";
+import Home from "./components/Home";
 
 function App() {
   return (
     <>
       <div className="App">
-        <Header />
+        {/* <Header />
         <main>
           <Map />
           <Filters />
         </main>
-        {/* <SignIn/> */}
-        {/* <SignUpFirstStep/> */}
+        <SignIn/> 
+        <SignUpFirstStep/>
         <SignUpSecondStep />
-        {/* <AddObjectWarning/> */}
-        {/* <AddObject/> */}
+        <AddObjectWarning/>
+        <AddObject/>  */}
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/object" element={<ObjectPage />} />
+        </Routes>
       </div>
     </>
   );

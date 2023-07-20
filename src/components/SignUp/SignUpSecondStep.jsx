@@ -4,6 +4,8 @@ import useValidation from "../../hooks/useValidation";
 import { useState } from "react";
 
 const SignUpSecondStep = () => {
+
+
   const regExp = /^[0-9a-zа-я_]+$/i;
 
   const [passwordCheck, setPasswordCheck] = useState("");
