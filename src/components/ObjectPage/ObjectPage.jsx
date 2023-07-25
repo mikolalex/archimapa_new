@@ -11,10 +11,10 @@ const ObjectPage = () => {
           <div className="object-style">Модернізм</div>
           <div className="object-title">Садиба Барбана</div>
           <div className="object-img">
-            <img src="img/obj_page_img.png" alt="" />
+            <img src="/img/obj_page_img.png" alt="object_img" />
           </div>
           <div className="object-address">
-            <img src="icons/address.png" alt="" />
+            <img src="/icons/address.png" alt="address_icon" />
             вулиця Обсерваторна, 6, Київ, 02000
           </div>
           <div className="object-description">
@@ -42,19 +42,19 @@ const ObjectPage = () => {
           <ul>
             <h3>Відомості</h3>
             <li>
-              Рік побудови <span className="accent">1891</span>{" "}
+              Рік побудови <span className="accent">1891</span>
             </li>
             <li>
-              Тип будівлі <span className="accent">Маєток</span>{" "}
+              Тип будівлі <span className="accent">Маєток</span>
             </li>
             <li>
-              Стиль <span className="accent">Модернізм</span>{" "}
+              Стиль <span className="accent">Модернізм</span>
             </li>
             <li>
-              Термін занепаду <span className="accent">25</span>{" "}
+              Термін занепаду <span className="accent">25</span>
             </li>
             <li>
-              Стан <span className="accent">Частково Зруйновано</span>{" "}
+              Стан <span className="accent">Частково Зруйновано</span>
             </li>
           </ul>
         </div>

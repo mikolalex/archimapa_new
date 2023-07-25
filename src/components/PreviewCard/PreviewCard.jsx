@@ -1,19 +1,22 @@
 import React from "react";
 import "./PreviewCard.less";
+import { Link } from "react-router-dom";
 
-const PreviewCard = () => {
+const PreviewCard = ({ id }) => {
   return (
     <div className="previewCardRoot">
       <div className="preview-card-img">
-        <img src="img/example_img.png" alt="" />
-        <img src="icons/close.png" alt="" className="close-icon" />
+        <img src="/img/example_img.png" alt="object-img" />
+        <img src="/icons/close.png" alt="" className="close-icon" />
       </div>
 
       <div className="preview-card-info">
-        <h2 className="preview-card-title">Садиба Барбана</h2>
+        <Link to={`/object/${id}`}>
+          <h2 className="preview-card-title">Садиба Барбана</h2>
+        </Link>
         <p className="preview-card-address">
-          <img src="icons/address.png" alt="" /> вулиця Обсерваторна, 6, Київ,
-          02000
+          <img src="/icons/address.png" alt="address_icon" /> вулиця
+          Обсерваторна, 6, Київ, 02000
         </p>
         <p className="preview-card-year">
           <span className="preview-card-bold-title">Роки побудови</span> 1891

@@ -1,15 +1,12 @@
 import React from "react";
 import "./Header.less";
 import Button from "../Button/Button";
-import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
     <div className="headerRoot">
       <div className="header-logo-block">
-        <Link to="/object">
-          <img src="logo/logo.png" alt="logo_img" className="logo-img" />
-        </Link>
+        <img src="/logo/logo.png" alt="logo_img" className="logo-img" />
 
         <p className="logo-text">Мапа архітектурних об'єктів України</p>
       </div>
@@ -19,7 +16,7 @@ const Header = () => {
         <Button type="text">
           {
             <img
-              src="icons/log-in.png"
+              src="/icons/log-in.png"
               alt="login_icon"
               className="login-icon"
             />

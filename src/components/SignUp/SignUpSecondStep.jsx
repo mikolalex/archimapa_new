@@ -4,8 +4,6 @@ import useValidation from "../../hooks/useValidation";
 import { useState } from "react";
 
 const SignUpSecondStep = () => {
-
-
   const regExp = /^[0-9a-zа-я_]+$/i;
 
   const [passwordCheck, setPasswordCheck] = useState("");
@@ -46,7 +44,7 @@ const SignUpSecondStep = () => {
     <div className="SignUpSecondRoot">
       <div className="form-head">
         <h2 className="form-title">Sign Up</h2>
-        <img src="icons/close.png" alt="" />
+        <img src="/icons/close.png" alt="" />
       </div>
 
       <form action="submit">
@@ -66,7 +64,7 @@ const SignUpSecondStep = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <img src="icons/eye.png" alt="" />
+          <img src="/icons/eye.png" alt="" />
         </div>
         <div className="password-input-block">
           <input
@@ -75,15 +73,11 @@ const SignUpSecondStep = () => {
             value={passwordCheck}
             onChange={(e) => setPasswordCheck(e.target.value)}
           />
-          <img src="icons/eye.png" alt="" />
+          <img src="/icons/eye.png" alt="" />
           {passwordError && <div className="warning">{passwordError}</div>}
         </div>
 
-        <button
-          type="submit"
-          className="form-submit-button"
-          onClick={onSubmit}
-        >
+        <button type="submit" className="form-submit-button" onClick={onSubmit}>
           Continue
         </button>
       </form>

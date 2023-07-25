@@ -9,9 +9,7 @@ const SignUpFirstStep = () => {
 
   const [email, setEmail, validateEmail, emailError] = useValidation(
     "",
-    (value) => 
-      emailRegExp.test(value) ? false : "Email is not valid"
-    
+    (value) => (emailRegExp.test(value) ? false : "Email is not valid")
   );
 
   const onSubmit = (e) => {
@@ -23,16 +21,16 @@ const SignUpFirstStep = () => {
     <div className="SignUpFirstRoot">
       <div className="form-head">
         <h2 className="form-title">Sign Up</h2>
-        <img src="icons/close.png" alt="" />
+        <img src="/icons/close.png" alt="" />
       </div>
 
       <button className="google-button">
-        <img src="icons/google.png" alt="" /> Sign up with Google
+        <img src="/icons/google.png" alt="" /> Sign up with Google
       </button>
       <div className="or-block">
-        <img src="img/line.png" alt="" />
+        <img src="/img/line.png" alt="" />
         <p>OR</p>
-        <img src="img/line.png" alt="" />
+        <img src="/img/line.png" alt="" />
       </div>
       <form action="submit">
         <div className="email-input-block">

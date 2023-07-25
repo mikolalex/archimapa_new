@@ -27,7 +27,7 @@ function App() {
         <AddObject/>  */}
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/object" element={<ObjectPage />} />
+          <Route path="/object/:id" element={<ObjectPage />} />
         </Routes>
       </div>
     </>
