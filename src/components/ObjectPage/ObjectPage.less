@@ -1,7 +1,7 @@
 @import "../../style.less";
 
 .objectPageRoot {
-  main {
+  .object-page-main {
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
@@ -36,21 +36,13 @@
         column-count: 2;
         margin-bottom: 24px;
       }
-      .object-map {
-        width: 100%;
-        .map {
-          width: 100%;
-          min-height: 550px;
-          border: none;
-        }
-      }
     }
     .object-details {
       width: 30%;
       background-color: #302f2d;
       color: #ffffff;
       font-family: "Proxima Nova Lt";
-      min-height: 700px;
+      height: 800px;
 
       h3 {
         font-size: 24px;
@@ -64,7 +56,14 @@
         align-items: center;
         padding: 14px 17px;
         border-bottom: 1px solid #000;
+        flex-wrap: wrap;
       }
+    }
+  }
+  .map-block {
+    width: 100%;
+    .leaflet-container {
+      height: 550px;
     }
   }
 }

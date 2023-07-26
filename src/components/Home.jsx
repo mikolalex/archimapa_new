@@ -8,12 +8,12 @@ import SignUpSecondStep from "./SignUp/SignUpSecondStep";
 import AddObjectWarning from "./AddObject/AddObjectWarning";
 import AddObject from "./AddObject/AddObject";
 
-const Home = () => {
+const Home = ({objects}) => {
   return (
     <div>
       <Header />
       <main>
-        <Map />
+        <Map objects={objects} />
         <Filters />
       </main>
       {/* <SignIn/> */}

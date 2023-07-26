@@ -11,7 +11,7 @@ const PreviewCard = ({ id }) => {
       </div>
 
       <div className="preview-card-info">
-        <Link to={`/object/${id}`}>
+        <Link to={`/object/${id}`} >
           <h2 className="preview-card-title">Садиба Барбана</h2>
         </Link>
         <p className="preview-card-address">

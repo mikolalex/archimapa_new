@@ -1,12 +1,24 @@
 import React from "react";
 import "./ObjectPage.less";
 import Header from "../Header/Header";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import "leaflet/dist/leaflet.css";
+import { useLocation } from "react-router";
 
-const ObjectPage = () => {
+const ObjectPage = ({ objects }) => {
+  const location = useLocation();
+
+  let geo = [];
+  objects.forEach((obj) => {
+    if (obj.id == location.pathname[location.pathname.length - 1]) {
+      geo = obj.geocode;
+    }
+  });
+
   return (
     <div className="objectPageRoot">
       <Header />
-      <main>
+      <main className="object-page-main">
         <div className="object-card">
           <div className="object-style">Модернізм</div>
           <div className="object-title">Садиба Барбана</div>
@@ -27,15 +39,6 @@ const ObjectPage = () => {
             складний карниз. Цінна пам'ятка культурного надбання міста Києва».
             Міністерство культури та інформаційної політики України не включило
             садибу до реєстру нерухомих пам'яток України[5].{" "}
-          </div>
-          <div className="object-map">
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2541.5678344241364!2d30.48567707635903!3d50.430523071588354!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40d4cee9c6ab905b%3A0x226e12153cabed24!2z0LLRg9C70LjRhtGPINCa0YPQtNGA0Y_RiNC-0LLQsCwgNywg0JrQuNGX0LIsIDAzMDM1!5e0!3m2!1suk!2sua!4v1687613227227!5m2!1suk!2sua"
-              allowFullScreen=""
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              className="map"
-            ></iframe>
           </div>
         </div>
         <div className="object-details">
@@ -59,6 +62,17 @@ const ObjectPage = () => {
           </ul>
         </div>
       </main>
+      <div className="map-block">
+        <MapContainer center={geo} zoom={11} scrollWheelZoom={true}>
+          <TileLayer
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          />
+          <Marker position={geo}>
+            <Popup>d</Popup>
+          </Marker>
+        </MapContainer>
+      </div>
     </div>
   );
 };

@@ -5,25 +5,7 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-cluster";
 import "leaflet/dist/leaflet.css";
 
-const Map = () => {
-  const markers = [
-    {
-      id: 1,
-      geocode: [50.43064609085728, 30.48826272549254],
-      popup: "marker1",
-    },
-    {
-      id: 2,
-      geocode: [47.951618726638536, 33.357941298473676],
-      popup: "marker2",
-    },
-    {
-      id: 3,
-      geocode: [48.155339589696794, 24.28114418795262],
-      popup: "marker3",
-    },
-  ];
-
+const Map = ({ objects }) => {
   return (
     <div className="mapRoot">
       <div className="map-list-switch">
@@ -41,10 +23,10 @@ const Map = () => {
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
           <MarkerClusterGroup>
-            {markers.map((marker) => (
+            {objects.map((marker) => (
               <Marker position={marker.geocode} key={marker.id}>
                 <Popup closeButton={false}>
-                  <PreviewCard id={marker.id} />
+                  <PreviewCard id={marker.id} geocode={marker.geocode} />
                 </Popup>
               </Marker>
             ))}
