@@ -33,16 +33,6 @@ function App() {
   return (
     <>
       <div className="App">
-        {/* <Header />
-        <main>
-          <Map />
-          <Filters />
-        </main>
-        <SignIn/> 
-        <SignUpFirstStep/>
-        <SignUpSecondStep />
-        <AddObjectWarning/>
-        <AddObject/>  */}
         <Routes>
           <Route path="/" element={<Home objects={objects} />} />
           <Route

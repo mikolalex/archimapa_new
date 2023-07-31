@@ -2,7 +2,7 @@ import React from "react";
 import "./SignIn.less";
 import useValidation from "../../hooks/useValidation";
 
-const SignIn = () => {
+const SignIn = ({ setIsSignInOpen, objToFormData }) => {
   const [email, setEmail, validateEmail, emailError] = useValidation(
     "",
     (value) => (value ? false : "Please enter the email")
@@ -11,10 +11,30 @@ const SignIn = () => {
   const [password, setPassword, validatePassword, passwordError] =
     useValidation("", (value) => (value ? false : "Please enter the password"));
 
+  async function postData(url, data) {
+    fetch(url, {
+      method: "POST",
+      body: data,
+    })
+      .then((response) => response.json())
+      .then((json) =>
+        json.token
+          ? sessionStorage.setItem("signInToken", json.token)
+          : console.log("Incorrect username or password")
+      );
+  }
+
   const onSubmit = (e) => {
     e.preventDefault();
 
     if (validateEmail() && validatePassword()) {
+      postData(
+        "https://map.transsearch.net/auth/login",
+        objToFormData({
+          username: email,
+          password: password,
+        })
+      );
       setEmail("");
       setPassword("");
     }
@@ -24,7 +44,13 @@ const SignIn = () => {
     <div className="SignInRoot">
       <div className="form-head">
         <h2 className="form-title">Sign In</h2>
-        <img src="/icons/close.png" alt="" />
+        <img
+          src="/icons/close.png"
+          alt=""
+          onClick={() => {
+            setIsSignInOpen(false);
+          }}
+        />
       </div>
 
       <button className="google-button">
@@ -70,7 +96,7 @@ const SignIn = () => {
       </div>
       <div className="redirect">
         <p>
-          Not a member yet? <span className="redirect-link">Join now </span>{" "}
+          Not a member yet? <span className="redirect-link">Join now </span>
         </p>
       </div>
     </div>

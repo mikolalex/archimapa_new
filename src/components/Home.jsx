@@ -7,16 +7,33 @@ import SignUpFirstStep from "./SignUp/SignUpFirstStep";
 import SignUpSecondStep from "./SignUp/SignUpSecondStep";
 import AddObjectWarning from "./AddObject/AddObjectWarning";
 import AddObject from "./AddObject/AddObject";
+import { useState } from "react";
 
-const Home = ({objects}) => {
+const Home = ({ objects }) => {
+  const objToFormData = (obj) => {
+    const fd = new FormData();
+    for (let i in obj) {
+      fd.append(i, obj[i]);
+    }
+    return fd;
+  };
+
+  const [isSignInOpen, setIsSignInOpen] = useState(false);
+
   return (
     <div>
-      <Header />
+      <Header setIsSignInOpen={setIsSignInOpen} />
       <main>
         <Map objects={objects} />
         <Filters />
       </main>
-      {/* <SignIn/> */}
+      {isSignInOpen ? (
+        <SignIn
+          setIsSignInOpen={setIsSignInOpen}
+          objToFormData={objToFormData}
+        />
+      ) : null}
+
       {/* <SignUpFirstStep/> */}
       {/* <SignUpSecondStep /> */}
       {/* <AddObjectWarning/> */}
