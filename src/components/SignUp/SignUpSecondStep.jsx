@@ -3,7 +3,11 @@ import React from "react";
 import useValidation from "../../hooks/useValidation";
 import { useState } from "react";
 
-const SignUpSecondStep = () => {
+const SignUpSecondStep = ({
+  setIsSignUpSecondStep,
+  emailToSend,
+  setInfoText,
+}) => {
   const regExp = /^[0-9a-zа-я_]+$/i;
 
   const [passwordCheck, setPasswordCheck] = useState("");
@@ -34,11 +38,28 @@ const SignUpSecondStep = () => {
     e.preventDefault();
 
     if (validateUsername() && validatePassword()) {
+      postData("https://map.transsearch.net/auth/register", {
+        email: emailToSend,
+        username: username,
+        password: password,
+      });
       setUsername("");
       setPassword("");
       setPasswordCheck("");
     }
   };
+
+  async function postData(url, data) {
+    fetch(url, {
+      method: "POST",
+      body: JSON.stringify(data),
+    }).then((response) =>
+      response
+        ? (setIsSignUpSecondStep(false),
+          setInfoText("you are successfully registered"))
+        : setInfoText("user already exist")
+    );
+  }
 
   return (
     <div className="SignUpSecondRoot">

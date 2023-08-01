@@ -2,7 +2,7 @@ import React from "react";
 import "./Header.less";
 import Button from "../Button/Button";
 
-const Header = ({ setIsSignInOpen }) => {
+const Header = ({ setIsSignInOpen, setIsSignUpFirstStepOpen }) => {
   return (
     <div className="headerRoot">
       <div className="header-logo-block">
@@ -15,7 +15,14 @@ const Header = ({ setIsSignInOpen }) => {
           <div className="button-content">Add Object</div>
         </Button>
         <Button type="contained">
-          <div className="button-content">Sign Up</div>
+          <div
+            className="button-content"
+            onClick={() => {
+              setIsSignUpFirstStepOpen((prev) => !prev);
+            }}
+          >
+            Sign Up
+          </div>
         </Button>
         <Button type="text">
           <div

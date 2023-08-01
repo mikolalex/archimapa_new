@@ -1,9 +1,12 @@
 import "./SignUpFirstStep.less";
 import React from "react";
-import { useState, useRef } from "react";
 import useValidation from "../../hooks/useValidation";
 
-const SignUpFirstStep = () => {
+const SignUpFirstStep = ({
+  setIsSignUpFirstStepOpen,
+  setIsSignUpSecondStep,
+  setEmailToSend,
+}) => {
   const emailRegExp =
     /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu;
 
@@ -14,7 +17,12 @@ const SignUpFirstStep = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    validateEmail() ? setEmail("") : null;
+    validateEmail()
+      ? (setIsSignUpFirstStepOpen(false),
+        setIsSignUpSecondStep(true),
+        setEmailToSend(email),
+        setEmail(""))
+      : null;
   };
 
   return (

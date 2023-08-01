@@ -2,7 +2,7 @@ import React from "react";
 import "./SignIn.less";
 import useValidation from "../../hooks/useValidation";
 
-const SignIn = ({ setIsSignInOpen, objToFormData }) => {
+const SignIn = ({ setIsSignInOpen, objToFormData, setInfoText }) => {
   const [email, setEmail, validateEmail, emailError] = useValidation(
     "",
     (value) => (value ? false : "Please enter the email")
@@ -19,8 +19,10 @@ const SignIn = ({ setIsSignInOpen, objToFormData }) => {
       .then((response) => response.json())
       .then((json) =>
         json.token
-          ? sessionStorage.setItem("signInToken", json.token)
-          : console.log("Incorrect username or password")
+          ? (sessionStorage.setItem("signInToken", json.token),
+            setInfoText("you are successfully logged in"),
+            setIsSignInOpen(false))
+          : setInfoText("Incorrect username or password")
       );
   }
 
