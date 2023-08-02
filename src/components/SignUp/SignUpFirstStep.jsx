@@ -4,7 +4,7 @@ import useValidation from "../../hooks/useValidation";
 
 const SignUpFirstStep = ({
   setIsSignUpFirstStepOpen,
-  setIsSignUpSecondStep,
+  setIsSignUpSecondStepOpen,
   setEmailToSend,
 }) => {
   const emailRegExp =
@@ -19,9 +19,8 @@ const SignUpFirstStep = ({
     e.preventDefault();
     validateEmail()
       ? (setIsSignUpFirstStepOpen(false),
-        setIsSignUpSecondStep(true),
-        setEmailToSend(email),
-        setEmail(""))
+        setIsSignUpSecondStepOpen(true),
+        setEmailToSend(email))
       : null;
   };
 
@@ -29,7 +28,11 @@ const SignUpFirstStep = ({
     <div className="SignUpFirstRoot">
       <div className="form-head">
         <h2 className="form-title">Sign Up</h2>
-        <img src="/icons/close.png" alt="" />
+        <img
+          src="/icons/close.png"
+          alt=""
+          onClick={() => setIsSignUpFirstStepOpen((prev) => !prev)}
+        />
       </div>
 
       <button className="google-button">

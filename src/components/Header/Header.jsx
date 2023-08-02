@@ -19,6 +19,7 @@ const Header = ({ setIsSignInOpen, setIsSignUpFirstStepOpen }) => {
             className="button-content"
             onClick={() => {
               setIsSignUpFirstStepOpen((prev) => !prev);
+              setIsSignInOpen(false);
             }}
           >
             Sign Up
@@ -28,6 +29,7 @@ const Header = ({ setIsSignInOpen, setIsSignUpFirstStepOpen }) => {
           <div
             className="button-content"
             onClick={() => {
+              setIsSignUpFirstStepOpen(false);
               setIsSignInOpen((prev) => !prev);
             }}
           >

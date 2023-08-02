@@ -1,17 +1,34 @@
 import React from "react";
 import "./SignIn.less";
 import useValidation from "../../hooks/useValidation";
+import { useState } from "react";
+import Loading from "../Loading/Loading";
 
-const SignIn = ({ setIsSignInOpen, objToFormData, setInfoText }) => {
+const SignIn = ({
+  setIsSignInOpen,
+  objToFormData,
+  setInfoText,
+  isLoading,
+  setIsLoading,
+}) => {
   const [email, setEmail, validateEmail, emailError] = useValidation(
     "",
     (value) => (value ? false : "Please enter the email")
   );
 
-  const [password, setPassword, validatePassword, passwordError] =
-    useValidation("", (value) => (value ? false : "Please enter the password"));
+  const [
+    password,
+    setPassword,
+    validatePassword,
+    passwordError,
+    setPasswordError,
+  ] = useValidation("", (value) =>
+    value ? false : "Please enter the password"
+  );
 
   async function postData(url, data) {
+    setIsDisabled(true);
+    setIsLoading(true);
     fetch(url, {
       method: "POST",
       body: data,
@@ -21,8 +38,11 @@ const SignIn = ({ setIsSignInOpen, objToFormData, setInfoText }) => {
         json.token
           ? (sessionStorage.setItem("signInToken", json.token),
             setInfoText("you are successfully logged in"),
-            setIsSignInOpen(false))
-          : setInfoText("Incorrect username or password")
+            setIsSignInOpen(false),
+            setIsLoading(false))
+          : (setPasswordError("Incorrect username or password"),
+            setIsDisabled(false),
+            setIsLoading(false))
       );
   }
 
@@ -37,10 +57,11 @@ const SignIn = ({ setIsSignInOpen, objToFormData, setInfoText }) => {
           password: password,
         })
       );
-      setEmail("");
-      setPassword("");
     }
   };
+
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(false);
 
   return (
     <div className="SignInRoot">
@@ -67,7 +88,7 @@ const SignIn = ({ setIsSignInOpen, objToFormData, setInfoText }) => {
         <div className="email-input-block">
           <input
             type="text"
-            placeholder="Email"
+            placeholder="Login"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
@@ -75,16 +96,30 @@ const SignIn = ({ setIsSignInOpen, objToFormData, setInfoText }) => {
         </div>
         <div className="password-input-block">
           <input
-            type="text"
+            type={isPasswordVisible ? "text" : "password"}
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <img src="/icons/eye.png" alt="" />
+          <img
+            src="/icons/eye.png"
+            alt=""
+            onClick={() => setIsPasswordVisible((prev) => !prev)}
+          />
           {passwordError && <div className="warning">{passwordError}</div>}
         </div>
+        <div className="loading-block">
+          {isLoading && <Loading type={"bubbles"} color={"#ae7743"} />}
+        </div>
 
-        <button type="submit" className="form-submit-button" onClick={onSubmit}>
+        <button
+          type="submit"
+          className={
+            isDisabled ? "form-submit-button disabled" : "form-submit-button"
+          }
+          onClick={onSubmit}
+          disabled={isDisabled}
+        >
           Continue
         </button>
       </form>

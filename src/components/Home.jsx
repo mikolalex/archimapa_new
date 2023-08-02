@@ -23,8 +23,9 @@ const Home = ({ objects }) => {
 
   const [isSignInOpen, setIsSignInOpen] = useState(false);
   const [isSignUpFirstStepOpen, setIsSignUpFirstStepOpen] = useState(false);
-  const [isSignUpSecondStep, setIsSignUpSecondStep] = useState(false);
+  const [isSignUpSecondStepOpen, setIsSignUpSecondStepOpen] = useState(false);
   const [infoText, setInfoText] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   return (
     <div>
@@ -41,22 +42,26 @@ const Home = ({ objects }) => {
           setIsSignInOpen={setIsSignInOpen}
           objToFormData={objToFormData}
           setInfoText={setInfoText}
+          isLoading={isLoading}
+          setIsLoading={setIsLoading}
         />
       ) : null}
 
       {isSignUpFirstStepOpen ? (
         <SignUpFirstStep
           setIsSignUpFirstStepOpen={setIsSignUpFirstStepOpen}
-          setIsSignUpSecondStep={setIsSignUpSecondStep}
+          setIsSignUpSecondStepOpen={setIsSignUpSecondStepOpen}
           setEmailToSend={setEmailToSend}
         />
       ) : null}
 
-      {isSignUpSecondStep ? (
+      {isSignUpSecondStepOpen ? (
         <SignUpSecondStep
-          setIsSignUpSecondStep={setIsSignUpSecondStep}
+          setIsSignUpSecondStepOpen={setIsSignUpSecondStepOpen}
           emailToSend={emailToSend}
           setInfoText={setInfoText}
+          isLoading={isLoading}
+          setIsLoading={setIsLoading}
         />
       ) : null}
 
