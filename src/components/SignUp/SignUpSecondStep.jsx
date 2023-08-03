@@ -2,8 +2,15 @@ import "./SignUpSecondStep.less";
 import React from "react";
 import useValidation from "../../hooks/useValidation";
 import { useState } from "react";
+import Loading from "../Loading/Loading";
 
-const SignUpSecondStep = () => {
+const SignUpSecondStep = ({
+  setIsSignUpSecondStepOpen,
+  emailToSend,
+  setInfoText,
+  isLoading,
+  setIsLoading,
+}) => {
   const regExp = /^[0-9a-zа-я_]+$/i;
 
   const [passwordCheck, setPasswordCheck] = useState("");
@@ -19,32 +26,63 @@ const SignUpSecondStep = () => {
       return false;
     });
 
-  const [password, setPassword, validatePassword, passwordError] =
-    useValidation("", (value) => {
-      if (value.length < 6 || !value) {
-        return "Password must be no shorter than 6 characters";
-      }
-      if (value !== passwordCheck) {
-        return "Passwords do not match";
-      }
-      return false;
-    });
+  const [
+    password,
+    setPassword,
+    validatePassword,
+    passwordError,
+    setPasswordError,
+  ] = useValidation("", (value) => {
+    if (value.length < 6 || !value) {
+      return "Password must be no shorter than 6 characters";
+    }
+    if (value !== passwordCheck) {
+      return "Passwords do not match";
+    }
+    return false;
+  });
 
   const onSubmit = (e) => {
     e.preventDefault();
 
     if (validateUsername() && validatePassword()) {
-      setUsername("");
-      setPassword("");
-      setPasswordCheck("");
+      postData("https://map.transsearch.net/auth/register", {
+        email: emailToSend,
+        username: username,
+        password: password,
+      });
     }
   };
+
+  async function postData(url, data) {
+    setIsDisabled(true);
+    setIsLoading(true);
+    fetch(url, {
+      method: "POST",
+      body: JSON.stringify(data),
+    }).then((response) =>
+      response
+        ? (setIsSignUpSecondStepOpen(false),
+          setIsLoading(false),
+          setInfoText("you are successfully registered"))
+        : (setPasswordError("user already exist"),
+          setIsDisabled(false),
+          setIsLoading(false))
+    );
+  }
+
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(false);
 
   return (
     <div className="SignUpSecondRoot">
       <div className="form-head">
         <h2 className="form-title">Sign Up</h2>
-        <img src="icons/close.png" alt="" />
+        <img
+          src="/icons/close.png"
+          alt=""
+          onClick={() => setIsSignUpSecondStepOpen(false)}
+        />
       </div>
 
       <form action="submit">
@@ -59,28 +97,41 @@ const SignUpSecondStep = () => {
         </div>
         <div className="password-input-block">
           <input
-            type="text"
+            type={isPasswordVisible ? "text" : "password"}
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <img src="icons/eye.png" alt="" />
+          <img
+            src="/icons/eye.png"
+            alt=""
+            onClick={() => setIsPasswordVisible((prev) => !prev)}
+          />
         </div>
         <div className="password-input-block">
           <input
-            type="text"
+            type={isPasswordVisible ? "text" : "password"}
             placeholder="Repeat password"
             value={passwordCheck}
             onChange={(e) => setPasswordCheck(e.target.value)}
           />
-          <img src="icons/eye.png" alt="" />
+          <img
+            src="/icons/eye.png"
+            alt=""
+            onClick={() => setIsPasswordVisible((prev) => !prev)}
+          />
           {passwordError && <div className="warning">{passwordError}</div>}
         </div>
-
+        <div className="loading-block">
+          {isLoading && <Loading type={"bubbles"} color={"#ae7743"} />}
+        </div>
         <button
           type="submit"
-          className="form-submit-button"
+          className={
+            isDisabled ? "form-submit-button disabled" : "form-submit-button"
+          }
           onClick={onSubmit}
+          disabled={isDisabled}
         >
           Continue
         </button>

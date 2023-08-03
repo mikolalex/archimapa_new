@@ -10,7 +10,7 @@ function useValidation(initialValue, checkingFunction) {
     return errorValue ? false : true;
   };
 
-  return [value, setValue, validate, error];
+  return [value, setValue, validate, error, setError];
 }
 
 export default useValidation;

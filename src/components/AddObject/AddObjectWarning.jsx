@@ -7,7 +7,7 @@ const AddObjectWarning = () => {
     <div className="AddObjectWarningRoot">
       <div className="form-head">
         <h2 className="form-title">Add Object</h2>
-        <img src="icons/close.png" alt="" />
+        <img src="/icons/close.png" alt="" />
       </div>
 
       <div className="notice">

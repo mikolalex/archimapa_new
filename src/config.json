@@ -1,0 +1,66 @@
+{
+  "objectCustomFields": [
+    {
+      "key": "date_built",
+      "type": "text",
+      "title": "Дата побудови"
+    },
+    {
+      "key": "building_type",
+      "type": "select",
+      "field_data": { "category_id": "1" },
+      "title": "Тип"
+    },
+    {
+      "key": "architect",
+      "type": "select",
+      "field_data": { "category_id": "4" },
+      "title": "Архітектор"
+    }
+  ],
+  "categoriesConfig": [
+    {
+      "id": "1",
+      "key": "building_type"
+    },
+    {
+      "id": "2",
+      "key": "architectural_style"
+    },
+    {
+      "id": "3",
+      "key": "architectural_substyle",
+      "parent_id": "2"
+    },
+    {
+      "id": "4",
+      "key": "architect"
+    },
+    {
+      "id": "5",
+      "key": "building_subtype",
+      "parent_id": "1"
+    }
+  ],
+  "filtersConfig": [
+    {
+      "type": "select",
+      "category_id": 4,
+      "title": "architect"
+    },
+    {
+      "type": "checkboxList",
+      "category_id": 1,
+      "title": "building_type"
+    },
+    {
+      "type": "checkboxList",
+      "category_id": 2,
+      "title": "architect_style"
+    }
+  ],
+  "breadcrumbs": [
+    [2, 3],
+    [1, 5]
+  ]
+}

@@ -1,38 +1,47 @@
 import "./SignUpFirstStep.less";
 import React from "react";
-import { useState, useRef } from "react";
 import useValidation from "../../hooks/useValidation";
 
-const SignUpFirstStep = () => {
+const SignUpFirstStep = ({
+  setIsSignUpFirstStepOpen,
+  setIsSignUpSecondStepOpen,
+  setEmailToSend,
+}) => {
   const emailRegExp =
     /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu;
 
   const [email, setEmail, validateEmail, emailError] = useValidation(
     "",
-    (value) => 
-      emailRegExp.test(value) ? false : "Email is not valid"
-    
+    (value) => (emailRegExp.test(value) ? false : "Email is not valid")
   );
 
   const onSubmit = (e) => {
     e.preventDefault();
-    validateEmail() ? setEmail("") : null;
+    validateEmail()
+      ? (setIsSignUpFirstStepOpen(false),
+        setIsSignUpSecondStepOpen(true),
+        setEmailToSend(email))
+      : null;
   };
 
   return (
     <div className="SignUpFirstRoot">
       <div className="form-head">
         <h2 className="form-title">Sign Up</h2>
-        <img src="icons/close.png" alt="" />
+        <img
+          src="/icons/close.png"
+          alt=""
+          onClick={() => setIsSignUpFirstStepOpen((prev) => !prev)}
+        />
       </div>
 
       <button className="google-button">
-        <img src="icons/google.png" alt="" /> Sign up with Google
+        <img src="/icons/google.png" alt="" /> Sign up with Google
       </button>
       <div className="or-block">
-        <img src="img/line.png" alt="" />
+        <img src="/img/line.png" alt="" />
         <p>OR</p>
-        <img src="img/line.png" alt="" />
+        <img src="/img/line.png" alt="" />
       </div>
       <form action="submit">
         <div className="email-input-block">

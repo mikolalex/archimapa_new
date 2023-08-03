@@ -31,6 +31,12 @@
   font-size: 18px;
   letter-spacing: 0.5px;
   cursor: pointer;
+
+  .button-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }
 
 .button-outlined {
@@ -118,12 +124,34 @@
     left: 50%;
     transform: translate(-50%, -50%);
   }
+  .InfoPopupRoot {
+    top: 25% !important;
+  }
+  .object-page-main {
+    flex-direction: column;
+  }
+  .object-card {
+    width: 100% !important;
+  }
+  .object-details {
+    height: fit-content !important;
+    width: 100% !important;
+    margin-bottom: 24px;
+  }
 }
 
 .accent {
   color: #ff7a00;
 }
-
 .none {
   display: none;
+}
+.disabled {
+  background: #ae7743 !important;
+}
+.loading-block {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 8px;
 }
