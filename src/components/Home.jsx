@@ -9,6 +9,7 @@ import AddObjectWarning from "./AddObject/AddObjectWarning";
 import AddObject from "./AddObject/AddObject";
 import { useState } from "react";
 import InfoPopup from "./InfoPopup/InfoPopup";
+import json from "../config.json";
 
 const Home = ({ objects }) => {
   const objToFormData = (obj) => {
@@ -18,6 +19,11 @@ const Home = ({ objects }) => {
     }
     return fd;
   };
+
+  function getConfig(config) {
+    return json[config];
+  }
+  console.log(getConfig("objectCustomFields"));
 
   const [emailToSend, setEmailToSend] = useState("");
 
