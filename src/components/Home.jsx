@@ -10,6 +10,7 @@ import AddObject from "./AddObject/AddObject";
 import { useState } from "react";
 import InfoPopup from "./InfoPopup/InfoPopup";
 import json from "../config.json";
+import useValidation from "../hooks/useValidation";
 
 const Home = ({ objects }) => {
   const objToFormData = (obj) => {
@@ -23,27 +24,43 @@ const Home = ({ objects }) => {
   function getConfig(config) {
     return json[config];
   }
-  console.log(getConfig("objectCustomFields"));
 
   const [emailToSend, setEmailToSend] = useState("");
 
   const [isSignInOpen, setIsSignInOpen] = useState(false);
   const [isSignUpFirstStepOpen, setIsSignUpFirstStepOpen] = useState(false);
   const [isSignUpSecondStepOpen, setIsSignUpSecondStepOpen] = useState(false);
+  const [isAddObjectOpen, setIsAddObjectOpen] = useState(false);
   const [infoText, setInfoText] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isWindowBlured, setIsWindowBlured] = useState(false);
+  // const [selectedPosition, setSelectedPosition] = useState({});
+
+  const [latitude, setLatitude, validateLatitude, latitudeError] =
+    useValidation("", (value) => (value ? false : "Please enter the latitude"));
+  const [longitude, setLongitude, validateLongitude, longitudeError] =
+    useValidation("", (value) =>
+      value ? false : "Please enter the longitude"
+    );
 
   return (
     <div>
       <Header
         setIsSignInOpen={setIsSignInOpen}
         setIsSignUpFirstStepOpen={setIsSignUpFirstStepOpen}
+        setIsAddObjectOpen={setIsAddObjectOpen}
       />
       <main>
-        <Map objects={objects} />
+        <Map
+          objects={objects}
+          isWindowBlured={isWindowBlured}
+          setIsWindowBlured={setIsWindowBlured}
+          setLatitude={setLatitude}
+          setLongitude={setLongitude}
+        />
         <Filters />
       </main>
-      {isSignInOpen ? (
+      {isSignInOpen && (
         <SignIn
           setIsSignInOpen={setIsSignInOpen}
           objToFormData={objToFormData}
@@ -51,17 +68,17 @@ const Home = ({ objects }) => {
           isLoading={isLoading}
           setIsLoading={setIsLoading}
         />
-      ) : null}
+      )}
 
-      {isSignUpFirstStepOpen ? (
+      {isSignUpFirstStepOpen && (
         <SignUpFirstStep
           setIsSignUpFirstStepOpen={setIsSignUpFirstStepOpen}
           setIsSignUpSecondStepOpen={setIsSignUpSecondStepOpen}
           setEmailToSend={setEmailToSend}
         />
-      ) : null}
+      )}
 
-      {isSignUpSecondStepOpen ? (
+      {isSignUpSecondStepOpen && (
         <SignUpSecondStep
           setIsSignUpSecondStepOpen={setIsSignUpSecondStepOpen}
           emailToSend={emailToSend}
@@ -69,13 +86,28 @@ const Home = ({ objects }) => {
           isLoading={isLoading}
           setIsLoading={setIsLoading}
         />
-      ) : null}
+      )}
 
       {/* <AddObjectWarning/> */}
-      {/* <AddObject /> */}
-      {infoText ? (
-        <InfoPopup infoText={infoText} setInfoText={setInfoText} />
-      ) : null}
+      {isAddObjectOpen && (
+        <AddObject
+          objToFormData={objToFormData}
+          setIsAddObjectOpen={setIsAddObjectOpen}
+          setIsWindowBlured={setIsWindowBlured}
+          latitude={latitude}
+          setLatitude={setLatitude}
+          validateLatitude={validateLatitude}
+          latitudeError={latitudeError}
+          longitude={longitude}
+          setLongitude={setLongitude}
+          validateLongitude={validateLongitude}
+          longitudeError={longitudeError}
+        />
+      )}
+
+      {infoText && <InfoPopup infoText={infoText} setInfoText={setInfoText} />}
+
+      {isWindowBlured && <div className="blured"></div>}
     </div>
   );
 };

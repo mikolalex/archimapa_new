@@ -2,7 +2,11 @@ import React from "react";
 import "./Header.less";
 import Button from "../Button/Button";
 
-const Header = ({ setIsSignInOpen, setIsSignUpFirstStepOpen }) => {
+const Header = ({
+  setIsSignInOpen,
+  setIsSignUpFirstStepOpen,
+  setIsAddObjectOpen,
+}) => {
   return (
     <div className="headerRoot">
       <div className="header-logo-block">
@@ -12,7 +16,16 @@ const Header = ({ setIsSignInOpen, setIsSignUpFirstStepOpen }) => {
       </div>
       <div className="header-buttons-block ">
         <Button type="outlined">
-          <div className="button-content">Add Object</div>
+          <div
+            className="button-content"
+            onClick={() => {
+              setIsAddObjectOpen((prev) => !prev);
+              setIsSignInOpen(false);
+              setIsSignUpFirstStepOpen(false);
+            }}
+          >
+            Add Object
+          </div>
         </Button>
         <Button type="contained">
           <div
@@ -20,6 +33,7 @@ const Header = ({ setIsSignInOpen, setIsSignUpFirstStepOpen }) => {
             onClick={() => {
               setIsSignUpFirstStepOpen((prev) => !prev);
               setIsSignInOpen(false);
+              setIsAddObjectOpen(false);
             }}
           >
             Sign Up
@@ -30,6 +44,7 @@ const Header = ({ setIsSignInOpen, setIsSignUpFirstStepOpen }) => {
             className="button-content"
             onClick={() => {
               setIsSignUpFirstStepOpen(false);
+              setIsAddObjectOpen(false);
               setIsSignInOpen((prev) => !prev);
             }}
           >

@@ -6,7 +6,7 @@ import Loading from "../Loading/Loading";
 
 const SignIn = ({
   setIsSignInOpen,
-  objToFormData,
+  objToFormData, 
   setInfoText,
   isLoading,
   setIsLoading,
