@@ -102,6 +102,7 @@ const Home = ({ objects }) => {
           setLongitude={setLongitude}
           validateLongitude={validateLongitude}
           longitudeError={longitudeError}
+          getConfig={getConfig}
         />
       )}
 

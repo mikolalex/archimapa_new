@@ -2,6 +2,7 @@ import "./AddObject.less";
 
 import React from "react";
 import useValidation from "../../hooks/useValidation";
+import { useState } from "react";
 
 const AddObject = ({
   objToFormData,
@@ -15,6 +16,7 @@ const AddObject = ({
   setLongitude,
   validateLongitude,
   longitudeError,
+  getConfig,
 }) => {
   const [title, setTitle, validateTitle, titleError] = useValidation(
     "",
@@ -25,17 +27,8 @@ const AddObject = ({
       value ? false : "Please enter the description"
     );
 
-  //  const [latitude, setLatitude, validateLatitude, latitudeError] =
-  //   useValidation('', (value) => (value ? false : "Please enter the latitude"));
-  // const [longitude, setLongitude, validateLongitude, longitudeError] =
-  //   useValidation("", (value) =>
-  //     value ? false : "Please enter the longitude"
-  //   );
-
   const onSubmit = (e) => {
     e.preventDefault();
-    // setLatitude(selectedPosition.latitude);
-    // setLongitude(selectedPosition.longitude);
     if (
       validateTitle() &&
       validateDescription() &&
@@ -74,6 +67,21 @@ const AddObject = ({
   const findCoordinatesOnMap = (e) => {
     e.preventDefault();
     setIsWindowBlured(true);
+  };
+
+  const categories = getConfig("objectCustomFields");
+
+  const fieldData = (category_id) => {
+    const [fieldData, setFieldData] = useState([]);
+    async function getFieldData(category_id) {
+      const response = await fetch(
+        `https://map.transsearch.net/items/category/${category_id}`
+      );
+      const data = await response.json();
+      setFieldData(data);
+    }
+    getFieldData(category_id);
+    return fieldData;
   };
 
   return (
@@ -130,26 +138,32 @@ const AddObject = ({
         {longitudeError && <div className="warning">{longitudeError}</div>}
 
         <div className="details-form-block">
-          <select name="" id="">
-            <option value="">Рік побудови</option>
-            <option value="">1999</option>
-            <option value="">1995</option>
-          </select>
-          <select name="" id="">
-            <option value="">Тип будівлі</option>
-            <option value="">тип 1</option>
-            <option value="">тип 2</option>
-          </select>
-          <select name="" id="">
-            <option value="">Стиль</option>
-            <option value="">Соцмодернізм</option>
-            <option value="">Модерн</option>
-          </select>
-          <select name="" id="">
-            <option value="">Архітектор</option>
-            <option value="">Растреллі</option>
-            <option value="">Каракіс</option>
-          </select>
+          {categories.map((category) => {
+            switch (category.type) {
+              case "text":
+                return (
+                  <input
+                    type={category.type}
+                    placeholder={category.title}
+                    key={category.key}
+                  />
+                );
+
+              case "select":
+                return (
+                  <select name="" id="" key={category.key}>
+                    <option value="">{category.title}</option>
+                    {fieldData(Object.values(category.field_data).join()).map(
+                      (option) => (
+                        <option value="" key={option.id}>
+                          {option.title}
+                        </option>
+                      )
+                    )}
+                  </select>
+                );
+            }
+          })}
         </div>
 
         <button type="submit" className="form-submit-button" onClick={onSubmit}>
@@ -159,6 +173,5 @@ const AddObject = ({
     </div>
   );
 };
-
 
 export default AddObject;
