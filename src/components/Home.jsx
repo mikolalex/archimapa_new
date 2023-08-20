@@ -12,7 +12,7 @@ import InfoPopup from "./InfoPopup/InfoPopup";
 import json from "../config.json";
 import useValidation from "../hooks/useValidation";
 
-const Home = ({ objects }) => {
+const Home = ({ objects, setObjects }) => {
   const objToFormData = (obj) => {
     const fd = new FormData();
     for (let i in obj) {
@@ -34,7 +34,6 @@ const Home = ({ objects }) => {
   const [infoText, setInfoText] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isWindowBlured, setIsWindowBlured] = useState(false);
-  // const [selectedPosition, setSelectedPosition] = useState({});
 
   const [latitude, setLatitude, validateLatitude, latitudeError] =
     useValidation("", (value) => (value ? false : "Please enter the latitude"));
@@ -57,6 +56,7 @@ const Home = ({ objects }) => {
           setIsWindowBlured={setIsWindowBlured}
           setLatitude={setLatitude}
           setLongitude={setLongitude}
+          setObjects={setObjects}
         />
         <Filters />
       </main>
