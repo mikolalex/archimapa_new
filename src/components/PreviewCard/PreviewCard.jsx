@@ -11,7 +11,7 @@ const PreviewCard = ({ marker }) => {
       </div>
 
       <div className="preview-card-info">
-        <Link to={`/object/${marker.id}`}>
+        <Link to={`/object/${marker.id}`} >
           <h2 className="preview-card-title">{marker.title}</h2>
         </Link>
         <p className="preview-card-address">

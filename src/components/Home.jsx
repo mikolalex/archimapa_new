@@ -12,7 +12,7 @@ import InfoPopup from "./InfoPopup/InfoPopup";
 import json from "../config.json";
 import useValidation from "../hooks/useValidation";
 
-const Home = ({ objects, setObjects }) => {
+const Home = ({ objects, bounds, setBounds, getObjects }) => {
   const objToFormData = (obj) => {
     const fd = new FormData();
     for (let i in obj) {
@@ -56,7 +56,9 @@ const Home = ({ objects, setObjects }) => {
           setIsWindowBlured={setIsWindowBlured}
           setLatitude={setLatitude}
           setLongitude={setLongitude}
-          setObjects={setObjects}
+          getObjects={getObjects}
+          bounds={bounds}
+          setBounds={setBounds}
         />
         <Filters />
       </main>

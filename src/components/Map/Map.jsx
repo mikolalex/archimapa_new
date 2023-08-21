@@ -20,15 +20,10 @@ const Map = ({
   setIsWindowBlured,
   setLatitude,
   setLongitude,
-  setObjects,
+  getObjects,
+  bounds,
+  setBounds,
 }) => {
-  const [bounds, setBounds] = useState({
-    east: 39.46289062500001,
-    north: 52.89564866211353,
-    south: 44.98034238084973,
-    west: 23.4228515625,
-  });
-
   function LocationMarker() {
     if (isWindowBlured) {
       useMapEvents({
@@ -43,7 +38,6 @@ const Map = ({
   }
   function GetBounds() {
     const map = useMap();
-    const data = map.getBounds();
     useMapEvents({
       move() {
         const data = map.getBounds();
@@ -58,16 +52,10 @@ const Map = ({
     return null;
   }
 
-  async function displayObjectsOnMap() {
-    fetch(
-      `https://map.transsearch.net/objects?north=${bounds.north}&south=${bounds.south}&east=${bounds.east}&west=${bounds.west}`
-    )
-      .then((response) => response.json())
-      .then((json) => setObjects(json));
-  }
-
   useEffect(() => {
-    displayObjectsOnMap();
+    getObjects(
+      `https://map.transsearch.net/objects?north=${bounds.north}&south=${bounds.south}&east=${bounds.east}&west=${bounds.west}`
+    );
   }, [bounds]);
 
   return (

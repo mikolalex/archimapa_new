@@ -7,19 +7,23 @@ import { useLocation } from "react-router";
 import { useState } from "react";
 import { useEffect } from "react";
 
-const ObjectPage = ({ objects }) => {
+const ObjectPage = ({ objects, bounds, getObjects }) => {
   const location = useLocation();
 
   const [currentObject, setCurrentObject] = useState({});
   useEffect(() => {
+    getObjects(
+      `https://map.transsearch.net/objects?north=${bounds.north}&south=${bounds.south}&east=${bounds.east}&west=${bounds.west}`
+    );
+  }, []);
+
+  useEffect(() => {
     objects.forEach((obj) => {
-      if (obj.id == location.pathname[location.pathname.length - 1]) {
-        console.log(obj.id);
+      if (obj.id === location.pathname.split("/")[2]) {
         setCurrentObject(obj);
       }
     });
-  }, []);
-  console.log(currentObject);
+  }, [objects]);
 
   return (
     <div className="objectPageRoot">
@@ -27,7 +31,7 @@ const ObjectPage = ({ objects }) => {
       <main className="object-page-main">
         <div className="object-card">
           <div className="object-style">Модернізм</div>
-          <div className="object-title">Садиба Барбана</div>
+          <div className="object-title">{currentObject.title}</div>
           <div className="object-img">
             <img src="/img/obj_page_img.png" alt="object_img" />
           </div>
@@ -35,17 +39,7 @@ const ObjectPage = ({ objects }) => {
             <img src="/icons/address.png" alt="address_icon" />
             вулиця Обсерваторна, 6, Київ, 02000
           </div>
-          <div className="object-description">
-            Садиба Барбана є зразком одноповерхового житла середнього класу із
-            цегляним декором. 2015 року Науково-дослідний інститут
-            пам'яткоохоронних досліджень пропонував внести будівлю до переліку
-            щойно виявлених об'єктів культурної спадщини[1]. В обґрунтуванні
-            було зазначено, що це «рідкісний взірець одноповерхового садибного
-            будинку. Прикрашений вишуканим неокласичним декором — русти, лиштви,
-            складний карниз. Цінна пам'ятка культурного надбання міста Києва».
-            Міністерство культури та інформаційної політики України не включило
-            садибу до реєстру нерухомих пам'яток України[5].{" "}
-          </div>
+          <div className="object-description">{currentObject.description}</div>
         </div>
         <div className="object-details">
           <ul>
@@ -69,19 +63,23 @@ const ObjectPage = ({ objects }) => {
         </div>
       </main>
       <div className="map-block">
-        {/* <MapContainer
-          center={[currentObject.latitude, currentObject.longitude]}
-          zoom={11}
-          scrollWheelZoom={true}
-        >
-          <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          />
-          <Marker position={[currentObject.latitude, currentObject.longitude]}>
-            <Popup>d</Popup>
-          </Marker>
-        </MapContainer> */}
+        {currentObject.latitude && (
+          <MapContainer
+            center={[currentObject.latitude, currentObject.longitude]}
+            zoom={11}
+            scrollWheelZoom={true}
+          >
+            <TileLayer
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            />
+            <Marker
+              position={[currentObject.latitude, currentObject.longitude]}
+            >
+              {/* <Popup>d</Popup> */}
+            </Marker>
+          </MapContainer>
+        )}
       </div>
     </div>
   );
