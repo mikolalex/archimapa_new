@@ -7,8 +7,43 @@ import { useLocation } from "react-router";
 import { useState } from "react";
 import { useEffect } from "react";
 
-const ObjectPage = ({ objects, bounds, getObjects }) => {
+const ObjectPage = ({ bounds,   openAddObjectPopup,
+  openSignInPopup,
+  openSigUpnPopup, }) => {
   const location = useLocation();
+
+  // const [isSignInOpen, setIsSignInOpen] = useState(false);
+  // const [isSignUpFirstStepOpen, setIsSignUpFirstStepOpen] = useState(false);
+  // const [isSignUpSecondStepOpen, setIsSignUpSecondStepOpen] = useState(false);
+  // const [isAddObjectOpen, setIsAddObjectOpen] = useState(false);
+
+  // const closeAllPopups = () => {
+  //   setIsAddObjectOpen(false);
+  //   setIsSignInOpen(false);
+  //   setIsSignUpFirstStepOpen(false);
+  //   setIsSignUpSecondStepOpen(false);
+  // };
+
+  // const openAddObjectPopup = () => {
+  //   closeAllPopups();
+  //   setIsAddObjectOpen(true);
+  // };
+  // const openSignInPopup = () => {
+  //   closeAllPopups();
+  //   setIsSignInOpen(true);
+  // };
+  // const openSigUpnPopup = () => {
+  //   closeAllPopups();
+  //   setIsSignUpFirstStepOpen(true);
+  // };
+
+  const [objects, setObjects] = useState([]);
+
+  async function getObjects(link) {
+    fetch(link)
+      .then((response) => response.json())
+      .then((json) => setObjects(json));
+  }
 
   const [currentObject, setCurrentObject] = useState({});
   useEffect(() => {
@@ -27,7 +62,11 @@ const ObjectPage = ({ objects, bounds, getObjects }) => {
 
   return (
     <div className="objectPageRoot">
-      <Header />
+      <Header
+        openAddObjectPopup={openAddObjectPopup}
+        openSignInPopup={openSignInPopup}
+        openSigUpnPopup={openSigUpnPopup}
+      />
       <main className="object-page-main">
         <div className="object-card">
           <div className="object-style">Модернізм</div>

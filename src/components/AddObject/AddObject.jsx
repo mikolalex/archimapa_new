@@ -1,8 +1,6 @@
 import "./AddObject.less";
-
 import React from "react";
 import useValidation from "../../hooks/useValidation";
-import { useState } from "react";
 
 const AddObject = ({
   objToFormData,
@@ -17,6 +15,7 @@ const AddObject = ({
   validateLongitude,
   longitudeError,
   getConfig,
+  fieldData,
 }) => {
   const [title, setTitle, validateTitle, titleError] = useValidation(
     "",
@@ -59,9 +58,7 @@ const AddObject = ({
       headers: {
         Authorization: "Bearer " + sessionStorage.getItem("signInToken"),
       },
-    })
-      .then((response) => response.json())
-      .then((json) => console.log(json));
+    });
   }
 
   const findCoordinatesOnMap = (e) => {
@@ -70,19 +67,6 @@ const AddObject = ({
   };
 
   const categories = getConfig("objectCustomFields");
-
-  const fieldData = (category_id) => {
-    const [fieldData, setFieldData] = useState([]);
-    async function getFieldData(category_id) {
-      const response = await fetch(
-        `https://map.transsearch.net/items/category/${category_id}`
-      );
-      const data = await response.json();
-      setFieldData(data);
-    }
-    getFieldData(category_id);
-    return fieldData;
-  };
 
   return (
     <div className="AddObjectRoot">
@@ -153,13 +137,13 @@ const AddObject = ({
                 return (
                   <select name="" id="" key={category.key}>
                     <option value="">{category.title}</option>
-                    {fieldData(Object.values(category.field_data).join()).map(
-                      (option) => (
-                        <option value="" key={option.id}>
-                          {option.title}
-                        </option>
-                      )
-                    )}
+                    {fieldData[
+                      Object.values(category.field_data.category_id)
+                    ].map((option) => (
+                      <option value="" key={option.id}>
+                        {option.title}
+                      </option>
+                    ))}
                   </select>
                 );
             }

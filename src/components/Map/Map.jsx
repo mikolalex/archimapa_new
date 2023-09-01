@@ -15,20 +15,25 @@ import { useState } from "react";
 import { useEffect } from "react";
 
 const Map = ({
-  objects,
   isWindowBlured,
   setIsWindowBlured,
   setLatitude,
   setLongitude,
-  getObjects,
   bounds,
   setBounds,
 }) => {
+  const [objects, setObjects] = useState([]);
+
+  async function getObjects(link) {
+    fetch(link)
+      .then((response) => response.json())
+      .then((json) => setObjects(json));
+  }
+
   function LocationMarker() {
     if (isWindowBlured) {
       useMapEvents({
         click(e) {
-          console.log(e);
           setLatitude(e.latlng.lat);
           setLongitude(e.latlng.lng);
           setIsWindowBlured(false);
