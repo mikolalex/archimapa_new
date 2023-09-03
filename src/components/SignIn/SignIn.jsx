@@ -6,10 +6,12 @@ import Loading from "../Loading/Loading";
 
 const SignIn = ({
   setIsSignInOpen,
-  objToFormData, 
+  objToFormData,
   setInfoText,
   isLoading,
   setIsLoading,
+  setIsWindowBlured,
+  isWindowBlured,
 }) => {
   const [email, setEmail, validateEmail, emailError] = useValidation(
     "",
@@ -64,15 +66,18 @@ const SignIn = ({
   const [isDisabled, setIsDisabled] = useState(false);
 
   return (
-    <div className="SignInRoot">
+    <div
+      className={isWindowBlured.popup ? "SignInRoot non-blured" : "SignInRoot"}
+    >
       <div className="form-head">
         <h2 className="form-title">Sign In</h2>
         <img
           src="/icons/close.png"
           alt=""
-          onClick={() => {
-            setIsSignInOpen(false);
-          }}
+          onClick={() => (
+            setIsSignInOpen(false),
+            setIsWindowBlured({ map: false, popup: false })
+          )}
         />
       </div>
 

@@ -6,6 +6,8 @@ const SignUpFirstStep = ({
   setIsSignUpFirstStepOpen,
   setIsSignUpSecondStepOpen,
   setEmailToSend,
+  setIsWindowBlured,
+  isWindowBlured,
 }) => {
   const emailRegExp =
     /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu;
@@ -25,13 +27,20 @@ const SignUpFirstStep = ({
   };
 
   return (
-    <div className="SignUpFirstRoot">
+    <div
+      className={
+        isWindowBlured.popup ? "SignUpFirstRoot non-blured" : "SignUpFirstRoot"
+      }
+    >
       <div className="form-head">
         <h2 className="form-title">Sign Up</h2>
         <img
           src="/icons/close.png"
           alt=""
-          onClick={() => setIsSignUpFirstStepOpen((prev) => !prev)}
+          onClick={() => (
+            setIsSignUpFirstStepOpen((prev) => !prev),
+            setIsWindowBlured({ map: false, popup: false })
+          )}
         />
       </div>
 

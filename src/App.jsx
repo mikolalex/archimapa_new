@@ -39,7 +39,10 @@ function App() {
   const [isAddObjectOpen, setIsAddObjectOpen] = useState(false);
   const [infoText, setInfoText] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [isWindowBlured, setIsWindowBlured] = useState(false);
+  const [isWindowBlured, setIsWindowBlured] = useState({
+    map: false,
+    popup: false,
+  });
 
   const [latitude, setLatitude, validateLatitude, latitudeError] =
     useValidation("", (value) => (value ? false : "Please enter the latitude"));
@@ -58,14 +61,17 @@ function App() {
   const openAddObjectPopup = () => {
     closeAllPopups();
     setIsAddObjectOpen(true);
+    setIsWindowBlured((prev) => ({ ...prev, popup: true }));
   };
   const openSignInPopup = () => {
     closeAllPopups();
     setIsSignInOpen(true);
+    setIsWindowBlured((prev) => ({ ...prev, popup: true }));
   };
   const openSigUpnPopup = () => {
     closeAllPopups();
     setIsSignUpFirstStepOpen(true);
+    setIsWindowBlured((prev) => ({ ...prev, popup: true }));
   };
 
   //optns
@@ -134,6 +140,8 @@ function App() {
             setInfoText={setInfoText}
             isLoading={isLoading}
             setIsLoading={setIsLoading}
+            setIsWindowBlured={setIsWindowBlured}
+            isWindowBlured={isWindowBlured}
           />
         )}
 
@@ -142,6 +150,8 @@ function App() {
             setIsSignUpFirstStepOpen={setIsSignUpFirstStepOpen}
             setIsSignUpSecondStepOpen={setIsSignUpSecondStepOpen}
             setEmailToSend={setEmailToSend}
+            setIsWindowBlured={setIsWindowBlured}
+            isWindowBlured={isWindowBlured}
           />
         )}
 
@@ -152,6 +162,8 @@ function App() {
             setInfoText={setInfoText}
             isLoading={isLoading}
             setIsLoading={setIsLoading}
+            setIsWindowBlured={setIsWindowBlured}
+            isWindowBlured={isWindowBlured}
           />
         )}
 
@@ -161,6 +173,7 @@ function App() {
             objToFormData={objToFormData}
             setIsAddObjectOpen={setIsAddObjectOpen}
             setIsWindowBlured={setIsWindowBlured}
+            isWindowBlured={isWindowBlured}
             latitude={latitude}
             setLatitude={setLatitude}
             validateLatitude={validateLatitude}
@@ -175,10 +188,17 @@ function App() {
         )}
 
         {infoText && (
-          <InfoPopup infoText={infoText} setInfoText={setInfoText} />
+          <InfoPopup
+            infoText={infoText}
+            setInfoText={setInfoText}
+            setIsWindowBlured={setIsWindowBlured}
+            isWindowBlured={isWindowBlured}
+          />
         )}
 
-        {isWindowBlured && <div className="blured"></div>}
+        {(isWindowBlured.map || isWindowBlured.popup) && (
+          <div className="blured"></div>
+        )}
       </div>
     </>
   );

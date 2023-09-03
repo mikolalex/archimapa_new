@@ -6,6 +6,7 @@ const AddObject = ({
   objToFormData,
   setIsAddObjectOpen,
   setIsWindowBlured,
+  isWindowBlured,
   latitude,
   setLatitude,
   validateLatitude,
@@ -63,19 +64,26 @@ const AddObject = ({
 
   const findCoordinatesOnMap = (e) => {
     e.preventDefault();
-    setIsWindowBlured(true);
+    setIsWindowBlured((prev) => ({ map: true, popup: false }));
   };
 
   const categories = getConfig("objectCustomFields");
 
   return (
-    <div className="AddObjectRoot">
+    <div
+      className={
+        isWindowBlured.popup ? "AddObjectRoot non-blured" : "AddObjectRoot"
+      }
+    >
       <div className="form-head">
         <h2 className="form-title">Add Object</h2>
         <img
           src="/icons/close.png"
           alt=""
-          onClick={() => setIsAddObjectOpen(false)}
+          onClick={() => (
+            setIsAddObjectOpen(false),
+            setIsWindowBlured({ map: false, popup: false })
+          )}
         />
       </div>
 

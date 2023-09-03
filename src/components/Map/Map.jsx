@@ -36,7 +36,7 @@ const Map = ({
         click(e) {
           setLatitude(e.latlng.lat);
           setLongitude(e.latlng.lng);
-          setIsWindowBlured(false);
+          setIsWindowBlured((prev) => ({ popup: true, map: false }));
         },
       });
     }
@@ -69,7 +69,9 @@ const Map = ({
         <button className="navigation-button-map button">Карта</button>
         <button className="navigation-button-list button">Список</button>
       </div>
-      <div className={isWindowBlured ? "map-block active" : "map-block"}>
+      <div
+        className={isWindowBlured.map ? "map-block non-blured" : "map-block"}
+      >
         <MapContainer
           center={[49.089980204600856, 31.437540444932036]}
           zoom={6}

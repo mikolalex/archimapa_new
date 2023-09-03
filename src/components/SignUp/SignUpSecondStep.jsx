@@ -10,6 +10,8 @@ const SignUpSecondStep = ({
   setInfoText,
   isLoading,
   setIsLoading,
+  setIsWindowBlured,
+  isWindowBlured,
 }) => {
   const regExp = /^[0-9a-zа-я_]+$/i;
 
@@ -75,13 +77,20 @@ const SignUpSecondStep = ({
   const [isDisabled, setIsDisabled] = useState(false);
 
   return (
-    <div className="SignUpSecondRoot">
+    <div
+      className={
+        isWindowBlured ? "SignUpSecondRoot non-blured" : "SignUpSecondRoot"
+      }
+    >
       <div className="form-head">
         <h2 className="form-title">Sign Up</h2>
         <img
           src="/icons/close.png"
           alt=""
-          onClick={() => setIsSignUpSecondStepOpen(false)}
+          onClick={() => (
+            setIsSignUpSecondStepOpen(false),
+            setIsWindowBlured({ map: false, popup: false })
+          )}
         />
       </div>
 
