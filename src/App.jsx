@@ -75,30 +75,31 @@ function App() {
   };
 
   //optns
+
   const categories = getConfig("objectCustomFields");
   const [fieldData, setFieldData] = useState({});
 
-  const getOptions = () => {
-    const categoriesId = [];
+  const categoriesId = () => {
+    const ids = [];
     categories.forEach((category) =>
       category.type === "select"
-        ? categoriesId.push(Object.values(category.field_data).join())
+        ? ids.push(Object.values(category.field_data).join())
         : null
     );
+    return ids;
+  };
 
-    categoriesId.forEach((id) => {
+  async function getFieldData(id) {
+    fetch(`https://map.transsearch.net/items/category/${id}`)
+      .then((response) => response.json())
+      .then((json) => setFieldData((prev) => ({ ...prev, [id]: json })));
+  }
+
+  useEffect(() => {
+    categoriesId().forEach((id) => {
       getFieldData(id);
     });
-
-    async function getFieldData(id) {
-      useEffect(() => {
-        fetch(`https://map.transsearch.net/items/category/${id}`)
-          .then((response) => response.json())
-          .then((json) => setFieldData((prev) => ({ ...prev, [id]: json })));
-      }, []);
-    }
-  };
-  getOptions();
+  }, [categories]);
 
   return (
     <>
