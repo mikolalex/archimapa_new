@@ -4,13 +4,7 @@ import useValidation from "../../hooks/useValidation";
 import { useState } from "react";
 import AddObjectMap from "../AddObjectMap/AddObjectMap";
 
-const AddObject = ({
-  setIsAddObjectOpen,
-  setIsWindowBlured,
-  isWindowBlured,
-  getConfig,
-  fieldData,
-}) => {
+const AddObject = ({ setIsAddObjectOpen, getConfig, fieldData }) => {
   const [title, setTitle, validateTitle, titleError] = useValidation(
     "",
     (value) => (value ? false : "Please enter the name")
@@ -80,105 +74,109 @@ const AddObject = ({
   const categories = getConfig("objectCustomFields");
 
   return (
-    <div
-      className={
-        isWindowBlured.popup ? "AddObjectRoot non-blured" : "AddObjectRoot"
-      }
-    >
-      <div className="form-head">
-        <h2 className="form-title">Add Object</h2>
-        <img
-          src="/icons/close.png"
-          alt=""
-          onClick={() => (
-            setIsAddObjectOpen(false),
-            setIsWindowBlured({ map: false, popup: false })
+    <div className="AddObjectRoot">
+      <div className="add-object-block-content">
+        <div className="form-head">
+          <h2 className="form-title">Add Object</h2>
+          <img
+            src="/icons/close.png"
+            alt=""
+            onClick={() => setIsAddObjectOpen(false)}
+          />
+        </div>
+
+        <form action="submit">
+          <div className="name-input-block">
+            <input
+              type="text"
+              placeholder="Name"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+          </div>
+          {titleError && <div className="warning">{titleError}</div>}
+          <div className="description-input-block">
+            <textarea
+              placeholder="Description"
+              className="description-textarea"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            />
+          </div>
+          {descriptionError && (
+            <div className="warning">{descriptionError}</div>
           )}
-        />
-      </div>
+          <div className="notice">
+            <p> Задайте координати</p>
+            <button
+              className="find-on-map-button"
+              onClick={findCoordinatesOnMap}
+            >
+              Знайти на карті
+            </button>
+          </div>
+          <div className="coordinates-input-block">
+            <input
+              type="number"
+              placeholder="Широта"
+              value={latitude}
+              onChange={(e) => setLatitude(e.target.value)}
+            />
+            <input
+              type="number"
+              placeholder="Довгота"
+              value={longitude}
+              onChange={(e) => setLongitude(e.target.value)}
+            />
+          </div>
+          {latitudeError && <div className="warning">{latitudeError}</div>}
+          {longitudeError && <div className="warning">{longitudeError}</div>}
 
-      <form action="submit">
-        <div className="name-input-block">
-          <input
-            type="text"
-            placeholder="Name"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-          />
-        </div>
-        {titleError && <div className="warning">{titleError}</div>}
-        <div className="description-input-block">
-          <textarea
-            placeholder="Description"
-            className="description-textarea"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-          />
-        </div>
-        {descriptionError && <div className="warning">{descriptionError}</div>}
-        <div className="notice">
-          <p> Задайте координати</p>
-          <button className="find-on-map-button" onClick={findCoordinatesOnMap}>
-            Знайти на карті
+          <div className="details-form-block">
+            {categories.map((category) => {
+              switch (category.type) {
+                case "text":
+                  return (
+                    <input
+                      type={category.type}
+                      placeholder={category.title}
+                      key={category.key}
+                    />
+                  );
+
+                case "select":
+                  return (
+                    <select name="" id="" key={category.key}>
+                      <option value="">{category.title}</option>
+                      {fieldData[
+                        Object.values(category.field_data.category_id)
+                      ].map((option) => (
+                        <option value="" key={option.id}>
+                          {option.title}
+                        </option>
+                      ))}
+                    </select>
+                  );
+              }
+            })}
+          </div>
+
+          <button
+            type="submit"
+            className="form-submit-button"
+            onClick={onSubmit}
+          >
+            Continue
           </button>
-        </div>
-        <div className="coordinates-input-block">
-          <input
-            type="number"
-            placeholder="Широта"
-            value={latitude}
-            onChange={(e) => setLatitude(e.target.value)}
+        </form>
+        {isMapOpen && (
+          <AddObjectMap
+            setLatitude={setLatitude}
+            setLongitude={setLongitude}
+            setIsMapOpen={setIsMapOpen}
           />
-          <input
-            type="number"
-            placeholder="Довгота"
-            value={longitude}
-            onChange={(e) => setLongitude(e.target.value)}
-          />
-        </div>
-        {latitudeError && <div className="warning">{latitudeError}</div>}
-        {longitudeError && <div className="warning">{longitudeError}</div>}
-
-        <div className="details-form-block">
-          {categories.map((category) => {
-            switch (category.type) {
-              case "text":
-                return (
-                  <input
-                    type={category.type}
-                    placeholder={category.title}
-                    key={category.key}
-                  />
-                );
-
-              case "select":
-                return (
-                  <select name="" id="" key={category.key}>
-                    <option value="">{category.title}</option>
-                    {fieldData[
-                      Object.values(category.field_data.category_id)
-                    ].map((option) => (
-                      <option value="" key={option.id}>
-                        {option.title}
-                      </option>
-                    ))}
-                  </select>
-                );
-            }
-          })}
-        </div>
-
-        <button type="submit" className="form-submit-button" onClick={onSubmit}>
-          Continue
-        </button>
-      </form>
-      {isMapOpen && (
-        <AddObjectMap
-          setLatitude={setLatitude}
-          setLongitude={setLongitude}
-          setIsMapOpen={setIsMapOpen}
-        />
-      )}
+        )}
+      </div>
     </div>
   );
 };

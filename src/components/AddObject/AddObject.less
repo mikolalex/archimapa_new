@@ -1,123 +1,130 @@
 @import "../../style.less";
 
 .AddObjectRoot {
+  background-color: #323232d4;
+  width: 100%;
+  height: 100%;
   position: absolute;
-  background: #fff;
-  box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.16);
-  top: 100px;
-  margin: 0 auto;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  padding: 24px 32px;
-  flex-direction: column;
-  width: 50%;
-  overflow: auto;
-  max-height: 560px;
-  z-index: 1000;
-  .form-head {
-    position: relative;
-    width: 100%;
-    text-align: center;
-    img {
-      position: absolute;
-      top: -12px;
-      right: -12px;
-      cursor: pointer;
-    }
-  }
-  .form-title {
-    margin-bottom: 32px;
-    font-family: "GT Eesti Pro Display";
-    font-size: 24px;
-  }
-
-  form {
-    width: 100%;
-    input,
-    textarea,
-    select {
+  top: 0;
+  .add-object-block-content {
+    position: absolute;
+    background: #fff;
+    box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.16);
+    top: 100px;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 24px 32px;
+    flex-direction: column;
+    width: 50%;
+    overflow: auto;
+    max-height: 560px;
+    z-index: 1000;
+    .form-head {
+      position: relative;
       width: 100%;
-      border-radius: 4px;
-      border: 1px solid #979797;
-      padding: 12px 8px;
-      margin-bottom: 24px;
-      font-family: "Proxima Nova Rg";
-      font-size: 16px;
-      color: #979797;
-      outline: none;
-      ::placeholder {
-        color: #979797;
+      text-align: center;
+      img {
+        position: absolute;
+        top: -12px;
+        right: -12px;
+        cursor: pointer;
+      }
+    }
+    .form-title {
+      margin-bottom: 32px;
+      font-family: "GT Eesti Pro Display";
+      font-size: 24px;
+    }
+
+    form {
+      width: 100%;
+      input,
+      textarea,
+      select {
+        width: 100%;
+        border-radius: 4px;
+        border: 1px solid #979797;
+        padding: 12px 8px;
+        margin-bottom: 24px;
         font-family: "Proxima Nova Rg";
         font-size: 16px;
+        color: #979797;
+        outline: none;
+        ::placeholder {
+          color: #979797;
+          font-family: "Proxima Nova Rg";
+          font-size: 16px;
+        }
       }
-    }
-    .description-textarea {
-      height: 120px;
-      resize: none;
-    }
+      .description-textarea {
+        height: 120px;
+        resize: none;
+      }
 
-    .coordinates-input-block {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: rgba(205, 205, 205, 0.147);
-      padding: 20px 10px;
-      :first-child {
-        margin-right: 16px;
-      }
-      input {
+      .coordinates-input-block {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
         background: rgba(205, 205, 205, 0.147);
-        margin-bottom: 10px;
+        padding: 20px 10px;
+        :first-child {
+          margin-right: 16px;
+        }
+        input {
+          background: rgba(205, 205, 205, 0.147);
+          margin-bottom: 10px;
+        }
       }
-    }
-    .details-form-block {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-direction: column;
-      margin-top: 24px;
-    }
-    .notice {
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-family: "Proxima Nova Rg";
-      font-size: 18px;
-      color: #302f2d;
-      background: rgba(205, 205, 205, 0.147);
-      padding: 20px 10px;
-
-      // flex-direction: column;
-      p {
-        // margin-bottom: 14px;
-        margin-right: 5px;
+      .details-form-block {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-direction: column;
+        margin-top: 24px;
       }
-    }
-    .find-on-map-button {
-      .google-button();
-      // width: 100%;
-      width: fit-content;
-      font-size: 14px;
-      border: #ff7a00 1px solid;
-      color: #ff7a00;
-      margin: 0;
-      &:hover {
-        cursor: pointer;
+      .notice {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-family: "Proxima Nova Rg";
+        font-size: 18px;
         color: #302f2d;
-        border: #302f2d 1px solid;
+        background: rgba(205, 205, 205, 0.147);
+        padding: 20px 10px;
+
+        // flex-direction: column;
+        p {
+          // margin-bottom: 14px;
+          margin-right: 5px;
+        }
       }
-    }
-    .form-submit-button {
-      .button-style();
-      background: #ff7a00;
-      color: #fff;
-      width: 100%;
-      margin: 0;
-      letter-spacing: 0.5px;
-      font-size: 18px;
-      margin-top: 8px;
+      .find-on-map-button {
+        .google-button();
+        // width: 100%;
+        width: fit-content;
+        font-size: 14px;
+        border: #ff7a00 1px solid;
+        color: #ff7a00;
+        margin: 0;
+        &:hover {
+          cursor: pointer;
+          color: #302f2d;
+          border: #302f2d 1px solid;
+        }
+      }
+      .form-submit-button {
+        .button-style();
+        background: #ff7a00;
+        color: #fff;
+        width: 100%;
+        margin: 0;
+        letter-spacing: 0.5px;
+        font-size: 18px;
+        margin-top: 8px;
+      }
     }
   }
 }

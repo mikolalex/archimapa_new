@@ -29,10 +29,6 @@ function App() {
   const [isSignUpSecondStepOpen, setIsSignUpSecondStepOpen] = useState(false);
   const [isAddObjectOpen, setIsAddObjectOpen] = useState(false);
   const [infoText, setInfoText] = useState("");
-  const [isWindowBlured, setIsWindowBlured] = useState({
-    map: false,
-    popup: false,
-  });
 
   const closeAllPopups = () => {
     setIsAddObjectOpen(false);
@@ -44,17 +40,14 @@ function App() {
   const openAddObjectPopup = () => {
     closeAllPopups();
     setIsAddObjectOpen(true);
-    setIsWindowBlured((prev) => ({ ...prev, popup: true }));
   };
   const openSignInPopup = () => {
     closeAllPopups();
     setIsSignInOpen(true);
-    setIsWindowBlured((prev) => ({ ...prev, popup: true }));
   };
   const openSigUpnPopup = () => {
     closeAllPopups();
     setIsSignUpFirstStepOpen(true);
-    setIsWindowBlured((prev) => ({ ...prev, popup: true }));
   };
 
   //optns
@@ -114,12 +107,7 @@ function App() {
         </Routes>
 
         {isSignInOpen && (
-          <SignIn
-            setIsSignInOpen={setIsSignInOpen}
-            setInfoText={setInfoText}
-            setIsWindowBlured={setIsWindowBlured}
-            isWindowBlured={isWindowBlured}
-          />
+          <SignIn setIsSignInOpen={setIsSignInOpen} setInfoText={setInfoText} />
         )}
 
         {isSignUpFirstStepOpen && (
@@ -127,8 +115,6 @@ function App() {
             setIsSignUpFirstStepOpen={setIsSignUpFirstStepOpen}
             setIsSignUpSecondStepOpen={setIsSignUpSecondStepOpen}
             setEmailToSend={setEmailToSend}
-            setIsWindowBlured={setIsWindowBlured}
-            isWindowBlured={isWindowBlured}
           />
         )}
 
@@ -137,8 +123,6 @@ function App() {
             setIsSignUpSecondStepOpen={setIsSignUpSecondStepOpen}
             emailToSend={emailToSend}
             setInfoText={setInfoText}
-            setIsWindowBlured={setIsWindowBlured}
-            isWindowBlured={isWindowBlured}
           />
         )}
 
@@ -146,24 +130,13 @@ function App() {
         {isAddObjectOpen && (
           <AddObject
             setIsAddObjectOpen={setIsAddObjectOpen}
-            setIsWindowBlured={setIsWindowBlured}
-            isWindowBlured={isWindowBlured}
             getConfig={getConfig}
             fieldData={fieldData}
           />
         )}
 
         {infoText && (
-          <InfoPopup
-            infoText={infoText}
-            setInfoText={setInfoText}
-            setIsWindowBlured={setIsWindowBlured}
-            isWindowBlured={isWindowBlured}
-          />
-        )}
-
-        {(isWindowBlured.map || isWindowBlured.popup) && (
-          <div className="blured"></div>
+          <InfoPopup infoText={infoText} setInfoText={setInfoText} />
         )}
       </div>
     </>

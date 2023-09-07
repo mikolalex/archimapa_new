@@ -1,27 +1,15 @@
 import React from "react";
 import "./InfoPopup.less";
 
-const InfoPopup = ({
-  infoText,
-  setInfoText,
-  setIsWindowBlured,
-  isWindowBlured,
-}) => {
+const InfoPopup = ({ infoText, setInfoText }) => {
   return (
-    <div
-      className={
-        isWindowBlured.popup ? "InfoPopupRoot non-blured" : "InfoPopupRoot"
-      }
-    >
-      <div className="info">{infoText}</div>
-      <button
-        className="info-close-button"
-        onClick={() => (
-          setInfoText(""), setIsWindowBlured({ map: false, popup: false })
-        )}
-      >
-        Continue
-      </button>
+    <div className="InfoPopupRoot">
+      <div className="info-popup-block-content">
+        <div className="info">{infoText}</div>
+        <button className="info-close-button" onClick={() => setInfoText("")}>
+          Continue
+        </button>
+      </div>
     </div>
   );
 };
