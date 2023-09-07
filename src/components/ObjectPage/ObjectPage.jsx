@@ -1,41 +1,18 @@
 import React from "react";
 import "./ObjectPage.less";
 import Header from "../Header/Header";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { MapContainer, TileLayer, Marker } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { useLocation } from "react-router";
-import { useState } from "react";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 
-const ObjectPage = ({ bounds,   openAddObjectPopup,
+const ObjectPage = ({
+  bounds,
+  openAddObjectPopup,
   openSignInPopup,
-  openSigUpnPopup, }) => {
+  openSigUpnPopup,
+}) => {
   const location = useLocation();
-
-  // const [isSignInOpen, setIsSignInOpen] = useState(false);
-  // const [isSignUpFirstStepOpen, setIsSignUpFirstStepOpen] = useState(false);
-  // const [isSignUpSecondStepOpen, setIsSignUpSecondStepOpen] = useState(false);
-  // const [isAddObjectOpen, setIsAddObjectOpen] = useState(false);
-
-  // const closeAllPopups = () => {
-  //   setIsAddObjectOpen(false);
-  //   setIsSignInOpen(false);
-  //   setIsSignUpFirstStepOpen(false);
-  //   setIsSignUpSecondStepOpen(false);
-  // };
-
-  // const openAddObjectPopup = () => {
-  //   closeAllPopups();
-  //   setIsAddObjectOpen(true);
-  // };
-  // const openSignInPopup = () => {
-  //   closeAllPopups();
-  //   setIsSignInOpen(true);
-  // };
-  // const openSigUpnPopup = () => {
-  //   closeAllPopups();
-  //   setIsSignUpFirstStepOpen(true);
-  // };
 
   const [objects, setObjects] = useState([]);
 

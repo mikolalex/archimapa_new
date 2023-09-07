@@ -8,12 +8,11 @@ const SignUpSecondStep = ({
   setIsSignUpSecondStepOpen,
   emailToSend,
   setInfoText,
-  isLoading,
-  setIsLoading,
   setIsWindowBlured,
   isWindowBlured,
 }) => {
   const regExp = /^[0-9a-zа-я_]+$/i;
+  const [isLoading, setIsLoading] = useState(false);
 
   const [passwordCheck, setPasswordCheck] = useState("");
 

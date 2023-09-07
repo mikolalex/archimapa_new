@@ -6,13 +6,9 @@ import Filters from "./Filters/Filters";
 const Home = ({
   bounds,
   setBounds,
-  setLatitude,
-  setLongitude,
   openAddObjectPopup,
   openSignInPopup,
   openSigUpnPopup,
-  isWindowBlured,
-  setIsWindowBlured,
 }) => {
   return (
     <div>
@@ -22,14 +18,7 @@ const Home = ({
         openSigUpnPopup={openSigUpnPopup}
       />
       <main>
-        <Map
-          isWindowBlured={isWindowBlured}
-          setIsWindowBlured={setIsWindowBlured}
-          setLatitude={setLatitude}
-          setLongitude={setLongitude}
-          bounds={bounds}
-          setBounds={setBounds}
-        />
+        <Map bounds={bounds} setBounds={setBounds} />
         <Filters />
       </main>
     </div>

@@ -1,20 +1,13 @@
 import "./AddObject.less";
 import React from "react";
 import useValidation from "../../hooks/useValidation";
+import { useState } from "react";
+import AddObjectMap from "../AddObjectMap/AddObjectMap";
 
 const AddObject = ({
-  objToFormData,
   setIsAddObjectOpen,
   setIsWindowBlured,
   isWindowBlured,
-  latitude,
-  setLatitude,
-  validateLatitude,
-  latitudeError,
-  longitude,
-  setLongitude,
-  validateLongitude,
-  longitudeError,
   getConfig,
   fieldData,
 }) => {
@@ -26,6 +19,23 @@ const AddObject = ({
     useValidation("", (value) =>
       value ? false : "Please enter the description"
     );
+
+  const [latitude, setLatitude, validateLatitude, latitudeError] =
+    useValidation("", (value) => (value ? false : "Please enter the latitude"));
+  const [longitude, setLongitude, validateLongitude, longitudeError] =
+    useValidation("", (value) =>
+      value ? false : "Please enter the longitude"
+    );
+
+  const [isMapOpen, setIsMapOpen] = useState(false);
+
+  const objToFormData = (obj) => {
+    const fd = new FormData();
+    for (let i in obj) {
+      fd.append(i, obj[i]);
+    }
+    return fd;
+  };
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -64,7 +74,7 @@ const AddObject = ({
 
   const findCoordinatesOnMap = (e) => {
     e.preventDefault();
-    setIsWindowBlured((prev) => ({ map: true, popup: false }));
+    setIsMapOpen((prev) => !prev);
   };
 
   const categories = getConfig("objectCustomFields");
@@ -162,6 +172,13 @@ const AddObject = ({
           Continue
         </button>
       </form>
+      {isMapOpen && (
+        <AddObjectMap
+          setLatitude={setLatitude}
+          setLongitude={setLongitude}
+          setIsMapOpen={setIsMapOpen}
+        />
+      )}
     </div>
   );
 };

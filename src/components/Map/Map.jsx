@@ -14,14 +14,7 @@ import "leaflet/dist/leaflet.css";
 import { useState } from "react";
 import { useEffect } from "react";
 
-const Map = ({
-  isWindowBlured,
-  setIsWindowBlured,
-  setLatitude,
-  setLongitude,
-  bounds,
-  setBounds,
-}) => {
+const Map = ({ bounds, setBounds }) => {
   const [objects, setObjects] = useState([]);
 
   async function getObjects(link) {
@@ -30,17 +23,6 @@ const Map = ({
       .then((json) => setObjects(json));
   }
 
-  function LocationMarker() {
-    if (isWindowBlured) {
-      useMapEvents({
-        click(e) {
-          setLatitude(e.latlng.lat);
-          setLongitude(e.latlng.lng);
-          setIsWindowBlured((prev) => ({ popup: true, map: false }));
-        },
-      });
-    }
-  }
   function GetBounds() {
     const map = useMap();
     useMapEvents({
@@ -69,9 +51,7 @@ const Map = ({
         <button className="navigation-button-map button">Карта</button>
         <button className="navigation-button-list button">Список</button>
       </div>
-      <div
-        className={isWindowBlured.map ? "map-block non-blured" : "map-block"}
-      >
+      <div className="map-block">
         <MapContainer
           center={[49.089980204600856, 31.437540444932036]}
           zoom={6}
@@ -82,7 +62,6 @@ const Map = ({
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
-          <LocationMarker />
           <GetBounds />
           <MarkerClusterGroup>
             {objects.map((marker) => (

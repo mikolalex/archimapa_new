@@ -6,10 +6,7 @@ import Loading from "../Loading/Loading";
 
 const SignIn = ({
   setIsSignInOpen,
-  objToFormData,
   setInfoText,
-  isLoading,
-  setIsLoading,
   setIsWindowBlured,
   isWindowBlured,
 }) => {
@@ -17,6 +14,16 @@ const SignIn = ({
     "",
     (value) => (value ? false : "Please enter the email")
   );
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  const objToFormData = (obj) => {
+    const fd = new FormData();
+    for (let i in obj) {
+      fd.append(i, obj[i]);
+    }
+    return fd;
+  };
 
   const [
     password,

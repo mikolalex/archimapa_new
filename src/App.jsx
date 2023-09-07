@@ -3,7 +3,6 @@ import { Routes, Route } from "react-router-dom";
 import ObjectPage from "./components/ObjectPage/ObjectPage";
 import Home from "./components/Home";
 import { useState, useEffect } from "react";
-import useValidation from "./hooks/useValidation";
 import SignIn from "./components/SignIn/SignIn";
 import SignUpFirstStep from "./components/SignUp/SignUpFirstStep";
 import SignUpSecondStep from "./components/SignUp/SignUpSecondStep";
@@ -20,14 +19,6 @@ function App() {
     west: 23.4228515625,
   });
 
-  const objToFormData = (obj) => {
-    const fd = new FormData();
-    for (let i in obj) {
-      fd.append(i, obj[i]);
-    }
-    return fd;
-  };
-
   function getConfig(config) {
     return json[config];
   }
@@ -38,18 +29,10 @@ function App() {
   const [isSignUpSecondStepOpen, setIsSignUpSecondStepOpen] = useState(false);
   const [isAddObjectOpen, setIsAddObjectOpen] = useState(false);
   const [infoText, setInfoText] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
   const [isWindowBlured, setIsWindowBlured] = useState({
     map: false,
     popup: false,
   });
-
-  const [latitude, setLatitude, validateLatitude, latitudeError] =
-    useValidation("", (value) => (value ? false : "Please enter the latitude"));
-  const [longitude, setLongitude, validateLongitude, longitudeError] =
-    useValidation("", (value) =>
-      value ? false : "Please enter the longitude"
-    );
 
   const closeAllPopups = () => {
     setIsAddObjectOpen(false);
@@ -111,10 +94,6 @@ function App() {
               <Home
                 bounds={bounds}
                 setBounds={setBounds}
-                isWindowBlured={isWindowBlured}
-                setIsWindowBlured={setIsWindowBlured}
-                setLatitude={setLatitude}
-                setLongitude={setLongitude}
                 openAddObjectPopup={openAddObjectPopup}
                 openSignInPopup={openSignInPopup}
                 openSigUpnPopup={openSigUpnPopup}
@@ -137,10 +116,7 @@ function App() {
         {isSignInOpen && (
           <SignIn
             setIsSignInOpen={setIsSignInOpen}
-            objToFormData={objToFormData}
             setInfoText={setInfoText}
-            isLoading={isLoading}
-            setIsLoading={setIsLoading}
             setIsWindowBlured={setIsWindowBlured}
             isWindowBlured={isWindowBlured}
           />
@@ -161,8 +137,6 @@ function App() {
             setIsSignUpSecondStepOpen={setIsSignUpSecondStepOpen}
             emailToSend={emailToSend}
             setInfoText={setInfoText}
-            isLoading={isLoading}
-            setIsLoading={setIsLoading}
             setIsWindowBlured={setIsWindowBlured}
             isWindowBlured={isWindowBlured}
           />
@@ -171,18 +145,9 @@ function App() {
         {/* <AddObjectWarning/> */}
         {isAddObjectOpen && (
           <AddObject
-            objToFormData={objToFormData}
             setIsAddObjectOpen={setIsAddObjectOpen}
             setIsWindowBlured={setIsWindowBlured}
             isWindowBlured={isWindowBlured}
-            latitude={latitude}
-            setLatitude={setLatitude}
-            validateLatitude={validateLatitude}
-            latitudeError={latitudeError}
-            longitude={longitude}
-            setLongitude={setLongitude}
-            validateLongitude={validateLongitude}
-            longitudeError={longitudeError}
             getConfig={getConfig}
             fieldData={fieldData}
           />
