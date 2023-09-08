@@ -4,7 +4,7 @@ import useValidation from "../../hooks/useValidation";
 import { useState } from "react";
 import AddObjectMap from "../AddObjectMap/AddObjectMap";
 
-const AddObject = ({ setIsAddObjectOpen, getConfig, fieldData }) => {
+const AddObject = ({ closePopup, getConfig, fieldData, openPopup }) => {
   const [title, setTitle, validateTitle, titleError] = useValidation(
     "",
     (value) => (value ? false : "Please enter the name")
@@ -20,8 +20,6 @@ const AddObject = ({ setIsAddObjectOpen, getConfig, fieldData }) => {
     useValidation("", (value) =>
       value ? false : "Please enter the longitude"
     );
-
-  const [isMapOpen, setIsMapOpen] = useState(false);
 
   const objToFormData = (obj) => {
     const fd = new FormData();
@@ -68,7 +66,7 @@ const AddObject = ({ setIsAddObjectOpen, getConfig, fieldData }) => {
 
   const findCoordinatesOnMap = (e) => {
     e.preventDefault();
-    setIsMapOpen((prev) => !prev);
+    openPopup("AddObjectMap", { setLatitude, setLongitude });
   };
 
   const categories = getConfig("objectCustomFields");
@@ -78,11 +76,7 @@ const AddObject = ({ setIsAddObjectOpen, getConfig, fieldData }) => {
       <div className="add-object-block-content">
         <div className="form-head">
           <h2 className="form-title">Add Object</h2>
-          <img
-            src="/icons/close.png"
-            alt=""
-            onClick={() => setIsAddObjectOpen(false)}
-          />
+          <img src="/icons/close.png" alt="" onClick={() => closePopup()} />
         </div>
 
         <form action="submit">
@@ -169,13 +163,14 @@ const AddObject = ({ setIsAddObjectOpen, getConfig, fieldData }) => {
             Continue
           </button>
         </form>
+        {/* 
         {isMapOpen && (
           <AddObjectMap
             setLatitude={setLatitude}
             setLongitude={setLongitude}
             setIsMapOpen={setIsMapOpen}
           />
-        )}
+        )} */}
       </div>
     </div>
   );

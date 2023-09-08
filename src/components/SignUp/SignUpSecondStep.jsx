@@ -4,11 +4,7 @@ import useValidation from "../../hooks/useValidation";
 import { useState } from "react";
 import Loading from "../Loading/Loading";
 
-const SignUpSecondStep = ({
-  setIsSignUpSecondStepOpen,
-  emailToSend,
-  setInfoText,
-}) => {
+const SignUpSecondStep = ({ email, closePopup, openPopup }) => {
   const regExp = /^[0-9a-zа-я_]+$/i;
   const [isLoading, setIsLoading] = useState(false);
 
@@ -43,15 +39,15 @@ const SignUpSecondStep = ({
 
   const onSubmit = (e) => {
     e.preventDefault();
-
     if (validateUsername() && validatePassword()) {
       postData("https://map.transsearch.net/auth/register", {
-        email: emailToSend,
+        email: email,
         username: username,
         password: password,
       });
     }
   };
+  const infoText = "You are successfully registered.";
 
   async function postData(url, data) {
     setIsDisabled(true);
@@ -61,9 +57,8 @@ const SignUpSecondStep = ({
       body: JSON.stringify(data),
     }).then((response) =>
       response
-        ? (setIsSignUpSecondStepOpen(false),
-          setIsLoading(false),
-          setInfoText("you are successfully registered"))
+        ? (setIsLoading(false),
+          openPopup("InfoPopup", { infoText, closePopup }))
         : (setPasswordError("user already exist"),
           setIsDisabled(false),
           setIsLoading(false))
@@ -78,11 +73,7 @@ const SignUpSecondStep = ({
       <div className="sign-up-second-step-block-content">
         <div className="form-head">
           <h2 className="form-title">Sign Up</h2>
-          <img
-            src="/icons/close.png"
-            alt=""
-            onClick={() => setIsSignUpSecondStepOpen(false)}
-          />
+          <img src="/icons/close.png" alt="" onClick={() => closePopup()} />
         </div>
 
         <form action="submit">

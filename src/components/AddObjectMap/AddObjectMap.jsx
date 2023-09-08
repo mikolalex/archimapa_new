@@ -3,13 +3,13 @@ import "./AddObjectMap.less";
 import { MapContainer, TileLayer, useMapEvents } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 
-const AddObjectMap = ({ setLatitude, setLongitude, setIsMapOpen }) => {
+const AddObjectMap = ({ setLatitude, setLongitude, closePopup }) => {
   function LocationMarker() {
     useMapEvents({
       click(e) {
         setLatitude(e.latlng.lat);
         setLongitude(e.latlng.lng);
-        setIsMapOpen((prev) => !prev);
+        closePopup();
       },
     });
   }

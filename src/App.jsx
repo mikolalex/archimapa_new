@@ -9,6 +9,7 @@ import SignUpSecondStep from "./components/SignUp/SignUpSecondStep";
 import AddObjectWarning from "./components/AddObject/AddObjectWarning";
 import AddObject from "./components/AddObject/AddObject";
 import InfoPopup from "./components/InfoPopup/InfoPopup";
+import AddObjectMap from "./components/AddObjectMap/AddObjectMap";
 import json from "./config.json";
 
 function App() {
@@ -22,33 +23,6 @@ function App() {
   function getConfig(config) {
     return json[config];
   }
-
-  const [emailToSend, setEmailToSend] = useState("");
-  const [isSignInOpen, setIsSignInOpen] = useState(false);
-  const [isSignUpFirstStepOpen, setIsSignUpFirstStepOpen] = useState(false);
-  const [isSignUpSecondStepOpen, setIsSignUpSecondStepOpen] = useState(false);
-  const [isAddObjectOpen, setIsAddObjectOpen] = useState(false);
-  const [infoText, setInfoText] = useState("");
-
-  const closeAllPopups = () => {
-    setIsAddObjectOpen(false);
-    setIsSignInOpen(false);
-    setIsSignUpFirstStepOpen(false);
-    setIsSignUpSecondStepOpen(false);
-  };
-
-  const openAddObjectPopup = () => {
-    closeAllPopups();
-    setIsAddObjectOpen(true);
-  };
-  const openSignInPopup = () => {
-    closeAllPopups();
-    setIsSignInOpen(true);
-  };
-  const openSigUpnPopup = () => {
-    closeAllPopups();
-    setIsSignUpFirstStepOpen(true);
-  };
 
   //optns
 
@@ -77,8 +51,34 @@ function App() {
     });
   }, [categories]);
 
+  //popups
+
+  const [popups, setPopups] = useState([]);
+  const popupsMapping = {
+    AddObject: AddObject,
+    SignIn: SignIn,
+    SignUpFirstStep: SignUpFirstStep,
+    SignUpSecondStep: SignUpSecondStep,
+    InfoPopup: InfoPopup,
+    AddObjectMap: AddObjectMap,
+  };
+
+  const openPopup = (popupName, customProps) => {
+    setPopups([{ type: popupName, props: customProps }]);
+  };
+
   return (
     <>
+      <div className="">
+        {popups.map(({ type, props }, i) => {
+          const Component = popupsMapping[type];
+          return (
+            <div className="componentWrapper" key={i}>
+              <Component {...props} closePopup={() => setPopups([])} />
+            </div>
+          );
+        })}
+      </div>
       <div className="App">
         <Routes>
           <Route
@@ -87,9 +87,9 @@ function App() {
               <Home
                 bounds={bounds}
                 setBounds={setBounds}
-                openAddObjectPopup={openAddObjectPopup}
-                openSignInPopup={openSignInPopup}
-                openSigUpnPopup={openSigUpnPopup}
+                openPopup={openPopup}
+                getConfig={getConfig}
+                fieldData={fieldData}
               />
             }
           />
@@ -98,46 +98,16 @@ function App() {
             element={
               <ObjectPage
                 bounds={bounds}
-                openAddObjectPopup={openAddObjectPopup}
-                openSignInPopup={openSignInPopup}
-                openSigUpnPopup={openSigUpnPopup}
+                // openAddObjectPopup={openAddObjectPopup}
+                // openSignInPopup={openSignInPopup}
+                // openSigUpnPopup={openSigUpnPopup}
+                openPopup={openPopup}
               />
             }
           />
         </Routes>
 
-        {isSignInOpen && (
-          <SignIn setIsSignInOpen={setIsSignInOpen} setInfoText={setInfoText} />
-        )}
-
-        {isSignUpFirstStepOpen && (
-          <SignUpFirstStep
-            setIsSignUpFirstStepOpen={setIsSignUpFirstStepOpen}
-            setIsSignUpSecondStepOpen={setIsSignUpSecondStepOpen}
-            setEmailToSend={setEmailToSend}
-          />
-        )}
-
-        {isSignUpSecondStepOpen && (
-          <SignUpSecondStep
-            setIsSignUpSecondStepOpen={setIsSignUpSecondStepOpen}
-            emailToSend={emailToSend}
-            setInfoText={setInfoText}
-          />
-        )}
-
         {/* <AddObjectWarning/> */}
-        {isAddObjectOpen && (
-          <AddObject
-            setIsAddObjectOpen={setIsAddObjectOpen}
-            getConfig={getConfig}
-            fieldData={fieldData}
-          />
-        )}
-
-        {infoText && (
-          <InfoPopup infoText={infoText} setInfoText={setInfoText} />
-        )}
       </div>
     </>
   );

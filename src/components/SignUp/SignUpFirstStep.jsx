@@ -1,12 +1,9 @@
 import "./SignUpFirstStep.less";
 import React from "react";
 import useValidation from "../../hooks/useValidation";
+import { useState } from "react";
 
-const SignUpFirstStep = ({
-  setIsSignUpFirstStepOpen,
-  setIsSignUpSecondStepOpen,
-  setEmailToSend,
-}) => {
+const SignUpFirstStep = ({ openPopup, closePopup }) => {
   const emailRegExp =
     /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu;
 
@@ -18,9 +15,7 @@ const SignUpFirstStep = ({
   const onSubmit = (e) => {
     e.preventDefault();
     validateEmail()
-      ? (setIsSignUpFirstStepOpen(false),
-        setIsSignUpSecondStepOpen(true),
-        setEmailToSend(email))
+      ? openPopup("SignUpSecondStep", { email, openPopup, closePopup })
       : null;
   };
 
@@ -29,11 +24,7 @@ const SignUpFirstStep = ({
       <div className="sign-up-first-step-block-content">
         <div className="form-head">
           <h2 className="form-title">Sign Up</h2>
-          <img
-            src="/icons/close.png"
-            alt=""
-            onClick={() => setIsSignUpFirstStepOpen((prev) => !prev)}
-          />
+          <img src="/icons/close.png" alt="" onClick={() => closePopup()} />
         </div>
 
         <button className="google-button">

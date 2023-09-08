@@ -3,19 +3,13 @@ import Header from "./Header/Header";
 import Map from "./Map/Map";
 import Filters from "./Filters/Filters";
 
-const Home = ({
-  bounds,
-  setBounds,
-  openAddObjectPopup,
-  openSignInPopup,
-  openSigUpnPopup,
-}) => {
+const Home = ({ bounds, setBounds, openPopup, getConfig, fieldData }) => {
   return (
     <div>
       <Header
-        openAddObjectPopup={openAddObjectPopup}
-        openSignInPopup={openSignInPopup}
-        openSigUpnPopup={openSigUpnPopup}
+        openPopup={openPopup}
+        getConfig={getConfig}
+        fieldData={fieldData}
       />
       <main>
         <Map bounds={bounds} setBounds={setBounds} />

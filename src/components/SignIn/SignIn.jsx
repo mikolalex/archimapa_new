@@ -4,7 +4,7 @@ import useValidation from "../../hooks/useValidation";
 import { useState } from "react";
 import Loading from "../Loading/Loading";
 
-const SignIn = ({ setIsSignInOpen, setInfoText }) => {
+const SignIn = ({ closePopup, openPopup }) => {
   const [email, setEmail, validateEmail, emailError] = useValidation(
     "",
     (value) => (value ? false : "Please enter the email")
@@ -30,6 +30,8 @@ const SignIn = ({ setIsSignInOpen, setInfoText }) => {
     value ? false : "Please enter the password"
   );
 
+  const infoText = "you have successfully logged in.";
+
   async function postData(url, data) {
     setIsDisabled(true);
     setIsLoading(true);
@@ -41,9 +43,8 @@ const SignIn = ({ setIsSignInOpen, setInfoText }) => {
       .then((json) =>
         json.token
           ? (sessionStorage.setItem("signInToken", json.token),
-            setInfoText("you are successfully logged in"),
-            setIsSignInOpen(false),
-            setIsLoading(false))
+            setIsLoading(false),
+            openPopup("InfoPopup", { infoText, closePopup }))
           : (setPasswordError("Incorrect username or password"),
             setIsDisabled(false),
             setIsLoading(false))
@@ -72,11 +73,7 @@ const SignIn = ({ setIsSignInOpen, setInfoText }) => {
       <div className="sign-in-block-content">
         <div className="form-head">
           <h2 className="form-title">Sign In</h2>
-          <img
-            src="/icons/close.png"
-            alt=""
-            onClick={() => setIsSignInOpen(false)}
-          />
+          <img src="/icons/close.png" alt="" onClick={() => closePopup()} />
         </div>
 
         <button className="google-button">
