@@ -3,7 +3,7 @@ import "./Header.less";
 import Button from "../Button/Button";
 import { Link } from "react-router-dom";
 
-const Header = ({ openPopup, getConfig, fieldData }) => {
+const Header = ({ openPopup }) => {
   const isUserSignedIn = () => {
     return sessionStorage.getItem("signInToken") ? true : false;
   };
@@ -22,7 +22,7 @@ const Header = ({ openPopup, getConfig, fieldData }) => {
           <div
             className="button-content"
             onClick={() => {
-              openPopup("AddObject", { getConfig, fieldData, openPopup });
+              openPopup("AddObject", { openPopup });
             }}
           >
             Add Object

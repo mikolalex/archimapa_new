@@ -6,12 +6,7 @@ import "leaflet/dist/leaflet.css";
 import { useLocation } from "react-router";
 import { useState, useEffect } from "react";
 
-const ObjectPage = ({
-  bounds,
-  openAddObjectPopup,
-  openSignInPopup,
-  openSigUpnPopup,
-}) => {
+const ObjectPage = ({ openPopup , fieldData}) => {
   const location = useLocation();
 
   const [objects, setObjects] = useState([]);
@@ -25,7 +20,7 @@ const ObjectPage = ({
   const [currentObject, setCurrentObject] = useState({});
   useEffect(() => {
     getObjects(
-      `https://map.transsearch.net/objects?north=${bounds.north}&south=${bounds.south}&east=${bounds.east}&west=${bounds.west}`
+      `https://map.transsearch.net/objects?north=52.89564866211353&south=44.98034238084973&east=39.46289062500001&west=23.4228515625`
     );
   }, []);
 
@@ -40,9 +35,9 @@ const ObjectPage = ({
   return (
     <div className="objectPageRoot">
       <Header
-        openAddObjectPopup={openAddObjectPopup}
-        openSignInPopup={openSignInPopup}
-        openSigUpnPopup={openSigUpnPopup}
+        openPopup={openPopup}
+        fieldData={fieldData}
+
       />
       <main className="object-page-main">
         <div className="object-card">

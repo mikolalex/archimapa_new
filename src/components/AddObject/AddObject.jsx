@@ -1,10 +1,10 @@
 import "./AddObject.less";
 import React from "react";
 import useValidation from "../../hooks/useValidation";
-import { useState } from "react";
-import AddObjectMap from "../AddObjectMap/AddObjectMap";
+import { useState, useEffect } from "react";
+import { getConfig } from "../../module";
 
-const AddObject = ({ closePopup, getConfig, fieldData, openPopup }) => {
+const AddObject = ({ closePopup, openPopup }) => {
   const [title, setTitle, validateTitle, titleError] = useValidation(
     "",
     (value) => (value ? false : "Please enter the name")
@@ -70,6 +70,36 @@ const AddObject = ({ closePopup, getConfig, fieldData, openPopup }) => {
   };
 
   const categories = getConfig("objectCustomFields");
+
+  const [fieldData, setFieldData] = useState({});
+
+  const categoriesId = () => {
+    const ids = [];
+    categories.forEach((category) =>
+      category.type === "select"
+        ? ids.push(Object.values(category.field_data).join())
+        : null
+    );
+    return ids;
+  };
+
+  async function getFieldData(id) {
+    fetch(`https://map.transsearch.net/items/category/${id}`)
+      .then((response) => response.json())
+      .then((json) => setFieldData((prev) => ({ ...prev, [id]: json })));
+  }
+  useEffect(() => {
+    categoriesId().forEach((id) => {
+      getFieldData(id);
+    });
+  }, [categories]);
+
+  const [isFieldDataReady, setIsFieldDataReady] = useState(false);
+  useEffect(() => {
+    Object.keys(fieldData).length === categories.length - 1
+      ? setIsFieldDataReady(true)
+      : null;
+  }, [fieldData]);
 
   return (
     <div className="AddObjectRoot">
@@ -142,13 +172,14 @@ const AddObject = ({ closePopup, getConfig, fieldData, openPopup }) => {
                   return (
                     <select name="" id="" key={category.key}>
                       <option value="">{category.title}</option>
-                      {fieldData[
-                        Object.values(category.field_data.category_id)
-                      ].map((option) => (
-                        <option value="" key={option.id}>
-                          {option.title}
-                        </option>
-                      ))}
+                      {isFieldDataReady &&
+                        fieldData[
+                          Object.values(category.field_data.category_id)
+                        ].map((option) => (
+                          <option value="" key={option.id}>
+                            {option.title}
+                          </option>
+                        ))}
                     </select>
                   );
               }
@@ -163,14 +194,6 @@ const AddObject = ({ closePopup, getConfig, fieldData, openPopup }) => {
             Continue
           </button>
         </form>
-        {/* 
-        {isMapOpen && (
-          <AddObjectMap
-            setLatitude={setLatitude}
-            setLongitude={setLongitude}
-            setIsMapOpen={setIsMapOpen}
-          />
-        )} */}
       </div>
     </div>
   );

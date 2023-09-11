@@ -14,8 +14,15 @@ import "leaflet/dist/leaflet.css";
 import { useState } from "react";
 import { useEffect } from "react";
 
-const Map = ({ bounds, setBounds }) => {
+const Map = () => {
   const [objects, setObjects] = useState([]);
+
+  const [bounds, setBounds] = useState({
+    east: 39.46289062500001,
+    north: 52.89564866211353,
+    south: 44.98034238084973,
+    west: 23.4228515625,
+  });
 
   async function getObjects(link) {
     fetch(link)
