@@ -1,44 +1,27 @@
 import React from "react";
 import "./ObjectPage.less";
 import Header from "../Header/Header";
-import { MapContainer, TileLayer, Marker } from "react-leaflet";
-import "leaflet/dist/leaflet.css";
 import { useLocation } from "react-router";
 import { useState, useEffect } from "react";
+import Map from "../Map/Map";
 
-const ObjectPage = ({ openPopup , fieldData}) => {
+const ObjectPage = ({ openPopup }) => {
   const location = useLocation();
-
-  const [objects, setObjects] = useState([]);
-
-  async function getObjects(link) {
-    fetch(link)
-      .then((response) => response.json())
-      .then((json) => setObjects(json));
-  }
-
   const [currentObject, setCurrentObject] = useState({});
-  useEffect(() => {
-    getObjects(
-      `https://map.transsearch.net/objects?north=52.89564866211353&south=44.98034238084973&east=39.46289062500001&west=23.4228515625`
-    );
-  }, []);
 
+  async function getObject(id) {
+    fetch(`
+https://map.transsearch.net/objects/${id}`)
+      .then((response) => response.json())
+      .then((json) => setCurrentObject(json));
+  }
   useEffect(() => {
-    objects.forEach((obj) => {
-      if (obj.id === location.pathname.split("/")[2]) {
-        setCurrentObject(obj);
-      }
-    });
-  }, [objects]);
+    getObject(location.pathname.split("/")[2]);
+  }, [location]);
 
   return (
     <div className="objectPageRoot">
-      <Header
-        openPopup={openPopup}
-        fieldData={fieldData}
-
-      />
+      <Header openPopup={openPopup} />
       <main className="object-page-main">
         <div className="object-card">
           <div className="object-style">Модернізм</div>
@@ -75,21 +58,12 @@ const ObjectPage = ({ openPopup , fieldData}) => {
       </main>
       <div className="map-block">
         {currentObject.latitude && (
-          <MapContainer
+          <Map
             center={[currentObject.latitude, currentObject.longitude]}
             zoom={11}
-            scrollWheelZoom={true}
-          >
-            <TileLayer
-              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            />
-            <Marker
-              position={[currentObject.latitude, currentObject.longitude]}
-            >
-              {/* <Popup>d</Popup> */}
-            </Marker>
-          </MapContainer>
+            openPopup={openPopup}
+            previewCardPosition={"bottomPreviewCardPosition"}
+          />
         )}
       </div>
     </div>

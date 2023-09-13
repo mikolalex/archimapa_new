@@ -1,0 +1,26 @@
+@import "../../style.less";
+
+.mapRoot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 70%;
+  position: relative;
+  z-index: 0;
+  .map-list-switch {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 12px 0;
+    .button {
+      .button-style();
+      margin: 0;
+    }
+    .navigation-button-map {
+      .accent();
+      border-right: 2px solid #000000;
+    }
+  }
+}

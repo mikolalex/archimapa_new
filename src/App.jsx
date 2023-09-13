@@ -10,6 +10,7 @@ import AddObjectWarning from "./components/AddObject/AddObjectWarning";
 import AddObject from "./components/AddObject/AddObject";
 import InfoPopup from "./components/InfoPopup/InfoPopup";
 import AddObjectMap from "./components/AddObjectMap/AddObjectMap";
+import PreviewCard from "./components/PreviewCard/PreviewCard";
 
 function App() {
   const [popups, setPopups] = useState([]);
@@ -21,6 +22,7 @@ function App() {
     SignUpSecondStep: SignUpSecondStep,
     InfoPopup: InfoPopup,
     AddObjectMap: AddObjectMap,
+    PreviewCard: PreviewCard,
   };
 
   const openPopup = (popupName, customProps) => {
@@ -29,23 +31,21 @@ function App() {
 
   return (
     <>
-      <div className="">
-        {popups.map(({ type, props }, i) => {
-          const Component = popupsMapping[type];
-          return (
-            <div className="componentWrapper" key={i}>
-              <Component
-                {...props}
-                closePopup={() =>
-                  setPopups((popups) =>
-                    popups.filter((popup) => popup.type !== type)
-                  )
-                }
-              />
-            </div>
-          );
-        })}
-      </div>
+      {popups.map(({ type, props }, i) => {
+        const Component = popupsMapping[type];
+        return (
+          <Component
+            key={i}
+            {...props}
+            closePopup={() =>
+              setPopups((popups) =>
+                popups.filter((popup) => popup.type !== type)
+              )
+            }
+          />
+        );
+      })}
+
       <div className="App">
         <Routes>
           <Route path="/" element={<Home openPopup={openPopup} />} />

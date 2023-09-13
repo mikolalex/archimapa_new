@@ -1,5 +1,6 @@
-import "./Map.less";
 import React from "react";
+import "./Map.less";
+
 import PreviewCard from "../PreviewCard/PreviewCard";
 import {
   MapContainer,
@@ -11,10 +12,9 @@ import {
 } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-cluster";
 import "leaflet/dist/leaflet.css";
-import { useState } from "react";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 
-const Map = () => {
+const Map = ({ center, zoom, openPopup, previewCardPosition }) => {
   const [objects, setObjects] = useState([]);
 
   const [bounds, setBounds] = useState({
@@ -53,40 +53,29 @@ const Map = () => {
   }, [bounds]);
 
   return (
-    <div className="mapRoot">
-      <div className="map-list-switch">
-        <button className="navigation-button-map button">Карта</button>
-        <button className="navigation-button-list button">Список</button>
-      </div>
-      <div className="map-block">
-        <MapContainer
-          center={[49.089980204600856, 31.437540444932036]}
-          zoom={6}
-          scrollWheelZoom={true}
-          bounds
-        >
-          <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          />
-          <GetBounds />
-          <MarkerClusterGroup>
-            {objects.map((marker) => (
-              <Marker
-                position={[marker.latitude, marker.longitude]}
-                key={marker.id}
-              >
-                <Popup closeButton={false}>
-                  <PreviewCard
-                    geocode={[marker.latitude, marker.longitude]}
-                    marker={marker}
-                  />
-                </Popup>
-              </Marker>
-            ))}
-          </MarkerClusterGroup>
-        </MapContainer>
-      </div>
+    <div className="map-block">
+      <MapContainer center={center} zoom={zoom} scrollWheelZoom={true} bounds>
+        <TileLayer
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
+        <GetBounds />
+        <MarkerClusterGroup>
+          {objects.map((marker) => (
+            <Marker
+              position={[marker.latitude, marker.longitude]}
+              key={marker.id}
+              eventHandlers={{
+                click: () => {
+                  openPopup("PreviewCard", { marker, previewCardPosition });
+                },
+              }}
+            >
+              <Popup closeButton={false}></Popup>
+            </Marker>
+          ))}
+        </MarkerClusterGroup>
+      </MapContainer>
     </div>
   );
 };

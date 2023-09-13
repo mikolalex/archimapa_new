@@ -1,6 +1,6 @@
 import React from "react";
 import Header from "./Header/Header";
-import Map from "./Map/Map";
+import MapBlock from "./Map/MapBlock";
 import Filters from "./Filters/Filters";
 
 const Home = ({ openPopup }) => {
@@ -8,7 +8,7 @@ const Home = ({ openPopup }) => {
     <div>
       <Header openPopup={openPopup} />
       <main>
-        <Map />
+        <MapBlock  openPopup={openPopup} />
         <Filters />
       </main>
     </div>

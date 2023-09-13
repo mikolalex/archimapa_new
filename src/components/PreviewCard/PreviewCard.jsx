@@ -2,16 +2,25 @@ import React from "react";
 import "./PreviewCard.less";
 import { Link } from "react-router-dom";
 
-const PreviewCard = ({ marker }) => {
+const PreviewCard = ({ marker, closePopup, previewCardPosition }) => {
   return (
-    <div className="previewCardRoot">
+    <div className={previewCardPosition + " previewCardRoot"}>
       <div className="preview-card-img">
         <img src="/img/example_img.png" alt="object-img" />
-        <img src="/icons/close.png" alt="" className="close-icon" />
+        <img
+          src="/icons/close.png"
+          alt=""
+          className="close-icon"
+          onClick={() => closePopup()}
+        />
       </div>
 
       <div className="preview-card-info">
-        <Link to={`/object/${marker.id}`} style={{ textDecoration: "none" }}>
+        <Link
+          to={`/object/${marker.id}`}
+          style={{ textDecoration: "none" }}
+          onClick={() => closePopup()}
+        >
           <h2 className="preview-card-title">{marker.title}</h2>
         </Link>
         <p className="preview-card-address">
