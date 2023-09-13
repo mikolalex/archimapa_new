@@ -15,6 +15,13 @@ const AddObjectMap = ({ setLatitude, setLongitude, closePopup }) => {
   }
   return (
     <div className="add-object-map-block">
+      <img
+        src="/icons/close.png"
+        alt=""
+        className="close-icon"
+        onClick={() => closePopup()}
+      />
+      <div className="notice">please select the location of the object</div>
       <MapContainer
         center={[49.089980204600856, 31.437540444932036]}
         zoom={11}

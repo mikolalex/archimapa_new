@@ -115,17 +115,8 @@
       height: fit-content !important;
     }
   }
-  .SignInRoot,
-  .AddObjectWarningRoot,
-  .SignUpSecondRoot,
-  .SignUpFirstRoot,
-  .AddObjectRoot {
-    top: 30% !important;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-  .AddObjectRoot {
-    width: 70%;
+  .add-object-block-content {
+    width: 70% !important;
     .coordinates-input-block {
       flex-wrap: wrap;
       input {
@@ -143,17 +134,28 @@
   .topPreviewCardPosition {
     top: 20% !important;
   }
-
-  .object-page-main {
-    flex-direction: column;
+  .bottomPreviewCardPosition {
+    bottom: 25% !important;
   }
-  .object-card {
-    width: 100% !important;
+  .info-popup-block-content {
+    top: 50px !important;
   }
-  .object-details {
-    height: fit-content !important;
-    width: 100% !important;
-    margin-bottom: 24px;
+  .objectPageRoot {
+    .object-page-main {
+      flex-direction: column;
+    }
+    .object-card {
+      width: 100% !important;
+    }
+    .object-details {
+      height: fit-content !important;
+      width: 100% !important;
+      position: static !important;
+      margin-top: 24px;
+    }
+    .map-block {
+      height: 400px;
+    }
   }
 }
 
@@ -162,6 +164,7 @@
 }
 .bottomPreviewCardPosition {
   bottom: 4%;
+  left: 24px;
 }
 
 .accent {

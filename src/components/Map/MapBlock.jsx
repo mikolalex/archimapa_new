@@ -9,12 +9,14 @@ const MapBlock = ({ openPopup }) => {
         <button className="navigation-button-map button">Карта</button>
         <button className="navigation-button-list button">Список</button>
       </div>
-      <Map
-        center={[49.089980204600856, 31.437540444932036]}
-        zoom={6}
-        openPopup={openPopup}
-        previewCardPosition={"topPreviewCardPosition"}
-      />
+      <div className="map-block">
+        <Map
+          center={[49.089980204600856, 31.437540444932036]}
+          zoom={6}
+          openPopup={openPopup}
+          previewCardPosition={"topPreviewCardPosition"}
+        />
+      </div>
     </div>
   );
 };

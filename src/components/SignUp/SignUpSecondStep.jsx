@@ -58,6 +58,7 @@ const SignUpSecondStep = ({ email, closePopup, openPopup }) => {
     }).then((response) =>
       response
         ? (setIsLoading(false),
+          closePopup(),
           openPopup("InfoPopup", { infoText, closePopup }))
         : (setPasswordError("user already exist"),
           setIsDisabled(false),

@@ -44,6 +44,7 @@ const SignIn = ({ closePopup, openPopup }) => {
         json.token
           ? (sessionStorage.setItem("signInToken", json.token),
             setIsLoading(false),
+            closePopup(),
             openPopup("InfoPopup", { infoText, closePopup }))
           : (setPasswordError("Incorrect username or password"),
             setIsDisabled(false),

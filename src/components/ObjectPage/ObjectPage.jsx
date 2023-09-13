@@ -34,6 +34,16 @@ https://map.transsearch.net/objects/${id}`)
             вулиця Обсерваторна, 6, Київ, 02000
           </div>
           <div className="object-description">{currentObject.description}</div>
+          <div className="map-block">
+            {currentObject.latitude && (
+              <Map
+                center={[currentObject.latitude, currentObject.longitude]}
+                zoom={11}
+                openPopup={openPopup}
+                previewCardPosition={"bottomPreviewCardPosition"}
+              />
+            )}
+          </div>
         </div>
         <div className="object-details">
           <ul>
@@ -56,16 +66,6 @@ https://map.transsearch.net/objects/${id}`)
           </ul>
         </div>
       </main>
-      <div className="map-block">
-        {currentObject.latitude && (
-          <Map
-            center={[currentObject.latitude, currentObject.longitude]}
-            zoom={11}
-            openPopup={openPopup}
-            previewCardPosition={"bottomPreviewCardPosition"}
-          />
-        )}
-      </div>
     </div>
   );
 };

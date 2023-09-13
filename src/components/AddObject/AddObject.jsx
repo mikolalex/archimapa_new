@@ -48,7 +48,7 @@ const AddObject = ({ closePopup, openPopup }) => {
       );
       setLatitude("");
       setLongitude("");
-      setIsAddObjectOpen(false);
+      closePopup();
     }
   };
 

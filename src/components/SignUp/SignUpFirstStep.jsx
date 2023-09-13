@@ -15,7 +15,8 @@ const SignUpFirstStep = ({ openPopup, closePopup }) => {
   const onSubmit = (e) => {
     e.preventDefault();
     validateEmail()
-      ? openPopup("SignUpSecondStep", { email, openPopup, closePopup })
+      ? (closePopup(),
+        openPopup("SignUpSecondStep", { email, openPopup, closePopup }))
       : null;
   };
 
