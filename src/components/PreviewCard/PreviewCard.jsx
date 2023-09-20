@@ -2,17 +2,26 @@ import React from "react";
 import "./PreviewCard.less";
 import { Link } from "react-router-dom";
 
-const PreviewCard = ({ id }) => {
+const PreviewCard = ({ marker, closePopup, previewCardPosition }) => {
   return (
-    <div className="previewCardRoot">
+    <div className={previewCardPosition + " previewCardRoot"}>
       <div className="preview-card-img">
         <img src="/img/example_img.png" alt="object-img" />
-        <img src="/icons/close.png" alt="" className="close-icon" />
+        <img
+          src="/icons/close.png"
+          alt=""
+          className="close-icon"
+          onClick={() => closePopup()}
+        />
       </div>
 
       <div className="preview-card-info">
-        <Link to={`/object/${id}`}>
-          <h2 className="preview-card-title">Садиба Барбана</h2>
+        <Link
+          to={`/object/${marker.id}`}
+          style={{ textDecoration: "none" }}
+          onClick={() => closePopup()}
+        >
+          <h2 className="preview-card-title">{marker.title}</h2>
         </Link>
         <p className="preview-card-address">
           <img src="/icons/address.png" alt="address_icon" /> вулиця
@@ -28,11 +37,7 @@ const PreviewCard = ({ id }) => {
           <span className="preview-card-bold-title">Стан</span> частково
           зруйновано
         </p>
-        <p className="preview-card-description">
-          Історичний одноповерховий будинок, що розташований у Києві за адресою
-          Обсерваторна, 6. Садибу було зведено наприкінці XIX століття для
-          Олександра Барбана[3] та неправомірно частково знесено 2021 року[4]
-        </p>
+        <p className="preview-card-description">{marker.description}</p>
       </div>
     </div>
   );

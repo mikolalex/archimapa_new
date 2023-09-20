@@ -1,27 +1,31 @@
 import React from "react";
 import "./ObjectPage.less";
 import Header from "../Header/Header";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import "leaflet/dist/leaflet.css";
 import { useLocation } from "react-router";
+import { useState, useEffect } from "react";
+import Map from "../Map/Map";
 
-const ObjectPage = ({ objects }) => {
+const ObjectPage = ({ openPopup }) => {
   const location = useLocation();
+  const [currentObject, setCurrentObject] = useState({});
 
-  let geo = [];
-  objects.forEach((obj) => {
-    if (obj.id == location.pathname[location.pathname.length - 1]) {
-      geo = obj.geocode;
-    }
-  });
+  async function getObject(id) {
+    fetch(`
+https://map.transsearch.net/objects/${id}`)
+      .then((response) => response.json())
+      .then((json) => setCurrentObject(json));
+  }
+  useEffect(() => {
+    getObject(location.pathname.split("/")[2]);
+  }, [location]);
 
   return (
     <div className="objectPageRoot">
-      <Header />
+      <Header openPopup={openPopup} />
       <main className="object-page-main">
         <div className="object-card">
           <div className="object-style">Модернізм</div>
-          <div className="object-title">Садиба Барбана</div>
+          <div className="object-title">{currentObject.title}</div>
           <div className="object-img">
             <img src="/img/obj_page_img.png" alt="object_img" />
           </div>
@@ -29,16 +33,16 @@ const ObjectPage = ({ objects }) => {
             <img src="/icons/address.png" alt="address_icon" />
             вулиця Обсерваторна, 6, Київ, 02000
           </div>
-          <div className="object-description">
-            Садиба Барбана є зразком одноповерхового житла середнього класу із
-            цегляним декором. 2015 року Науково-дослідний інститут
-            пам'яткоохоронних досліджень пропонував внести будівлю до переліку
-            щойно виявлених об'єктів культурної спадщини[1]. В обґрунтуванні
-            було зазначено, що це «рідкісний взірець одноповерхового садибного
-            будинку. Прикрашений вишуканим неокласичним декором — русти, лиштви,
-            складний карниз. Цінна пам'ятка культурного надбання міста Києва».
-            Міністерство культури та інформаційної політики України не включило
-            садибу до реєстру нерухомих пам'яток України[5].{" "}
+          <div className="object-description">{currentObject.description}</div>
+          <div className="map-block">
+            {currentObject.latitude && (
+              <Map
+                center={[currentObject.latitude, currentObject.longitude]}
+                zoom={11}
+                openPopup={openPopup}
+                previewCardPosition={"bottomPreviewCardPosition"}
+              />
+            )}
           </div>
         </div>
         <div className="object-details">
@@ -62,17 +66,6 @@ const ObjectPage = ({ objects }) => {
           </ul>
         </div>
       </main>
-      <div className="map-block">
-        <MapContainer center={geo} zoom={11} scrollWheelZoom={true}>
-          <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          />
-          <Marker position={geo}>
-            <Popup>d</Popup>
-          </Marker>
-        </MapContainer>
-      </div>
     </div>
   );
 };

@@ -4,14 +4,9 @@ import useValidation from "../../hooks/useValidation";
 import { useState } from "react";
 import Loading from "../Loading/Loading";
 
-const SignUpSecondStep = ({
-  setIsSignUpSecondStepOpen,
-  emailToSend,
-  setInfoText,
-  isLoading,
-  setIsLoading,
-}) => {
+const SignUpSecondStep = ({ email, closePopup, openPopup }) => {
   const regExp = /^[0-9a-zа-я_]+$/i;
+  const [isLoading, setIsLoading] = useState(false);
 
   const [passwordCheck, setPasswordCheck] = useState("");
 
@@ -44,15 +39,15 @@ const SignUpSecondStep = ({
 
   const onSubmit = (e) => {
     e.preventDefault();
-
     if (validateUsername() && validatePassword()) {
       postData("https://map.transsearch.net/auth/register", {
-        email: emailToSend,
+        email: email,
         username: username,
         password: password,
       });
     }
   };
+  const infoText = "You are successfully registered.";
 
   async function postData(url, data) {
     setIsDisabled(true);
@@ -62,9 +57,9 @@ const SignUpSecondStep = ({
       body: JSON.stringify(data),
     }).then((response) =>
       response
-        ? (setIsSignUpSecondStepOpen(false),
-          setIsLoading(false),
-          setInfoText("you are successfully registered"))
+        ? (setIsLoading(false),
+          closePopup(),
+          openPopup("InfoPopup", { infoText, closePopup }))
         : (setPasswordError("user already exist"),
           setIsDisabled(false),
           setIsLoading(false))
@@ -76,75 +71,73 @@ const SignUpSecondStep = ({
 
   return (
     <div className="SignUpSecondRoot">
-      <div className="form-head">
-        <h2 className="form-title">Sign Up</h2>
-        <img
-          src="/icons/close.png"
-          alt=""
-          onClick={() => setIsSignUpSecondStepOpen(false)}
-        />
-      </div>
+      <div className="sign-up-second-step-block-content">
+        <div className="form-head">
+          <h2 className="form-title">Sign Up</h2>
+          <img src="/icons/close.png" alt="" onClick={() => closePopup()} />
+        </div>
 
-      <form action="submit">
-        <div className="email-input-block">
-          <input
-            type="text"
-            placeholder="Username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-          {usernameError && <div className="warning">{usernameError}</div>}
+        <form action="submit">
+          <div className="email-input-block">
+            <input
+              type="text"
+              placeholder="Username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+            {usernameError && <div className="warning">{usernameError}</div>}
+          </div>
+          <div className="password-input-block">
+            <input
+              type={isPasswordVisible ? "text" : "password"}
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <img
+              src="/icons/eye.png"
+              alt=""
+              onClick={() => setIsPasswordVisible((prev) => !prev)}
+            />
+          </div>
+          <div className="password-input-block">
+            <input
+              type={isPasswordVisible ? "text" : "password"}
+              placeholder="Repeat password"
+              value={passwordCheck}
+              onChange={(e) => setPasswordCheck(e.target.value)}
+            />
+            <img
+              src="/icons/eye.png"
+              alt=""
+              onClick={() => setIsPasswordVisible((prev) => !prev)}
+            />
+            {passwordError && <div className="warning">{passwordError}</div>}
+          </div>
+          <div className="loading-block">
+            {isLoading && <Loading type={"bubbles"} color={"#ae7743"} />}
+          </div>
+          <button
+            type="submit"
+            className={
+              isDisabled ? "form-submit-button disabled" : "form-submit-button"
+            }
+            onClick={onSubmit}
+            disabled={isDisabled}
+          >
+            Continue
+          </button>
+        </form>
+        <div className="form-details-block">
+          <div className="notice">
+            By joining I agree to receive emails from Arhimapa
+          </div>
         </div>
-        <div className="password-input-block">
-          <input
-            type={isPasswordVisible ? "text" : "password"}
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <img
-            src="/icons/eye.png"
-            alt=""
-            onClick={() => setIsPasswordVisible((prev) => !prev)}
-          />
+        <div className="redirect">
+          <p>
+            Already a member? <span className="redirect-link"> Sign in </span>
+          </p>
         </div>
-        <div className="password-input-block">
-          <input
-            type={isPasswordVisible ? "text" : "password"}
-            placeholder="Repeat password"
-            value={passwordCheck}
-            onChange={(e) => setPasswordCheck(e.target.value)}
-          />
-          <img
-            src="/icons/eye.png"
-            alt=""
-            onClick={() => setIsPasswordVisible((prev) => !prev)}
-          />
-          {passwordError && <div className="warning">{passwordError}</div>}
-        </div>
-        <div className="loading-block">
-          {isLoading && <Loading type={"bubbles"} color={"#ae7743"} />}
-        </div>
-        <button
-          type="submit"
-          className={
-            isDisabled ? "form-submit-button disabled" : "form-submit-button"
-          }
-          onClick={onSubmit}
-          disabled={isDisabled}
-        >
-          Continue
-        </button>
-      </form>
-      <div className="form-details-block">
-        <div className="notice">
-          By joining I agree to receive emails from Arhimapa
-        </div>
-      </div>
-      <div className="redirect">
-        <p>
-          Already a member? <span className="redirect-link"> Sign in </span>
-        </p>
       </div>
     </div>
   );

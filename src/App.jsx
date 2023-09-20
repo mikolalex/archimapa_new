@@ -1,45 +1,61 @@
 import "./App.less";
-import Header from "./components/Header/Header";
-import Map from "./components/Map/Map";
-import Filters from "./components/Filters/Filters";
+import { Routes, Route } from "react-router-dom";
+import ObjectPage from "./components/ObjectPage/ObjectPage";
+import Home from "./components/Home";
+import { useState } from "react";
 import SignIn from "./components/SignIn/SignIn";
 import SignUpFirstStep from "./components/SignUp/SignUpFirstStep";
 import SignUpSecondStep from "./components/SignUp/SignUpSecondStep";
 import AddObjectWarning from "./components/AddObject/AddObjectWarning";
 import AddObject from "./components/AddObject/AddObject";
-import { Routes, Route } from "react-router-dom";
-import ObjectPage from "./components/ObjectPage/ObjectPage";
-import Home from "./components/Home";
+import InfoPopup from "./components/InfoPopup/InfoPopup";
+import AddObjectMap from "./components/AddObjectMap/AddObjectMap";
+import PreviewCard from "./components/PreviewCard/PreviewCard";
 
 function App() {
-  const objects = [
-    {
-      id: 1,
-      geocode: [50.43064609085728, 30.48826272549254],
-      popup: "marker1",
-    },
-    {
-      id: 2,
-      geocode: [47.951618726638536, 33.357941298473676],
-      popup: "marker2",
-    },
-    {
-      id: 3,
-      geocode: [48.155339589696794, 24.28114418795262],
-      popup: "marker3",
-    },
-  ];
+  const [popups, setPopups] = useState([]);
+
+  const popupsMapping = {
+    AddObject: AddObject,
+    SignIn: SignIn,
+    SignUpFirstStep: SignUpFirstStep,
+    SignUpSecondStep: SignUpSecondStep,
+    InfoPopup: InfoPopup,
+    AddObjectMap: AddObjectMap,
+    PreviewCard: PreviewCard,
+  };
+
+  const openPopup = (popupName, customProps) => {
+    setPopups((popups) => [...popups, { type: popupName, props: customProps }]);
+  };
 
   return (
     <>
+      {popups.map(({ type, props }, i) => {
+        const Component = popupsMapping[type];
+        return (
+          <Component
+            key={i}
+            {...props}
+            closePopup={() =>
+              setPopups((popups) =>
+                popups.filter((popup) => popup.type !== type)
+              )
+            }
+          />
+        );
+      })}
+
       <div className="App">
         <Routes>
-          <Route path="/" element={<Home objects={objects} />} />
+          <Route path="/" element={<Home openPopup={openPopup} />} />
           <Route
             path="/object/:id"
-            element={<ObjectPage objects={objects} />}
+            element={<ObjectPage openPopup={openPopup} />}
           />
         </Routes>
+
+        {/* <AddObjectWarning/> */}
       </div>
     </>
   );
