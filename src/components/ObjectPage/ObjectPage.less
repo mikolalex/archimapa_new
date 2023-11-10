@@ -18,6 +18,36 @@
       padding-bottom: 0;
       font-family: "Proxima Nova Rg";
       font-size: 14px;
+      .head {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        width: 100%;
+        .edit-object-button {
+          .button-outlined();
+          color: #ff7a00;
+          border: 1px solid #ff7a00;
+          font-size: 15px;
+          padding: 5px 12px;
+          &:hover {
+            border: 1px solid #ff7a00;
+            background: #ff7a00;
+            color: #ffffff;
+          }
+        }
+      }
+      .object-breadcrumbs {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        cursor: pointer;
+        a:visited {
+          color: #302f2d;
+        }
+        .breadcrumb-arrow-icon {
+          margin: 0 4px;
+        }
+      }
       .object-title {
         font-family: "GT Eesti Pro Display";
         margin: 8px 0;

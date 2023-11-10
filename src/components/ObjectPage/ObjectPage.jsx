@@ -4,6 +4,7 @@ import Header from "../Header/Header";
 import { useLocation } from "react-router";
 import { useState, useEffect } from "react";
 import Map from "../Map/Map";
+import { Link } from "react-router-dom";
 
 const ObjectPage = ({ openPopup }) => {
   const location = useLocation();
@@ -19,12 +20,47 @@ https://map.transsearch.net/objects/${id}`)
     getObject(location.pathname.split("/")[2]);
   }, [location]);
 
+  const [isAuthorised, setIsAuthorised] = useState(false);
+
+  useEffect(() => {
+    sessionStorage.getItem("signInToken")
+      ? setIsAuthorised(true)
+      : setIsAuthorised(false);
+  }, [sessionStorage.getItem("signInToken")]);
+
   return (
     <div className="objectPageRoot">
       <Header openPopup={openPopup} />
       <main className="object-page-main">
         <div className="object-card">
-          <div className="object-style">Модернізм</div>
+          <div className="head">
+            <div className="object-breadcrumbs">
+              <Link to={"/"} style={{ textDecoration: "none" }}>
+                <p className="breadcrumb">Головна</p>
+              </Link>
+              <img
+                src="/icons/breadcrumb-arrow.png"
+                alt=""
+                className="breadcrumb-arrow-icon"
+              />
+              <p className="breadcrumb">Модернізм</p>
+              <img
+                src="/icons/breadcrumb-arrow.png"
+                alt=""
+                className="breadcrumb-arrow-icon"
+              />
+              <p className="breadcrumb">УАМ</p>
+              <img
+                src="/icons/breadcrumb-arrow.png"
+                alt=""
+                className="breadcrumb-arrow-icon"
+              />
+              <p className="breadcrumb">{currentObject.title}</p>
+            </div>
+            {isAuthorised && (
+              <button className="edit-object-button">Редагувати</button>
+            )}
+          </div>
           <div className="object-title">{currentObject.title}</div>
           <div className="object-img">
             <img src="/img/obj_page_img.png" alt="object_img" />
