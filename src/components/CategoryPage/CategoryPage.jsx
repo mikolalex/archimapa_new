@@ -6,6 +6,10 @@ import { useEffect } from "react";
 
 const CategoryPage = ({ openPopup }) => {
   const [objects, setObjects] = useState([]);
+  const [objectsToDisplay, setObjectsToDisplay] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pagesQty, setPagesQty] = useState();
+  const displayedObjectsQty = 20;
 
   useEffect(() => {
     async function getObjects() {
@@ -17,6 +21,15 @@ const CategoryPage = ({ openPopup }) => {
     }
     getObjects();
   }, []);
+
+
+  useEffect(() => {
+    const end = currentPage * displayedObjectsQty;
+    const start = end - displayedObjectsQty;
+    setPagesQty(Math.ceil((objects.length - 1) / displayedObjectsQty));
+
+    setObjectsToDisplay(objects.slice(start, end));
+  }, [objects, currentPage]);
 
   return (
     <div className="CategoryPageRoot">
@@ -55,7 +68,7 @@ const CategoryPage = ({ openPopup }) => {
         </div>
         <div className="category-objects-block">
           <ul className="category-objects-list">
-            {objects.map((object) => (
+            {objectsToDisplay.map((object) => (
               <li className="category-object-item" key={object.id}>
                 <div>
                   <img
@@ -70,6 +83,11 @@ const CategoryPage = ({ openPopup }) => {
                 </div>
               </li>
             ))}
+          </ul>
+          <ul>
+           
+            <li onClick={(e) => setCurrentPage(e.target.innerText)}>1</li>
+            <li onClick={(e) => setCurrentPage(e.target.innerText)}>2</li>
           </ul>
         </div>
       </div>
