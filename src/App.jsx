@@ -11,6 +11,7 @@ import AddObject from "./components/AddObject/AddObject";
 import InfoPopup from "./components/InfoPopup/InfoPopup";
 import AddObjectMap from "./components/AddObjectMap/AddObjectMap";
 import PreviewCard from "./components/PreviewCard/PreviewCard";
+import CategoryPage from "./components/CategoryPage/CategoryPage";
 
 function App() {
   const [popups, setPopups] = useState([]);
@@ -52,6 +53,10 @@ function App() {
           <Route
             path="/object/:id"
             element={<ObjectPage openPopup={openPopup} />}
+          />
+             <Route
+            path="/category"
+            element={<CategoryPage openPopup={openPopup} />}
           />
         </Routes>
 

@@ -1,0 +1,50 @@
+@import "../../style.less";
+
+.CategoryPageRoot {
+  .category-page-main {
+    margin: 24px 75px 38px 75px;
+    .category-breadcrumbs {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      line-height: 160%;
+      cursor: pointer;
+      font-family: "Proxima Nova Rg";
+      a:visited {
+        color: #302f2d;
+      }
+      .breadcrumb-arrow-icon {
+        margin: 0 4px;
+      }
+    }
+    .category-details {
+      margin: 8px auto 24px auto;
+      text-align: center;
+      .category-title {
+        font-family: "GT Eesti Pro Display";
+        font-size: 24px;
+        margin-bottom: 8px;
+        line-height: 140%;
+      }
+      .category-description {
+        font-family: "Proxima Nova Rg";
+        font-size: 16px;
+        line-height: 140%;
+      }
+    }
+    .category-objects-list {
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      flex-wrap: wrap;
+      .category-object-item {
+        width: 298px;
+        // margin: 12px;
+        .category-object-item-img {
+          width: 298px;
+        }
+      }
+    }
+  }
+}
