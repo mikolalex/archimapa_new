@@ -8,7 +8,8 @@ const CategoryPage = ({ openPopup }) => {
   const [objects, setObjects] = useState([]);
   const [objectsToDisplay, setObjectsToDisplay] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [pagesQty, setPagesQty] = useState();
+  const [pagesQty, setPagesQty] = useState([]);
+  const [displayedSlice, setDisplayedSlice] = useState([0, 20]);
   const displayedObjectsQty = 20;
 
   useEffect(() => {
@@ -22,14 +23,22 @@ const CategoryPage = ({ openPopup }) => {
     getObjects();
   }, []);
 
-
   useEffect(() => {
     const end = currentPage * displayedObjectsQty;
     const start = end - displayedObjectsQty;
-    setPagesQty(Math.ceil((objects.length - 1) / displayedObjectsQty));
-
-    setObjectsToDisplay(objects.slice(start, end));
+    setDisplayedSlice([start, end]);
   }, [objects, currentPage]);
+
+  useEffect(() => {
+    const pages = Math.ceil((objects.length - 1) / displayedObjectsQty);
+    for (let i = 1; i <= pages; i++) {
+      setPagesQty((prev) => [...prev, i]);
+    }
+  }, [objects]);
+
+  useEffect(() => {
+    setObjectsToDisplay(objects.slice(displayedSlice[0], displayedSlice[1]));
+  }, [displayedSlice]);
 
   return (
     <div className="CategoryPageRoot">
@@ -84,11 +93,53 @@ const CategoryPage = ({ openPopup }) => {
               </li>
             ))}
           </ul>
-          <ul>
-           
-            <li onClick={(e) => setCurrentPage(e.target.innerText)}>1</li>
-            <li onClick={(e) => setCurrentPage(e.target.innerText)}>2</li>
-          </ul>
+          <div className="pagination-block">
+            <div className="empty-block"></div>
+            <button
+              className="show-more-button"
+              onClick={() =>
+                setDisplayedSlice((prev) => [
+                  prev[0],
+                  (prev[1] = prev[1] + displayedObjectsQty),
+                ])
+              }
+            >
+              Show More
+            </button>
+            <ul className="pagination">
+              {pagesQty.map((page) =>
+                page < 3 ? (
+                  <li
+                    key={page}
+                    onClick={() => setCurrentPage(page)}
+                    className={
+                      currentPage === page
+                        ? "page-number active"
+                        : "page-number"
+                    }
+                  >
+                    {page}
+                  </li>
+                ) : page === pagesQty.length ? (
+                  <li
+                    key={page}
+                    onClick={() => setCurrentPage(page)}
+                    className={
+                      currentPage === page
+                        ? "page-number active"
+                        : "page-number"
+                    }
+                  >
+                    {page}
+                  </li>
+                ) : (
+                  <li className="page-number" key={"..."}>
+                    ...
+                  </li>
+                )
+              )}
+            </ul>
+          </div>
         </div>
       </div>
     </div>
