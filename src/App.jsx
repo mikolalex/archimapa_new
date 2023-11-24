@@ -1,7 +1,7 @@
 import "./App.less";
 import { Routes, Route } from "react-router-dom";
 import ObjectPage from "./components/ObjectPage/ObjectPage";
-import Home from "./components/Home";
+import Home from "./components/Home/Home";
 import { useState } from "react";
 import SignIn from "./components/SignIn/SignIn";
 import SignUpFirstStep from "./components/SignUp/SignUpFirstStep";

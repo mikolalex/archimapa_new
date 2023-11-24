@@ -1,16 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./CategoryPage.less";
 import Header from "../Header/Header";
 import { Link } from "react-router-dom";
-import { useEffect } from "react";
+import ObjectsList from "../ObjectsList/ObjectsList";
+import Pagination from "../ObjectsList/Pagination";
 
 const CategoryPage = ({ openPopup }) => {
   const [objects, setObjects] = useState([]);
   const [objectsToDisplay, setObjectsToDisplay] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [pagesQty, setPagesQty] = useState([]);
-  const [displayedSlice, setDisplayedSlice] = useState([0, 20]);
-  const displayedObjectsQty = 20;
 
   useEffect(() => {
     async function getObjects() {
@@ -22,23 +19,6 @@ const CategoryPage = ({ openPopup }) => {
     }
     getObjects();
   }, []);
-
-  useEffect(() => {
-    const end = currentPage * displayedObjectsQty;
-    const start = end - displayedObjectsQty;
-    setDisplayedSlice([start, end]);
-  }, [objects, currentPage]);
-
-  useEffect(() => {
-    const pages = Math.ceil((objects.length - 1) / displayedObjectsQty);
-    for (let i = 1; i <= pages; i++) {
-      setPagesQty((prev) => [...prev, i]);
-    }
-  }, [objects]);
-
-  useEffect(() => {
-    setObjectsToDisplay(objects.slice(displayedSlice[0], displayedSlice[1]));
-  }, [displayedSlice]);
 
   return (
     <div className="CategoryPageRoot">
@@ -76,26 +56,10 @@ const CategoryPage = ({ openPopup }) => {
           </p>
         </div>
         <div className="category-objects-block">
-          <ul className="category-objects-list">
-            {objectsToDisplay.map((object) => (
-              <li className="category-object-item" key={object.id}>
-                <div>
-                  <img
-                    src="/img/example_img.png"
-                    alt=""
-                    className="category-object-item-img"
-                  />
-                  <h3 className="category-object-item-title">{object.title}</h3>
-                  <p className="category-object-item-description">
-                    {object.description}
-                  </p>
-                </div>
-              </li>
-            ))}
-          </ul>
+          <ObjectsList list={objectsToDisplay} />
           <div className="pagination-block">
             <div className="empty-block"></div>
-            <button
+            {/* <button
               className="show-more-button"
               onClick={() =>
                 setDisplayedSlice((prev) => [
@@ -105,40 +69,11 @@ const CategoryPage = ({ openPopup }) => {
               }
             >
               Show More
-            </button>
-            <ul className="pagination">
-              {pagesQty.map((page) =>
-                page < 3 ? (
-                  <li
-                    key={page}
-                    onClick={() => setCurrentPage(page)}
-                    className={
-                      currentPage === page
-                        ? "page-number active"
-                        : "page-number"
-                    }
-                  >
-                    {page}
-                  </li>
-                ) : page === pagesQty.length ? (
-                  <li
-                    key={page}
-                    onClick={() => setCurrentPage(page)}
-                    className={
-                      currentPage === page
-                        ? "page-number active"
-                        : "page-number"
-                    }
-                  >
-                    {page}
-                  </li>
-                ) : (
-                  <li className="page-number" key={"..."}>
-                    ...
-                  </li>
-                )
-              )}
-            </ul>
+            </button> */}
+            <Pagination
+              objects={objects}
+              setObjectsToDisplay={setObjectsToDisplay}
+            />
           </div>
         </div>
       </div>

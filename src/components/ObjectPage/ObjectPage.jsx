@@ -43,13 +43,17 @@ https://map.transsearch.net/objects/${id}`)
                 alt=""
                 className="breadcrumb-arrow-icon"
               />
-              <p className="breadcrumb">Модернізм</p>
+              <Link to={"/category"} style={{ textDecoration: "none" }}>
+                <p className="breadcrumb">Модернізм</p>
+              </Link>
               <img
                 src="/icons/breadcrumb-arrow.png"
                 alt=""
                 className="breadcrumb-arrow-icon"
               />
-              <p className="breadcrumb">УАМ</p>
+              <Link to={"/category"} style={{ textDecoration: "none" }}>
+                <p className="breadcrumb">УАМ</p>
+              </Link>
               <img
                 src="/icons/breadcrumb-arrow.png"
                 alt=""
@@ -91,7 +95,10 @@ https://map.transsearch.net/objects/${id}`)
               Тип будівлі <span className="accent">Маєток</span>
             </li>
             <li>
-              Стиль <span className="accent">Модернізм</span>
+              Стиль
+              <Link to={"/category"} style={{ textDecoration: "none" }}>
+                <span className="accent">Модернізм</span>
+              </Link>
             </li>
             <li>
               Термін занепаду <span className="accent">25</span>
