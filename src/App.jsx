@@ -49,7 +49,7 @@ function App() {
 
       <div className="App">
         <Routes>
-          <Route path="/" element={<Home openPopup={openPopup} />} />
+          <Route path="/" element={<Home openPopup={openPopup} setPopups={setPopups} />} />
           <Route
             path="/object/:id"
             element={<ObjectPage openPopup={openPopup} />}

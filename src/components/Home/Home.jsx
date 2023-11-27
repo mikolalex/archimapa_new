@@ -4,11 +4,14 @@ import Header from "../Header/Header";
 import MapBlock from "../Map/MapBlock";
 import Filters from "../Filters/Filters";
 import ListBlockMainPage from "../ListBlockMainPage/ListBlockMainPage";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import MapListSwitcher from "./MapListSwitcher";
 
-const Home = ({ openPopup }) => {
+const Home = ({ openPopup, setPopups }) => {
   const [isListOpen, setIsListOpen] = useState(false);
+
+  useEffect(() => setPopups([]), [isListOpen]);
+
   return (
     <div>
       <Header openPopup={openPopup} />

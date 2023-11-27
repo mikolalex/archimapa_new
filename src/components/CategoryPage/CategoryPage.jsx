@@ -4,6 +4,7 @@ import Header from "../Header/Header";
 import { Link } from "react-router-dom";
 import ObjectsList from "../ObjectsList/ObjectsList";
 import Pagination from "../ObjectsList/Pagination";
+import Breadcrumbs from "../Breadcrumbs/Breadcrumbs";
 
 const CategoryPage = ({ openPopup }) => {
   const [objects, setObjects] = useState([]);
@@ -24,23 +25,7 @@ const CategoryPage = ({ openPopup }) => {
     <div className="CategoryPageRoot">
       <Header openPopup={openPopup} />
       <div className="category-page-main">
-        <div className="category-breadcrumbs">
-          <Link to={"/"} style={{ textDecoration: "none" }}>
-            <p className="breadcrumb">Головна</p>
-          </Link>
-          <img
-            src="/icons/breadcrumb-arrow.png"
-            alt=""
-            className="breadcrumb-arrow-icon"
-          />
-          <p className="breadcrumb">Модернізм</p>
-          <img
-            src="/icons/breadcrumb-arrow.png"
-            alt=""
-            className="breadcrumb-arrow-icon"
-          />
-          <p className="breadcrumb">УАМ</p>
-        </div>
+        <Breadcrumbs />
 
         <div className="category-details">
           <h2 className="category-title">Український Архітектурний Модерн</h2>

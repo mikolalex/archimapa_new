@@ -44,6 +44,7 @@ const AddObject = ({ closePopup, openPopup }) => {
           description: description,
           latitude: latitude,
           longitude: longitude,
+          custom_fields: `{"date_built":"${selectedFieldData.date_built}","building_type":"${selectedFieldData.building_type}","architect":"${selectedFieldData.architect}"}`,
         })
       );
       setLatitude("");
@@ -51,7 +52,6 @@ const AddObject = ({ closePopup, openPopup }) => {
       closePopup();
     }
   };
-
   async function postData(url, data) {
     // setIsDisabled(true);
     // setIsLoading(true);
@@ -70,6 +70,7 @@ const AddObject = ({ closePopup, openPopup }) => {
   };
 
   const categories = getConfig("objectCustomFields");
+  console.log(categories);
 
   const [fieldData, setFieldData] = useState({});
 
@@ -100,6 +101,10 @@ const AddObject = ({ closePopup, openPopup }) => {
       ? setIsFieldDataReady(true)
       : null;
   }, [fieldData]);
+
+  const [selectedFieldData, setSelectedFieldData] = useState({});
+
+  console.log(selectedFieldData);
 
   return (
     <div className="AddObjectRoot">
@@ -165,18 +170,37 @@ const AddObject = ({ closePopup, openPopup }) => {
                       type={category.type}
                       placeholder={category.title}
                       key={category.key}
+                      onInput={(e) => {
+                        setSelectedFieldData(
+                          (prev) =>
+                            (prev = { ...prev, [category.key]: e.target.value })
+                        );
+                      }}
                     />
                   );
 
                 case "select":
                   return (
-                    <select name="" id="" key={category.key}>
-                      <option value="">{category.title}</option>
+                    <select
+                      name=""
+                      id=""
+                      key={category.key}
+                      onChange={(e) => {
+                        setSelectedFieldData(
+                          (prev) =>
+                            (prev = {
+                              ...prev,
+                              [category.key]: e.target.selectedOptions[0].id,
+                            })
+                        );
+                      }}
+                    >
+                      <option>{category.title}</option>
                       {isFieldDataReady &&
                         fieldData[
                           Object.values(category.field_data.category_id)
                         ].map((option) => (
-                          <option value="" key={option.id}>
+                          <option key={option.id} id={option.id}>
                             {option.title}
                           </option>
                         ))}

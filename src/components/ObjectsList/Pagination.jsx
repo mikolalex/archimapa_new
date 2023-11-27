@@ -22,7 +22,7 @@ const Pagination = ({ objects, setObjectsToDisplay }) => {
 
   useEffect(() => {
     setObjectsToDisplay(objects.slice(displayedSlice[0], displayedSlice[1]));
-    console.log(currentPage);
+
   }, [displayedSlice]);
 
   return (

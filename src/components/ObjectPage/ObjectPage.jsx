@@ -5,6 +5,7 @@ import { useLocation } from "react-router";
 import { useState, useEffect } from "react";
 import Map from "../Map/Map";
 import { Link } from "react-router-dom";
+import Breadcrumbs from "../Breadcrumbs/Breadcrumbs";
 
 const ObjectPage = ({ openPopup }) => {
   const location = useLocation();
@@ -34,33 +35,7 @@ https://map.transsearch.net/objects/${id}`)
       <main className="object-page-main">
         <div className="object-card">
           <div className="head">
-            <div className="object-breadcrumbs">
-              <Link to={"/"} style={{ textDecoration: "none" }}>
-                <p className="breadcrumb">Головна</p>
-              </Link>
-              <img
-                src="/icons/breadcrumb-arrow.png"
-                alt=""
-                className="breadcrumb-arrow-icon"
-              />
-              <Link to={"/category"} style={{ textDecoration: "none" }}>
-                <p className="breadcrumb">Модернізм</p>
-              </Link>
-              <img
-                src="/icons/breadcrumb-arrow.png"
-                alt=""
-                className="breadcrumb-arrow-icon"
-              />
-              <Link to={"/category"} style={{ textDecoration: "none" }}>
-                <p className="breadcrumb">УАМ</p>
-              </Link>
-              <img
-                src="/icons/breadcrumb-arrow.png"
-                alt=""
-                className="breadcrumb-arrow-icon"
-              />
-              <p className="breadcrumb">{currentObject.title}</p>
-            </div>
+            <Breadcrumbs currentObject={currentObject} />
             {isAuthorised && (
               <button className="edit-object-button">Редагувати</button>
             )}
