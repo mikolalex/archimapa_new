@@ -29,6 +29,8 @@ const AddObject = ({ closePopup, openPopup }) => {
     return fd;
   };
 
+  const infoText = "object successfully added.";
+
   const onSubmit = (e) => {
     e.preventDefault();
     if (
@@ -37,6 +39,14 @@ const AddObject = ({ closePopup, openPopup }) => {
       validateLatitude() &&
       validateLongitude()
     ) {
+      let customFields = "";
+      let items = "";
+      for (let key in selectedFieldData) {
+        customFields += `"${key}":"${selectedFieldData[key][0]}",`;
+        selectedFieldData[key][1] === "id"
+          ? (items += `${selectedFieldData[key][0]},`)
+          : null;
+      }
       postData(
         "https://map.transsearch.net/objects/add",
         objToFormData({
@@ -44,14 +54,17 @@ const AddObject = ({ closePopup, openPopup }) => {
           description: description,
           latitude: latitude,
           longitude: longitude,
-          custom_fields: `{"date_built":"${selectedFieldData.date_built}","building_type":"${selectedFieldData.building_type}","architect":"${selectedFieldData.architect}"}`,
+          customFields: `{${customFields}}`,
+          items: items,
         })
       );
       setLatitude("");
       setLongitude("");
       closePopup();
+      openPopup("InfoPopup", { infoText, closePopup });
     }
   };
+
   async function postData(url, data) {
     // setIsDisabled(true);
     // setIsLoading(true);
@@ -60,6 +73,7 @@ const AddObject = ({ closePopup, openPopup }) => {
       body: data,
       headers: {
         Authorization: "Bearer " + sessionStorage.getItem("signInToken"),
+        Accept: "application/json, text/plain, */*",
       },
     });
   }
@@ -70,7 +84,6 @@ const AddObject = ({ closePopup, openPopup }) => {
   };
 
   const categories = getConfig("objectCustomFields");
-  console.log(categories);
 
   const [fieldData, setFieldData] = useState({});
 
@@ -103,8 +116,6 @@ const AddObject = ({ closePopup, openPopup }) => {
   }, [fieldData]);
 
   const [selectedFieldData, setSelectedFieldData] = useState({});
-
-  console.log(selectedFieldData);
 
   return (
     <div className="AddObjectRoot">
@@ -173,7 +184,10 @@ const AddObject = ({ closePopup, openPopup }) => {
                       onInput={(e) => {
                         setSelectedFieldData(
                           (prev) =>
-                            (prev = { ...prev, [category.key]: e.target.value })
+                            (prev = {
+                              ...prev,
+                              [category.key]: [e.target.value, "text"],
+                            })
                         );
                       }}
                     />
@@ -190,7 +204,10 @@ const AddObject = ({ closePopup, openPopup }) => {
                           (prev) =>
                             (prev = {
                               ...prev,
-                              [category.key]: e.target.selectedOptions[0].id,
+                              [category.key]: [
+                                e.target.selectedOptions[0].id,
+                                "id",
+                              ],
                             })
                         );
                       }}
