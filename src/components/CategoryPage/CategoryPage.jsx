@@ -1,19 +1,24 @@
 import React, { useState, useEffect } from "react";
 import "./CategoryPage.less";
 import Header from "../Header/Header";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import ObjectsList from "../ObjectsList/ObjectsList";
 import Pagination from "../ObjectsList/Pagination";
 import Breadcrumbs from "../Breadcrumbs/Breadcrumbs";
 
 const CategoryPage = ({ openPopup }) => {
+  const location = useLocation();
+
   const [objects, setObjects] = useState([]);
   const [objectsToDisplay, setObjectsToDisplay] = useState([]);
 
   useEffect(() => {
     async function getObjects() {
       fetch(
-        "https://map.transsearch.net/objects?north=52.89564866211353&south=44.98034238084973&east=39.46289062500001&west=23.4228515625"
+        // "https://map.transsearch.net/objects?north=52.89564866211353&south=44.98034238084973&east=39.46289062500001&west=23.4228515625"
+        `https://map.transsearch.net/objects/item/${
+          location.pathname.split("/")[2]
+        }`
       )
         .then((response) => response.json())
         .then((json) => setObjects(json));

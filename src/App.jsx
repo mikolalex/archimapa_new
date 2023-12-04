@@ -54,8 +54,12 @@ function App() {
             path="/object/:id"
             element={<ObjectPage openPopup={openPopup} />}
           />
-             <Route
+             {/* <Route
             path="/category"
+            element={<CategoryPage openPopup={openPopup} />}
+          /> */}
+            <Route
+            path="/item/:id"
             element={<CategoryPage openPopup={openPopup} />}
           />
         </Routes>

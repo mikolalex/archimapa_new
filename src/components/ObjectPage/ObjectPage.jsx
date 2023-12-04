@@ -11,6 +11,7 @@ const ObjectPage = ({ openPopup }) => {
   const location = useLocation();
   const [currentObject, setCurrentObject] = useState({});
 
+
   async function getObject(id) {
     fetch(`
 https://map.transsearch.net/objects/${id}`)
@@ -67,7 +68,21 @@ https://map.transsearch.net/objects/${id}`)
               Рік побудови <span className="accent">1891</span>
             </li>
             <li>
-              Тип будівлі <span className="accent">Маєток</span>
+              Тип будівлі
+              {currentObject.categories &&
+                currentObject.categories.map((item) =>
+                  item[0].category_id === 1 ? (
+                    <Link
+                      to={`/item/${item[0].id}`}
+                      style={{ textDecoration: "none" }}
+                      key={item[0].id}
+                    >
+                      <span className="accent" >
+                        {item[0].title}
+                      </span>
+                    </Link>
+                  ) : null
+                )}
             </li>
             <li>
               Стиль
