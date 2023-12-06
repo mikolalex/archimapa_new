@@ -8,6 +8,7 @@ import Breadcrumbs from "../Breadcrumbs/Breadcrumbs";
 
 const CategoryPage = ({ openPopup }) => {
   const location = useLocation();
+  const itemId = location.pathname.split("/")[2];
 
   const [objects, setObjects] = useState([]);
   const [objectsToDisplay, setObjectsToDisplay] = useState([]);
@@ -16,9 +17,7 @@ const CategoryPage = ({ openPopup }) => {
     async function getObjects() {
       fetch(
         // "https://map.transsearch.net/objects?north=52.89564866211353&south=44.98034238084973&east=39.46289062500001&west=23.4228515625"
-        `https://map.transsearch.net/objects/item/${
-          location.pathname.split("/")[2]
-        }`
+        `https://map.transsearch.net/objects/item/${itemId}`
       )
         .then((response) => response.json())
         .then((json) => setObjects(json));
@@ -30,7 +29,7 @@ const CategoryPage = ({ openPopup }) => {
     <div className="CategoryPageRoot">
       <Header openPopup={openPopup} />
       <div className="category-page-main">
-        <Breadcrumbs />
+        <Breadcrumbs itemId={itemId}/>
 
         <div className="category-details">
           <h2 className="category-title">Український Архітектурний Модерн</h2>

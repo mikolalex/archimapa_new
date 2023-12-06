@@ -2,6 +2,7 @@ import React from "react";
 import "./Breadcrumbs.less";
 
 import { Link } from "react-router-dom";
+import Item from "../Item";
 
 const breadcrumbsArrow = (
   <img
@@ -11,12 +12,20 @@ const breadcrumbsArrow = (
   />
 );
 
-const Breadcrumbs = ({ currentObject }) => {
+const Breadcrumbs = ({ currentObject, itemId }) => {
+  // console.log(currentObject);
   return (
-    <div className="breadcrumbs">
-      <Link to={"/"} style={{ textDecoration: "none" }} className="breadcrumb">
-        Головна
-      </Link>
+    <ul className="breadcrumbs">
+      <li>
+        <Link
+          to={"/"}
+          style={{ textDecoration: "none" }}
+          className="breadcrumb"
+        >
+          Головна
+        </Link>
+      </li>
+
       {breadcrumbsArrow}
       <Link
         to={"/category"}
@@ -26,20 +35,31 @@ const Breadcrumbs = ({ currentObject }) => {
         Модернізм
       </Link>
       {breadcrumbsArrow}
-      <Link
+      {/* <Link
         to={"/category"}
         style={{ textDecoration: "none" }}
         className="breadcrumb"
       >
         УАМ
-      </Link>
+      </Link> */}
+      {currentObject ? (
+        <Item currentObject={currentObject} categoryId={1} />
+      ) : (
+        <Link
+          to={`/item/${itemId}`}
+          style={{ textDecoration: "none" }}
+          className="breadcrumb"
+        >
+          Item Name
+        </Link>
+      )}
       {currentObject && breadcrumbsArrow}
       {currentObject && (
         <Link style={{ textDecoration: "none" }} className="breadcrumb">
           {currentObject.title}
         </Link>
       )}
-    </div>
+    </ul>
   );
 };
 

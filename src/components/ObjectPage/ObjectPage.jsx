@@ -6,11 +6,11 @@ import { useState, useEffect } from "react";
 import Map from "../Map/Map";
 import { Link } from "react-router-dom";
 import Breadcrumbs from "../Breadcrumbs/Breadcrumbs";
+import Item from "../Item";
 
 const ObjectPage = ({ openPopup }) => {
   const location = useLocation();
   const [currentObject, setCurrentObject] = useState({});
-
 
   async function getObject(id) {
     fetch(`
@@ -67,32 +67,26 @@ https://map.transsearch.net/objects/${id}`)
             <li>
               Рік побудови <span className="accent">1891</span>
             </li>
-            <li>
-              Тип будівлі
-              {currentObject.categories &&
-                currentObject.categories.map((item) =>
-                  item[0].category_id === 1 ? (
-                    <Link
-                      to={`/item/${item[0].id}`}
-                      style={{ textDecoration: "none" }}
-                      key={item[0].id}
-                    >
-                      <span className="accent" >
-                        {item[0].title}
-                      </span>
-                    </Link>
-                  ) : null
-                )}
-            </li>
+
+            <Item
+              currentObject={currentObject}
+              title={"Тип будівлі"}
+              categoryId={1}
+            />
+            <Item
+              currentObject={currentObject}
+              title={"Архітектор"}
+              categoryId={4}
+            />
+
+        
             <li>
               Стиль
               <Link to={"/category"} style={{ textDecoration: "none" }}>
                 <span className="accent">Модернізм</span>
               </Link>
             </li>
-            <li>
-              Термін занепаду <span className="accent">25</span>
-            </li>
+
             <li>
               Стан <span className="accent">Частково Зруйновано</span>
             </li>
