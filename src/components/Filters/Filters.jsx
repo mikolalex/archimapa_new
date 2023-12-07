@@ -1,10 +1,9 @@
 import "./Filters.less";
-import React from "react";
+import React, { useState } from "react";
 import YearFilter from "./YearFilter";
 import TypeFilter from "./TypeFilter";
 import StyleFilter from "./StyleFilter";
 import ArchitectFilter from "./ArchitectFilter";
-import { useState } from "react";
 
 const Filters = () => {
   const [clearFiltersButton, setClearFiltersButton] = useState(false);

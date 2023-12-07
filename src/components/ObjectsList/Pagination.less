@@ -1,0 +1,20 @@
+@import "../../style.less";
+
+.pagination {
+    list-style: none;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    .page-number {
+      margin-left: 16px;
+      font-family: "Proxima Nova Rg";
+      line-height: 160%;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      font-size: 18px;
+    }
+    .active {
+      font-family: "Proxima Nova Lt";
+      border-bottom: 2px solid #ff7a00;
+    }
+  }

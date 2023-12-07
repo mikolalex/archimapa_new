@@ -4,10 +4,40 @@ import Header from "../Header/Header";
 import { useLocation } from "react-router";
 import { useState, useEffect } from "react";
 import Map from "../Map/Map";
+import Breadcrumbs from "../Breadcrumbs/Breadcrumbs";
+import Item from "../Item";
+import { getConfig } from "../../module";
 
 const ObjectPage = ({ openPopup }) => {
   const location = useLocation();
   const [currentObject, setCurrentObject] = useState({});
+  const [itemsToDisplay, setItemsToDisplay] = useState([]);
+
+  const categories = getConfig("objectCustomFields");
+
+  const currentObjectCustomFields = currentObject.custom_fields
+    ? JSON.parse(currentObject.custom_fields)
+    : null;
+
+  useEffect(() => {
+    for (let key in currentObjectCustomFields) {
+      categories.forEach((item) => {
+        key === item.key
+          ? setItemsToDisplay(
+              (prev) =>
+                (prev = [
+                  ...prev,
+                  {
+                    type: item.type === "text" ? "text" : "other",
+                    title: item.title,
+                    value: currentObjectCustomFields[key],
+                  },
+                ])
+            )
+          : null;
+      });
+    }
+  }, [currentObject]);
 
   async function getObject(id) {
     fetch(`
@@ -19,12 +49,25 @@ https://map.transsearch.net/objects/${id}`)
     getObject(location.pathname.split("/")[2]);
   }, [location]);
 
+  const [isAuthorised, setIsAuthorised] = useState(false);
+
+  useEffect(() => {
+    sessionStorage.getItem("signInToken")
+      ? setIsAuthorised(true)
+      : setIsAuthorised(false);
+  }, [sessionStorage.getItem("signInToken")]);
+
   return (
     <div className="objectPageRoot">
       <Header openPopup={openPopup} />
       <main className="object-page-main">
         <div className="object-card">
-          <div className="object-style">Модернізм</div>
+          <div className="head">
+            <Breadcrumbs currentObject={currentObject} />
+            {isAuthorised && (
+              <button className="edit-object-button">Редагувати</button>
+            )}
+          </div>
           <div className="object-title">{currentObject.title}</div>
           <div className="object-img">
             <img src="/img/obj_page_img.png" alt="object_img" />
@@ -48,21 +91,14 @@ https://map.transsearch.net/objects/${id}`)
         <div className="object-details">
           <ul>
             <h3>Відомості</h3>
-            <li>
-              Рік побудови <span className="accent">1891</span>
-            </li>
-            <li>
-              Тип будівлі <span className="accent">Маєток</span>
-            </li>
-            <li>
-              Стиль <span className="accent">Модернізм</span>
-            </li>
-            <li>
-              Термін занепаду <span className="accent">25</span>
-            </li>
-            <li>
-              Стан <span className="accent">Частково Зруйновано</span>
-            </li>
+
+            {itemsToDisplay.map((item) => (
+              <Item
+                currentObject={currentObject}
+                item={item}
+                key={item.title}
+              />
+            ))}
           </ul>
         </div>
       </main>

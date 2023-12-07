@@ -29,6 +29,8 @@ const AddObject = ({ closePopup, openPopup }) => {
     return fd;
   };
 
+  const infoText = "object successfully added.";
+
   const onSubmit = (e) => {
     e.preventDefault();
     if (
@@ -37,6 +39,10 @@ const AddObject = ({ closePopup, openPopup }) => {
       validateLatitude() &&
       validateLongitude()
     ) {
+      let items = "";
+      for (let key in selectedFieldDataItemsID) {
+        items += `${selectedFieldData[key]},`;
+      }
       postData(
         "https://map.transsearch.net/objects/add",
         objToFormData({
@@ -44,11 +50,14 @@ const AddObject = ({ closePopup, openPopup }) => {
           description: description,
           latitude: latitude,
           longitude: longitude,
+          customFields: JSON.stringify(selectedFieldData),
+          items: items,
         })
       );
       setLatitude("");
       setLongitude("");
       closePopup();
+      openPopup("InfoPopup", { infoText, closePopup });
     }
   };
 
@@ -60,6 +69,7 @@ const AddObject = ({ closePopup, openPopup }) => {
       body: data,
       headers: {
         Authorization: "Bearer " + sessionStorage.getItem("signInToken"),
+        Accept: "application/json, text/plain, */*",
       },
     });
   }
@@ -100,6 +110,9 @@ const AddObject = ({ closePopup, openPopup }) => {
       ? setIsFieldDataReady(true)
       : null;
   }, [fieldData]);
+
+  const [selectedFieldData, setSelectedFieldData] = useState({});
+  const [selectedFieldDataItemsID, setSelectedFieldDataItemsID] = useState({});
 
   return (
     <div className="AddObjectRoot">
@@ -165,18 +178,48 @@ const AddObject = ({ closePopup, openPopup }) => {
                       type={category.type}
                       placeholder={category.title}
                       key={category.key}
+                      onInput={(e) => {
+                        setSelectedFieldData(
+                          (prev) =>
+                            (prev = {
+                              ...prev,
+                              [category.key]: e.target.value,
+                            })
+                        );
+                      }}
                     />
                   );
 
                 case "select":
                   return (
-                    <select name="" id="" key={category.key}>
-                      <option value="">{category.title}</option>
+                    <select
+                      name=""
+                      id=""
+                      key={category.key}
+                      defaultValue={category.title}
+                      onChange={(e) => {
+                        setSelectedFieldData(
+                          (prev) =>
+                            (prev = {
+                              ...prev,
+                              [category.key]: e.target.selectedOptions[0].id,
+                            })
+                        );
+                        setSelectedFieldDataItemsID(
+                          (prev) =>
+                            (prev = {
+                              ...prev,
+                              [category.key]: e.target.selectedOptions[0].id,
+                            })
+                        );
+                      }}
+                    >
+                      <option disabled>{category.title}</option>
                       {isFieldDataReady &&
                         fieldData[
                           Object.values(category.field_data.category_id)
                         ].map((option) => (
-                          <option value="" key={option.id}>
+                          <option key={option.id} id={option.id}>
                             {option.title}
                           </option>
                         ))}

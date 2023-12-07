@@ -96,6 +96,19 @@
   text-align: center;
   margin-bottom: 24px;
 }
+@media screen and (max-width: 1000px) {
+  .objectPageRoot {
+    .object-details {
+      h3{
+        text-align: center;
+      }
+      li{
+        flex-direction: column;
+
+      }
+    }}
+
+}
 
 @media screen and (max-width: 750px) {
   .headerRoot {
@@ -110,6 +123,7 @@
   }
   .filtersRoot {
     width: 100% !important;
+    position: relative;
 
     .all-filters {
       height: fit-content !important;
@@ -131,12 +145,10 @@
       }
     }
   }
-  .topPreviewCardPosition {
-    top: 20% !important;
+  .main-block {
+    width: 100%;
   }
-  .bottomPreviewCardPosition {
-    bottom: 25% !important;
-  }
+
   .info-popup-block-content {
     top: 50px !important;
   }
@@ -152,6 +164,13 @@
       width: 100% !important;
       position: static !important;
       margin-top: 24px;
+      h3{
+        text-align: start;
+      }
+      li{
+        flex-direction: row;
+
+      }
     }
     .map-block {
       height: 400px;
@@ -161,10 +180,11 @@
 
 .topPreviewCardPosition {
   top: 30%;
+  left: 20%;
 }
 .bottomPreviewCardPosition {
   bottom: 4%;
-  left: 24px;
+  left: 20%;
 }
 
 .accent {

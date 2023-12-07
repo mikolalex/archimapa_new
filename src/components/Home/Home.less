@@ -1,0 +1,25 @@
+@import "../../style.less";
+.main-block {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 70%;
+  .map-list-switch {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 12px 0;
+    .button {
+      .button-style();
+      margin: 0;
+    }
+    .navigation-button-map {
+      border-right: 2px solid #000000;
+    }
+    .active {
+      .accent();
+    }
+  }
+}
