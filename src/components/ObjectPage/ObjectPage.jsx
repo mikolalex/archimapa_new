@@ -4,13 +4,40 @@ import Header from "../Header/Header";
 import { useLocation } from "react-router";
 import { useState, useEffect } from "react";
 import Map from "../Map/Map";
-import { Link } from "react-router-dom";
 import Breadcrumbs from "../Breadcrumbs/Breadcrumbs";
 import Item from "../Item";
+import { getConfig } from "../../module";
 
 const ObjectPage = ({ openPopup }) => {
   const location = useLocation();
   const [currentObject, setCurrentObject] = useState({});
+  const [itemsToDisplay, setItemsToDisplay] = useState([]);
+
+  const categories = getConfig("objectCustomFields");
+
+  const currentObjectCustomFields = currentObject.custom_fields
+    ? JSON.parse(currentObject.custom_fields)
+    : null;
+
+  useEffect(() => {
+    for (let key in currentObjectCustomFields) {
+      categories.forEach((item) => {
+        key === item.key
+          ? setItemsToDisplay(
+              (prev) =>
+                (prev = [
+                  ...prev,
+                  {
+                    type: item.type === "text" ? "text" : "other",
+                    title: item.title,
+                    value: currentObjectCustomFields[key],
+                  },
+                ])
+            )
+          : null;
+      });
+    }
+  }, [currentObject]);
 
   async function getObject(id) {
     fetch(`
@@ -64,32 +91,14 @@ https://map.transsearch.net/objects/${id}`)
         <div className="object-details">
           <ul>
             <h3>Відомості</h3>
-            <li>
-              Рік побудови <span className="accent">1891</span>
-            </li>
 
-            <Item
-              currentObject={currentObject}
-              title={"Тип будівлі"}
-              categoryId={1}
-            />
-            <Item
-              currentObject={currentObject}
-              title={"Архітектор"}
-              categoryId={4}
-            />
-
-        
-            <li>
-              Стиль
-              <Link to={"/category"} style={{ textDecoration: "none" }}>
-                <span className="accent">Модернізм</span>
-              </Link>
-            </li>
-
-            <li>
-              Стан <span className="accent">Частково Зруйновано</span>
-            </li>
+            {itemsToDisplay.map((item) => (
+              <Item
+                currentObject={currentObject}
+                item={item}
+                key={item.title}
+              />
+            ))}
           </ul>
         </div>
       </main>

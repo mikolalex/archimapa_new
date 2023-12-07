@@ -39,13 +39,9 @@ const AddObject = ({ closePopup, openPopup }) => {
       validateLatitude() &&
       validateLongitude()
     ) {
-      let customFields = "";
       let items = "";
-      for (let key in selectedFieldData) {
-        customFields += `"${key}":"${selectedFieldData[key][0]}",`;
-        selectedFieldData[key][1] === "id"
-          ? (items += `${selectedFieldData[key][0]},`)
-          : null;
+      for (let key in selectedFieldDataItemsID) {
+        items += `${selectedFieldData[key]},`;
       }
       postData(
         "https://map.transsearch.net/objects/add",
@@ -54,7 +50,7 @@ const AddObject = ({ closePopup, openPopup }) => {
           description: description,
           latitude: latitude,
           longitude: longitude,
-          customFields: `{${customFields}}`,
+          customFields: JSON.stringify(selectedFieldData),
           items: items,
         })
       );
@@ -116,6 +112,7 @@ const AddObject = ({ closePopup, openPopup }) => {
   }, [fieldData]);
 
   const [selectedFieldData, setSelectedFieldData] = useState({});
+  const [selectedFieldDataItemsID, setSelectedFieldDataItemsID] = useState({});
 
   return (
     <div className="AddObjectRoot">
@@ -186,7 +183,7 @@ const AddObject = ({ closePopup, openPopup }) => {
                           (prev) =>
                             (prev = {
                               ...prev,
-                              [category.key]: [e.target.value, "text"],
+                              [category.key]: e.target.value,
                             })
                         );
                       }}
@@ -199,20 +196,25 @@ const AddObject = ({ closePopup, openPopup }) => {
                       name=""
                       id=""
                       key={category.key}
+                      defaultValue={category.title}
                       onChange={(e) => {
                         setSelectedFieldData(
                           (prev) =>
                             (prev = {
                               ...prev,
-                              [category.key]: [
-                                e.target.selectedOptions[0].id,
-                                "id",
-                              ],
+                              [category.key]: e.target.selectedOptions[0].id,
+                            })
+                        );
+                        setSelectedFieldDataItemsID(
+                          (prev) =>
+                            (prev = {
+                              ...prev,
+                              [category.key]: e.target.selectedOptions[0].id,
                             })
                         );
                       }}
                     >
-                      <option>{category.title}</option>
+                      <option disabled>{category.title}</option>
                       {isFieldDataReady &&
                         fieldData[
                           Object.values(category.field_data.category_id)

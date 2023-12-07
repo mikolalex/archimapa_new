@@ -96,6 +96,19 @@
   text-align: center;
   margin-bottom: 24px;
 }
+@media screen and (max-width: 1000px) {
+  .objectPageRoot {
+    .object-details {
+      h3{
+        text-align: center;
+      }
+      li{
+        flex-direction: column;
+
+      }
+    }}
+
+}
 
 @media screen and (max-width: 750px) {
   .headerRoot {
@@ -151,6 +164,13 @@
       width: 100% !important;
       position: static !important;
       margin-top: 24px;
+      h3{
+        text-align: start;
+      }
+      li{
+        flex-direction: row;
+
+      }
     }
     .map-block {
       height: 400px;
