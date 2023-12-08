@@ -1,8 +1,7 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./ObjectPage.less";
 import Header from "../Header/Header";
 import { useLocation } from "react-router";
-import { useState, useEffect } from "react";
 import Map from "../Map/Map";
 import Breadcrumbs from "../Breadcrumbs/Breadcrumbs";
 import Item from "../Item";
@@ -15,11 +14,11 @@ const ObjectPage = ({ openPopup }) => {
 
   const categories = getConfig("objectCustomFields");
 
-  const currentObjectCustomFields = currentObject.custom_fields
-    ? JSON.parse(currentObject.custom_fields)
-    : null;
-
   useEffect(() => {
+    const currentObjectCustomFields = currentObject.custom_fields
+      ? JSON.parse(currentObject.custom_fields)
+      : null;
+  
     for (let key in currentObjectCustomFields) {
       categories.forEach((item) => {
         key === item.key

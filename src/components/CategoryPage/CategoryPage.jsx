@@ -12,24 +12,31 @@ const CategoryPage = ({ openPopup }) => {
 
   const [objects, setObjects] = useState([]);
   const [objectsToDisplay, setObjectsToDisplay] = useState([]);
+  const [itemInfo, setItemInfo] = useState([]);
 
   useEffect(() => {
     async function getObjects() {
       fetch(
         // "https://map.transsearch.net/objects?north=52.89564866211353&south=44.98034238084973&east=39.46289062500001&west=23.4228515625"
-        `https://map.transsearch.net/objects/item/${itemId}`
+        `https://map.transsearch.net/items/${itemId}`
       )
         .then((response) => response.json())
-        .then((json) => setObjects(json));
+        .then((json) => {
+          setItemInfo(json[0]);
+          setObjects(json[0].objects);
+        });
     }
     getObjects();
   }, []);
+
+  console.log(objects);
+  console.log(itemInfo);
 
   return (
     <div className="CategoryPageRoot">
       <Header openPopup={openPopup} />
       <div className="category-page-main">
-        <Breadcrumbs itemId={itemId}/>
+        <Breadcrumbs itemInfo={itemInfo} />
 
         <div className="category-details">
           <h2 className="category-title">Український Архітектурний Модерн</h2>

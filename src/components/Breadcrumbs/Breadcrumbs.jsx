@@ -12,8 +12,7 @@ const breadcrumbsArrow = (
   />
 );
 
-const Breadcrumbs = ({ currentObject, itemId }) => {
-  // console.log(currentObject);
+const Breadcrumbs = ({ currentObject, itemInfo }) => {
   return (
     <ul className="breadcrumbs">
       <li>
@@ -27,14 +26,14 @@ const Breadcrumbs = ({ currentObject, itemId }) => {
       </li>
 
       {breadcrumbsArrow}
-      <Link
+      {/* <Link
         to={"/category"}
         style={{ textDecoration: "none" }}
         className="breadcrumb"
       >
         Модернізм
       </Link>
-      {breadcrumbsArrow}
+      {breadcrumbsArrow} */}
       {/* <Link
         to={"/category"}
         style={{ textDecoration: "none" }}
@@ -42,15 +41,22 @@ const Breadcrumbs = ({ currentObject, itemId }) => {
       >
         УАМ
       </Link> */}
-      {currentObject ? (
-        <Item currentObject={currentObject} categoryId={1} />
-      ) : (
+      {currentObject && currentObject.items && (
         <Link
-          to={`/item/${itemId}`}
+          to={`/item/${currentObject.items[0].id}`}
           style={{ textDecoration: "none" }}
           className="breadcrumb"
         >
-          Item Name
+          {currentObject.items[0].name}
+        </Link>
+      )}
+      {itemInfo && (
+        <Link
+          to={`/item/${itemInfo.id}`}
+          style={{ textDecoration: "none" }}
+          className="breadcrumb"
+        >
+          {itemInfo.title}
         </Link>
       )}
       {currentObject && breadcrumbsArrow}
