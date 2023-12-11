@@ -3,6 +3,9 @@ import "./Pagination.less";
 
 const Pagination = ({ objects, setObjectsToDisplay }) => {
   const [currentPage, setCurrentPage] = useState(1);
+  const nextPage = currentPage + 1;
+  const prevPage = currentPage - 1;
+
   const [pagesQty, setPagesQty] = useState([]);
   const [displayedSlice, setDisplayedSlice] = useState([0, 20]);
   const displayedObjectsQty = 20;
@@ -22,7 +25,6 @@ const Pagination = ({ objects, setObjectsToDisplay }) => {
 
   useEffect(() => {
     setObjectsToDisplay(objects.slice(displayedSlice[0], displayedSlice[1]));
-
   }, [displayedSlice]);
 
   return (
@@ -31,8 +33,8 @@ const Pagination = ({ objects, setObjectsToDisplay }) => {
         page === 1 ||
         page === pagesQty.length ||
         page === currentPage ||
-        page === currentPage + 1 ||
-        page === currentPage - 1 ? (
+        page === nextPage ||
+        page === prevPage ? (
           <li
             key={page}
             onClick={() => setCurrentPage(page)}
@@ -42,11 +44,11 @@ const Pagination = ({ objects, setObjectsToDisplay }) => {
           >
             {page}
           </li>
-        ) : (
-          <li className="page-number" key={"..."}>
+        ) : page === nextPage + 1 || page === prevPage - 1 ? (
+          <li className="page-number not-a-number" key={"..."}>
             ...
           </li>
-        )
+        ) : null
       )}
     </ul>
   );
