@@ -1,6 +1,6 @@
 import "./SignUpFirstStep.less";
 import React from "react";
-import useValidation from "../../hooks/useValidation";
+import useValidation from "../../../hooks/useValidation";
 import { useState } from "react";
 
 const SignUpFirstStep = ({ openPopup, closePopup }) => {

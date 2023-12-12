@@ -3,14 +3,14 @@ import { Routes, Route } from "react-router-dom";
 import ObjectPage from "./components/ObjectPage/ObjectPage";
 import Home from "./components/Home/Home";
 import { useState } from "react";
-import SignIn from "./components/SignIn/SignIn";
-import SignUpFirstStep from "./components/SignUp/SignUpFirstStep";
-import SignUpSecondStep from "./components/SignUp/SignUpSecondStep";
-import AddObjectWarning from "./components/AddObject/AddObjectWarning";
-import AddObject from "./components/AddObject/AddObject";
-import InfoPopup from "./components/InfoPopup/InfoPopup";
+import SignIn from "./components/Popups/SignIn/SignIn";
+import SignUpFirstStep from "./components/Popups/SignUp/SignUpFirstStep";
+import SignUpSecondStep from "./components/Popups/SignUp/SignUpSecondStep";
+import AddObjectWarning from "./components/Popups/AddObject/AddObjectWarning";
+import AddObject from "./components/Popups/AddObject/AddObject";
+import InfoPopup from "./components/Popups/InfoPopup/InfoPopup";
 import AddObjectMap from "./components/AddObjectMap/AddObjectMap";
-import PreviewCard from "./components/PreviewCard/PreviewCard";
+import PreviewCard from "./components/Popups/PreviewCard/PreviewCard";
 import CategoryPage from "./components/CategoryPage/CategoryPage";
 
 function App() {
@@ -49,16 +49,19 @@ function App() {
 
       <div className="App">
         <Routes>
-          <Route path="/" element={<Home openPopup={openPopup} setPopups={setPopups} />} />
+          <Route
+            path="/"
+            element={<Home openPopup={openPopup} setPopups={setPopups} />}
+          />
           <Route
             path="/object/:id"
             element={<ObjectPage openPopup={openPopup} />}
           />
-             {/* <Route
+          {/* <Route
             path="/category"
             element={<CategoryPage openPopup={openPopup} />}
           /> */}
-            <Route
+          <Route
             path="/item/:id"
             element={<CategoryPage openPopup={openPopup} />}
           />

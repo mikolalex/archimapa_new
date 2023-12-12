@@ -3,14 +3,18 @@ import "./Header.less";
 import Button from "../Button/Button";
 import { Link } from "react-router-dom";
 
-const Header = ({ openPopup }) => {
+const Header = ({ openPopup, setIsListOpen }) => {
   const isUserSignedIn = () => {
     return sessionStorage.getItem("signInToken") ? true : false;
   };
 
   return (
     <div className="headerRoot">
-      <Link to={"/"} style={{ textDecoration: "none" }}>
+      <Link
+        to={"/"}
+        style={{ textDecoration: "none" }}
+        onClick={() => setIsListOpen(false)}
+      >
         <div className="header-logo-block">
           <img src="/logo/logo.png" alt="logo_img" className="logo-img" />
 

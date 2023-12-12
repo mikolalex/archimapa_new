@@ -1,7 +1,7 @@
 import React from "react";
 import "./Map.less";
 
-import PreviewCard from "../PreviewCard/PreviewCard";
+import PreviewCard from "../Popups/PreviewCard/PreviewCard";
 import {
   MapContainer,
   TileLayer,

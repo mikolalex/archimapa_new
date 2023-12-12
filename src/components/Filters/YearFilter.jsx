@@ -1,13 +1,11 @@
 import React from "react";
 import { useState } from "react";
+import InputNumber from "./InputNumber";
 import "./YearFilter.less";
-// import Nouislider from "nouislider-react";
-// import '../../../node_modules/nouislider-react/node_modules/nouislider/distribute/nouislider.css'
 
 const YearFilter = ({ filterOnChangeHandler }) => {
-  const [rangeYearFrom, setRangeYearFrom] = useState(1650);
-  const [rangeYearTill, setRangeYearTill] = useState(1650);
-
+  const [yearFilterFrom, setYearFilterFrom] = useState("");
+  const [yearFilterTill, setYearFilterTill] = useState("");
   const [isYearFilterOpen, setIsYearFilterOpen] = useState(false);
 
   return (
@@ -20,37 +18,34 @@ const YearFilter = ({ filterOnChangeHandler }) => {
         }
         onClick={() => setIsYearFilterOpen((prev) => !prev)}
       >
-        Рік Побудови{" "}
+        Рік Побудови
         <img
           src={isYearFilterOpen ? "icons/-.png" : "icons/+.png"}
           alt="add_img"
         />
       </div>
+
       <div className={isYearFilterOpen ? "filter-year-range-block" : "none"}>
-        <div className="filter-range-from-year">
-          <p>Від: </p>
-          <input
-            type="range"
-            min={1650}
-            max={2023}
-            onChange={(e) => (
-              setRangeYearFrom(e.target.value), filterOnChangeHandler()
-            )}
+        <div className="years-form">
+          <InputNumber
+            title={"Від:"}
+            value={yearFilterFrom}
+            onInput={(e) => setYearFilterFrom(e.target.value)}
           />
-          <p>{rangeYearFrom}</p>
-        </div>
-        <div className="filter-range-till-year">
-          <p>До: </p>
-          <input
-            type="range"
-            min={1650}
-            max={2023}
-            onChange={(e) => (
-              setRangeYearTill(e.target.value), filterOnChangeHandler()
-            )}
+          <InputNumber
+            title={"До:"}
+            value={yearFilterTill}
+            onInput={(e) => setYearFilterTill(e.target.value)}
           />
-          <p>{rangeYearTill}</p>
         </div>
+        {(yearFilterFrom || yearFilterTill) && (
+          <button
+            className="submit-years-button"
+            onClick={() => filterOnChangeHandler()}
+          >
+            Save
+          </button>
+        )}
       </div>
     </div>
   );

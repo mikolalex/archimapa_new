@@ -1,4 +1,4 @@
-@import "../../style.less";
+@import "../../../style.less";
 
 .AddObjectRoot {
   background-color: #323232d4;
@@ -53,7 +53,7 @@
         font-size: 16px;
         color: #4f4f4f;
         outline: none;
-        
+
         ::placeholder {
           color: #979797;
           font-family: "Proxima Nova Rg";
@@ -126,6 +126,37 @@
         letter-spacing: 0.5px;
         font-size: 18px;
         margin-top: 8px;
+      }
+    }
+    .exit-warning {
+      position: absolute;
+      top: 30%;
+      left: 0;
+      right: 0;
+      margin-left: auto;
+      margin-right: auto;
+      width: 60%;
+      padding: 20px 30px;
+      text-align: center;
+      background: #302f2d;
+      color: white;
+      font-family: "Proxima Nova Rg";
+      box-shadow: 30px 30px 48px -17px rgba(112, 112, 112, 0.69);
+      .options {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        button {
+          .button-contained();
+          width: 40%;
+          margin: 20px auto;
+          background: rgb(255, 122, 0);
+          border: none;
+          &:hover {
+            border: none !important;
+          }
+        }
       }
     }
   }

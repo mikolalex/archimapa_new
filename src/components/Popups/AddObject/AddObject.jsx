@@ -1,8 +1,8 @@
 import "./AddObject.less";
 import React from "react";
-import useValidation from "../../hooks/useValidation";
+import useValidation from "../../../hooks/useValidation";
 import { useState, useEffect } from "react";
-import { getConfig } from "../../module";
+import { getConfig } from "../../../module";
 
 const AddObject = ({ closePopup, openPopup }) => {
   const [title, setTitle, validateTitle, titleError] = useValidation(
@@ -113,14 +113,33 @@ const AddObject = ({ closePopup, openPopup }) => {
 
   const [selectedFieldData, setSelectedFieldData] = useState({});
   const [selectedFieldDataItemsID, setSelectedFieldDataItemsID] = useState({});
+  const [isExitWarningOpen, setIsExitWarningOpen] = useState(false);
 
   return (
     <div className="AddObjectRoot">
       <div className="add-object-block-content">
         <div className="form-head">
           <h2 className="form-title">Add Object</h2>
-          <img src="/icons/close.png" alt="" onClick={() => closePopup()} />
+          <img
+            src="/icons/close.png"
+            alt=""
+            onClick={() => setIsExitWarningOpen(true)}
+          />
         </div>
+        {isExitWarningOpen && (
+          <div className="exit-warning">
+            <p>
+              are you sure you want to close the form? <br /> all entered data
+              will be lost.
+            </p>
+            <div className="options">
+              <button onClick={() => setIsExitWarningOpen(false)}>
+                cancel
+              </button>
+              <button onClick={() => closePopup()}>yes</button>
+            </div>
+          </div>
+        )}
 
         <form action="submit">
           <div className="name-input-block">

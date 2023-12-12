@@ -14,7 +14,7 @@ const Home = ({ openPopup, setPopups }) => {
 
   return (
     <div>
-      <Header openPopup={openPopup} />
+      <Header openPopup={openPopup} setIsListOpen={setIsListOpen} />
       <main>
         <div className="main-block">
           <MapListSwitcher
