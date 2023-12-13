@@ -71,6 +71,7 @@ const SignIn = ({ closePopup, openPopup }) => {
 
   return (
     <div className="SignInRoot">
+      <div className="overlay" onClick={() => closePopup()}></div>
       <div className="sign-in-block-content">
         <div className="form-head">
           <h2 className="form-title">Sign In</h2>
@@ -134,7 +135,15 @@ const SignIn = ({ closePopup, openPopup }) => {
         </div>
         <div className="redirect">
           <p>
-            Not a member yet? <span className="redirect-link">Join now </span>
+            Not a member yet?
+            <span
+              className="redirect-link"
+              onClick={() => (
+                closePopup(), openPopup("SignUpFirstStep", { openPopup })
+              )}
+            >
+              Join now
+            </span>
           </p>
         </div>
       </div>

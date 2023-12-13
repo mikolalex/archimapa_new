@@ -71,6 +71,7 @@ const SignUpSecondStep = ({ email, closePopup, openPopup }) => {
 
   return (
     <div className="SignUpSecondRoot">
+      <div className="overlay" onClick={() => closePopup()}></div>
       <div className="sign-up-second-step-block-content">
         <div className="form-head">
           <h2 className="form-title">Sign Up</h2>

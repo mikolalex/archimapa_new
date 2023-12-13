@@ -1,13 +1,14 @@
 @import "../../../style.less";
 
 .AddObjectRoot {
-  background-color: #323232d4;
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  z-index: 1000;
-
+  .overlay {
+    background-color: #323232d4;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    z-index: 1000;
+  }
   .add-object-block-content {
     position: absolute;
     background: #fff;
@@ -22,6 +23,7 @@
     width: 50%;
     overflow: auto;
     max-height: 560px;
+    z-index: 1100;
     .form-head {
       position: relative;
       width: 100%;
@@ -79,7 +81,7 @@
           margin-bottom: 10px;
         }
       }
-      .details-form-block {
+      .items-form-block {
         display: flex;
         justify-content: space-between;
         align-items: center;
