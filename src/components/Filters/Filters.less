@@ -5,15 +5,16 @@
   position: absolute;
   right: 0;
   top: 0;
+  bottom: 0;
   height: 100%;
   background: #302f2d;
-
   .objects {
     display: flex;
     justify-content: space-between;
     align-items: center;
     background: #000000;
     padding: 16px 24px;
+    height: 8vh;
     .total-objects {
       color: #ffffff;
       font-size: 16px;
@@ -48,12 +49,6 @@
   }
   .all-filters {
     background: #302f2d;
-    min-height: 550px;
-    // position: absolute;
-    // width: 100%;
-    // bottom: 0;
-    // height: 100%;
-
     .filters-title-block {
       padding: 14px 24px;
       color: #ffffff;
@@ -64,9 +59,9 @@
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
-
       .filters-title {
-        margin: 16px 10px 16px 0;
+        margin: 10px;
+        margin-left: 0;
       }
       .clear-filters-button {
         .button-outlined();
@@ -103,5 +98,4 @@
       }
     }
   }
-
 }

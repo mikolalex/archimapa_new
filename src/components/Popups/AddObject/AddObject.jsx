@@ -5,7 +5,6 @@ import { useState, useEffect } from "react";
 import { getConfig } from "../../../module";
 import AddObjectWarning from "./AddObjectWarning";
 
-
 const AddObject = ({ closePopup, openPopup, isUserSignedIn }) => {
   const [title, setTitle, validateTitle, titleError] = useValidation(
     "",
@@ -119,153 +118,161 @@ const AddObject = ({ closePopup, openPopup, isUserSignedIn }) => {
 
   return (
     <div className="AddObjectRoot">
-    {isUserSignedIn()?( 
-      <>
-    <div className="overlay" onClick={() => setIsExitWarningOpen(true)}></div>
-    <div className="add-object-block-content">
-      <div className="form-head">
-        <h2 className="form-title">Add Object</h2>
-        <img
-          src="/icons/close.png"
-          alt=""
-          onClick={() => setIsExitWarningOpen(true)}
-        />
-      </div>
-      {isExitWarningOpen && (
-        <div className="exit-warning">
-          <p>
-            are you sure you want to close the form? <br /> all entered data
-            will be lost.
-          </p>
-          <div className="options">
-            <button onClick={() => setIsExitWarningOpen(false)}>
-              cancel
-            </button>
-            <button onClick={() => closePopup()}>yes</button>
+      {isUserSignedIn() ? (
+        <>
+          <div
+            className="overlay"
+            onClick={() => setIsExitWarningOpen(true)}
+          ></div>
+          <div className="add-object-block-content">
+            <div className="form-head">
+              <h2 className="form-title">Add Object</h2>
+              <img
+                src="/icons/close.png"
+                alt=""
+                onClick={() => setIsExitWarningOpen(true)}
+              />
+            </div>
+            {isExitWarningOpen && (
+              <div className="exit-warning">
+                <p>
+                  are you sure you want to close the form? <br /> all entered
+                  data will be lost.
+                </p>
+                <div className="options">
+                  <button onClick={() => setIsExitWarningOpen(false)}>
+                    cancel
+                  </button>
+                  <button onClick={() => closePopup()}>yes</button>
+                </div>
+              </div>
+            )}
+
+            <form action="submit">
+              <div className="name-input-block">
+                <input
+                  type="text"
+                  placeholder="Name"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                />
+              </div>
+              {titleError && <div className="warning">{titleError}</div>}
+              <div className="description-input-block">
+                <textarea
+                  placeholder="Description"
+                  className="description-textarea"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                />
+              </div>
+              {descriptionError && (
+                <div className="warning">{descriptionError}</div>
+              )}
+              <div className="notice">
+                <p> Задайте координати</p>
+                <button
+                  className="find-on-map-button"
+                  onClick={findCoordinatesOnMap}
+                >
+                  Знайти на карті
+                </button>
+              </div>
+              <div className="coordinates-input-block">
+                <input
+                  type="number"
+                  placeholder="Широта"
+                  value={latitude}
+                  onChange={(e) => setLatitude(e.target.value)}
+                />
+                <input
+                  type="number"
+                  placeholder="Довгота"
+                  value={longitude}
+                  onChange={(e) => setLongitude(e.target.value)}
+                />
+              </div>
+              {latitudeError && <div className="warning">{latitudeError}</div>}
+              {longitudeError && (
+                <div className="warning">{longitudeError}</div>
+              )}
+
+              <div className="items-form-block">
+                {categories.map((category) => {
+                  switch (category.type) {
+                    case "text":
+                      return (
+                        <input
+                          type={category.type}
+                          placeholder={category.title}
+                          key={category.key}
+                          onInput={(e) => {
+                            setSelectedFieldData(
+                              (prev) =>
+                                (prev = {
+                                  ...prev,
+                                  [category.key]: e.target.value,
+                                })
+                            );
+                          }}
+                        />
+                      );
+
+                    case "select":
+                      return (
+                        <select
+                          name=""
+                          id=""
+                          key={category.key}
+                          defaultValue={category.title}
+                          onChange={(e) => {
+                            setSelectedFieldData(
+                              (prev) =>
+                                (prev = {
+                                  ...prev,
+                                  [category.key]:
+                                    e.target.selectedOptions[0].id,
+                                })
+                            );
+                            setSelectedFieldDataItemsID(
+                              (prev) =>
+                                (prev = {
+                                  ...prev,
+                                  [category.key]:
+                                    e.target.selectedOptions[0].id,
+                                })
+                            );
+                          }}
+                        >
+                          <option disabled>{category.title}</option>
+                          {isFieldDataReady &&
+                            fieldData[
+                              Object.values(category.field_data.category_id)
+                            ].map((option) => (
+                              <option key={option.id} id={option.id}>
+                                {option.title}
+                              </option>
+                            ))}
+                        </select>
+                      );
+                  }
+                })}
+              </div>
+
+              <button
+                type="submit"
+                className="form-submit-button"
+                onClick={onSubmit}
+              >
+                Continue
+              </button>
+            </form>
           </div>
-        </div>
+        </>
+      ) : (
+        <AddObjectWarning closePopup={closePopup} openPopup={openPopup} />
       )}
-
-      <form action="submit">
-        <div className="name-input-block">
-          <input
-            type="text"
-            placeholder="Name"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-          />
-        </div>
-        {titleError && <div className="warning">{titleError}</div>}
-        <div className="description-input-block">
-          <textarea
-            placeholder="Description"
-            className="description-textarea"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-          />
-        </div>
-        {descriptionError && (
-          <div className="warning">{descriptionError}</div>
-        )}
-        <div className="notice">
-          <p> Задайте координати</p>
-          <button
-            className="find-on-map-button"
-            onClick={findCoordinatesOnMap}
-          >
-            Знайти на карті
-          </button>
-        </div>
-        <div className="coordinates-input-block">
-          <input
-            type="number"
-            placeholder="Широта"
-            value={latitude}
-            onChange={(e) => setLatitude(e.target.value)}
-          />
-          <input
-            type="number"
-            placeholder="Довгота"
-            value={longitude}
-            onChange={(e) => setLongitude(e.target.value)}
-          />
-        </div>
-        {latitudeError && <div className="warning">{latitudeError}</div>}
-        {longitudeError && <div className="warning">{longitudeError}</div>}
-
-        <div className="items-form-block">
-          {categories.map((category) => {
-            switch (category.type) {
-              case "text":
-                return (
-                  <input
-                    type={category.type}
-                    placeholder={category.title}
-                    key={category.key}
-                    onInput={(e) => {
-                      setSelectedFieldData(
-                        (prev) =>
-                          (prev = {
-                            ...prev,
-                            [category.key]: e.target.value,
-                          })
-                      );
-                    }}
-                  />
-                );
-
-              case "select":
-                return (
-                  <select
-                    name=""
-                    id=""
-                    key={category.key}
-                    defaultValue={category.title}
-                    onChange={(e) => {
-                      setSelectedFieldData(
-                        (prev) =>
-                          (prev = {
-                            ...prev,
-                            [category.key]: e.target.selectedOptions[0].id,
-                          })
-                      );
-                      setSelectedFieldDataItemsID(
-                        (prev) =>
-                          (prev = {
-                            ...prev,
-                            [category.key]: e.target.selectedOptions[0].id,
-                          })
-                      );
-                    }}
-                  >
-                    <option disabled>{category.title}</option>
-                    {isFieldDataReady &&
-                      fieldData[
-                        Object.values(category.field_data.category_id)
-                      ].map((option) => (
-                        <option key={option.id} id={option.id}>
-                          {option.title}
-                        </option>
-                      ))}
-                  </select>
-                );
-            }
-          })}
-        </div>
-
-        <button
-          type="submit"
-          className="form-submit-button"
-          onClick={onSubmit}
-        >
-          Continue
-        </button>
-      </form>
     </div>
-    </>
- ):(<AddObjectWarning closePopup={closePopup} openPopup={openPopup}/>)}
-  </div>
-   
   );
 };
 

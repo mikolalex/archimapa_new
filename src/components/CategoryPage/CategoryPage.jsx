@@ -29,9 +29,6 @@ const CategoryPage = ({ openPopup }) => {
     getObjects();
   }, []);
 
-  console.log(objects);
-  console.log(itemInfo);
-
   return (
     <div className="CategoryPageRoot">
       <Header openPopup={openPopup} />
