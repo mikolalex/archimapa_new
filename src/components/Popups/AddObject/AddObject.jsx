@@ -34,6 +34,7 @@ const AddObject = ({ closePopup, openPopup, isUserSignedIn }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
+
     if (
       validateTitle() &&
       validateDescription() &&
@@ -44,16 +45,35 @@ const AddObject = ({ closePopup, openPopup, isUserSignedIn }) => {
       for (let key in selectedFieldDataItemsID) {
         items += `${selectedFieldData[key]},`;
       }
+      let data = objToFormData({
+        title: title,
+        description: description,
+        latitude: latitude,
+        longitude: longitude,
+        customFields: JSON.stringify(selectedFieldData),
+        items: items,
+      });
+
+      for (let i in uploadedImgs) {
+        if (uploadedImgs.hasOwnProperty(i)) {
+          data.append("photo" + i, uploadedImgs[i]);
+        }
+      }
+
+      console.log(data);
+
       postData(
         "https://map.transsearch.net/objects/add",
-        objToFormData({
-          title: title,
-          description: description,
-          latitude: latitude,
-          longitude: longitude,
-          customFields: JSON.stringify(selectedFieldData),
-          items: items,
-        })
+        data
+        // objToFormData({
+        //   title: title,
+        //   description: description,
+        //   latitude: latitude,
+        //   longitude: longitude,
+        //   customFields: JSON.stringify(selectedFieldData),
+        //   items: items,
+
+        // })
       );
       setLatitude("");
       setLongitude("");
@@ -114,6 +134,8 @@ const AddObject = ({ closePopup, openPopup, isUserSignedIn }) => {
 
   const [selectedFieldData, setSelectedFieldData] = useState({});
   const [selectedFieldDataItemsID, setSelectedFieldDataItemsID] = useState({});
+  const [uploadedImgs, setUploadedImgs] = useState({});
+  console.log(uploadedImgs);
   const [isExitWarningOpen, setIsExitWarningOpen] = useState(false);
 
   return (
@@ -257,6 +279,17 @@ const AddObject = ({ closePopup, openPopup, isUserSignedIn }) => {
                       );
                   }
                 })}
+              </div>
+              <div className="add-img-block">
+                <input
+                  type="file"
+                  multiple
+                  onChange={
+                    (e) => setUploadedImgs(e.target.files)
+                    // setUploadedImgs(prev=>prev=[...prev, ((e.target.value).split("\\").pop())])
+                  }
+                />
+                {/* <p className="img-name"></p> */}
               </div>
 
               <button

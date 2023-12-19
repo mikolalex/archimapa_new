@@ -1,5 +1,5 @@
 import "./Filters.less";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import YearFilter from "./YearFilter";
 import TypeFilter from "./TypeFilter";
 import StyleFilter from "./StyleFilter";
@@ -12,11 +12,25 @@ const Filters = () => {
     clearFiltersButton ? null : setClearFiltersButton(true);
   };
 
+  const [objects, setObjects] = useState([]);
+
+  useEffect(() => {
+    async function getObjects() {
+      fetch(
+        "https://map.transsearch.net/objects?north=52.89564866211353&south=44.98034238084973&east=39.46289062500001&west=23.4228515625"
+      )
+        .then((response) => response.json())
+        .then((json) => setObjects(json));
+    }
+    getObjects();
+  }, []);
+
   return (
     <div className="filtersRoot">
       <div className="objects">
         <p className="total-objects">
-          Всього <span className="objects-number accent">120</span> об'єктів
+          Всього <span className="objects-number accent">{objects.length}</span>{" "}
+          об'єктів
         </p>
         <p className="navigation-search-block">
           <input type="text" placeholder="Введіть назву" />
