@@ -41,17 +41,13 @@ const AddObject = ({ closePopup, openPopup, isUserSignedIn }) => {
       validateLatitude() &&
       validateLongitude()
     ) {
-      let items = "";
-      for (let key in selectedFieldDataItemsID) {
-        items += `${selectedFieldData[key]},`;
-      }
       let data = objToFormData({
         title: title,
         description: description,
         latitude: latitude,
         longitude: longitude,
         customFields: JSON.stringify(selectedFieldData),
-        items: items,
+        items: itemsIds.join(","),
       });
 
       for (let i in uploadedImgs) {
@@ -59,22 +55,7 @@ const AddObject = ({ closePopup, openPopup, isUserSignedIn }) => {
           data.append("photo" + i, uploadedImgs[i]);
         }
       }
-
-      console.log(data);
-
-      postData(
-        "https://map.transsearch.net/objects/add",
-        data
-        // objToFormData({
-        //   title: title,
-        //   description: description,
-        //   latitude: latitude,
-        //   longitude: longitude,
-        //   customFields: JSON.stringify(selectedFieldData),
-        //   items: items,
-
-        // })
-      );
+      postData("https://map.transsearch.net/objects/add", data);
       setLatitude("");
       setLongitude("");
       closePopup();
@@ -133,9 +114,8 @@ const AddObject = ({ closePopup, openPopup, isUserSignedIn }) => {
   }, [fieldData]);
 
   const [selectedFieldData, setSelectedFieldData] = useState({});
-  const [selectedFieldDataItemsID, setSelectedFieldDataItemsID] = useState({});
+  const [itemsIds, setItemsIds] = useState([]);
   const [uploadedImgs, setUploadedImgs] = useState({});
-  console.log(uploadedImgs);
   const [isExitWarningOpen, setIsExitWarningOpen] = useState(false);
 
   return (
@@ -256,13 +236,13 @@ const AddObject = ({ closePopup, openPopup, isUserSignedIn }) => {
                                     e.target.selectedOptions[0].id,
                                 })
                             );
-                            setSelectedFieldDataItemsID(
+                            setItemsIds(
                               (prev) =>
-                                (prev = {
+                                (prev = [
                                   ...prev,
-                                  [category.key]:
-                                    e.target.selectedOptions[0].id,
-                                })
+
+                                  e.target.selectedOptions[0].id,
+                                ])
                             );
                           }}
                         >
@@ -283,13 +263,13 @@ const AddObject = ({ closePopup, openPopup, isUserSignedIn }) => {
               <div className="add-img-block">
                 <input
                   type="file"
+                  id="img-input"
                   multiple
-                  onChange={
-                    (e) => setUploadedImgs(e.target.files)
-                    // setUploadedImgs(prev=>prev=[...prev, ((e.target.value).split("\\").pop())])
-                  }
+                  onChange={(e) => setUploadedImgs(e.target.files)}
                 />
-                {/* <p className="img-name"></p> */}
+                <label htmlFor="img-input" className="img-input-label">
+                  Завантажити фото
+                </label>
               </div>
 
               <button

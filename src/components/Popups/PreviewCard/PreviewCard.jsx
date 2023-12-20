@@ -6,7 +6,14 @@ const PreviewCard = ({ marker, closePopup, previewCardPosition }) => {
   return (
     <div className={previewCardPosition + " previewCardRoot"}>
       <div className="preview-card-img">
-        <img src="/img/example_img.png" alt="object-img" />
+        {marker.images[0] && (
+          <img
+            src={`https://map.transsearch.net${marker.images[0].preview_url}`}
+            alt="preview-img"
+            className="preview-img"
+          />
+        )}
+
         <img
           src="/icons/close.png"
           alt=""

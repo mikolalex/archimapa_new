@@ -18,7 +18,7 @@ const ObjectPage = ({ openPopup }) => {
     const currentObjectCustomFields = currentObject.custom_fields
       ? JSON.parse(currentObject.custom_fields)
       : null;
-  
+
     for (let key in currentObjectCustomFields) {
       categories.forEach((item) => {
         key === item.key
@@ -69,7 +69,16 @@ https://map.transsearch.net/objects/${id}`)
           </div>
           <div className="object-title">{currentObject.title}</div>
           <div className="object-img">
-            <img src="/img/obj_page_img.png" alt="object_img" />
+            { currentObject.images &&
+            (currentObject.images).map(img=>(
+              <img
+                src={`https://map.transsearch.net${img.full_url}`}
+                alt="object_img"
+                key={img.id}
+                className={currentObject.images.length>1?"multiple-imgs":"single-img"}
+              />
+            ))
+             }
           </div>
           <div className="object-address">
             <img src="/icons/address.png" alt="address_icon" />
