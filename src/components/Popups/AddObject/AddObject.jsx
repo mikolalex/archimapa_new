@@ -1,8 +1,7 @@
 import "./AddObject.less";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import useValidation from "../../../hooks/useValidation";
-import { useState, useEffect } from "react";
-import { getConfig } from "../../../module";
+import { getConfig, mainUrl } from "../../../module";
 import AddObjectWarning from "./AddObjectWarning";
 
 const AddObject = ({ closePopup, openPopup, isUserSignedIn }) => {
@@ -55,7 +54,7 @@ const AddObject = ({ closePopup, openPopup, isUserSignedIn }) => {
           data.append("photo" + i, uploadedImgs[i]);
         }
       }
-      postData("https://map.transsearch.net/objects/add", data);
+      postData(`${mainUrl}/objects/add`, data);
       setLatitude("");
       setLongitude("");
       closePopup();
@@ -96,7 +95,7 @@ const AddObject = ({ closePopup, openPopup, isUserSignedIn }) => {
   };
 
   async function getFieldData(id) {
-    fetch(`https://map.transsearch.net/items/category/${id}`)
+    fetch(`${mainUrl}/items/category/${id}`)
       .then((response) => response.json())
       .then((json) => setFieldData((prev) => ({ ...prev, [id]: json })));
   }
@@ -270,6 +269,16 @@ const AddObject = ({ closePopup, openPopup, isUserSignedIn }) => {
                 <label htmlFor="img-input" className="img-input-label">
                   Завантажити фото
                 </label>
+                {uploadedImgs.length && (
+                  <p>
+                    Завантажено {uploadedImgs.length}
+                    {uploadedImgs.length === 1
+                      ? " файл"
+                      : uploadedImgs.length < 5
+                      ? " файли"
+                      : " файлів"}
+                  </p>
+                )}
               </div>
 
               <button

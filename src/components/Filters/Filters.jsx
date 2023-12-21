@@ -4,6 +4,7 @@ import YearFilter from "./YearFilter";
 import TypeFilter from "./TypeFilter";
 import StyleFilter from "./StyleFilter";
 import ArchitectFilter from "./ArchitectFilter";
+import { mainUrl } from "../../module";
 
 const Filters = () => {
   const [clearFiltersButton, setClearFiltersButton] = useState(false);
@@ -17,7 +18,7 @@ const Filters = () => {
   useEffect(() => {
     async function getObjects() {
       fetch(
-        "https://map.transsearch.net/objects?north=52.89564866211353&south=44.98034238084973&east=39.46289062500001&west=23.4228515625"
+        `${mainUrl}/objects?north=52.89564866211353&south=44.98034238084973&east=39.46289062500001&west=23.4228515625`
       )
         .then((response) => response.json())
         .then((json) => setObjects(json));

@@ -1,6 +1,7 @@
 import React from "react";
 import "./PreviewCard.less";
 import { Link } from "react-router-dom";
+import { mainUrl } from "../../../module";
 
 const PreviewCard = ({ marker, closePopup, previewCardPosition }) => {
   return (
@@ -8,7 +9,7 @@ const PreviewCard = ({ marker, closePopup, previewCardPosition }) => {
       <div className="preview-card-img">
         {marker.images[0] && (
           <img
-            src={`https://map.transsearch.net${marker.images[0].preview_url}`}
+            src={mainUrl + marker.images[0].preview_url}
             alt="preview-img"
             className="preview-img"
           />
