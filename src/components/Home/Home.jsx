@@ -1,10 +1,9 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./Home.less";
 import Header from "../Header/Header";
 import MapBlock from "../Map/MapBlock";
 import Filters from "../Filters/Filters";
 import ListBlockMainPage from "../ListBlockMainPage/ListBlockMainPage";
-import { useState, useEffect } from "react";
 import MapListSwitcher from "./MapListSwitcher";
 
 const Home = ({ openPopup, setPopups }) => {
@@ -14,7 +13,7 @@ const Home = ({ openPopup, setPopups }) => {
 
   return (
     <div>
-      <Header openPopup={openPopup} />
+      <Header openPopup={openPopup} setIsListOpen={setIsListOpen} />
       <main>
         <div className="main-block">
           <MapListSwitcher

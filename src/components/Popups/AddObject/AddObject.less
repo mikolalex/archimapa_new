@@ -1,13 +1,14 @@
-@import "../../style.less";
+@import "../../../style.less";
 
 .AddObjectRoot {
-  background-color: #323232d4;
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  z-index: 1000;
-
+  .overlay {
+    background-color: #323232d4;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    z-index: 1000;
+  }
   .add-object-block-content {
     position: absolute;
     background: #fff;
@@ -21,7 +22,8 @@
     flex-direction: column;
     width: 50%;
     overflow: auto;
-    max-height: 560px;
+    max-height: 80vh;
+    z-index: 1100;
     .form-head {
       position: relative;
       width: 100%;
@@ -38,12 +40,11 @@
       font-family: "GT Eesti Pro Display";
       font-size: 24px;
     }
-
     form {
-      width: 100%;
       input,
       textarea,
-      select {
+      select,
+      .add-img-block {
         width: 100%;
         border-radius: 4px;
         border: 1px solid #979797;
@@ -53,7 +54,7 @@
         font-size: 16px;
         color: #4f4f4f;
         outline: none;
-        
+
         ::placeholder {
           color: #979797;
           font-family: "Proxima Nova Rg";
@@ -79,10 +80,10 @@
           margin-bottom: 10px;
         }
       }
-      .details-form-block {
+      .items-form-block {
         display: flex;
         justify-content: space-between;
-        align-items: center;
+        align-items: flex-start;
         flex-direction: column;
         margin-top: 24px;
       }
@@ -96,16 +97,12 @@
         color: #302f2d;
         background: rgba(205, 205, 205, 0.147);
         padding: 20px 10px;
-
-        // flex-direction: column;
         p {
-          // margin-bottom: 14px;
           margin-right: 5px;
         }
       }
       .find-on-map-button {
         .google-button();
-        // width: 100%;
         width: fit-content;
         font-size: 14px;
         border: #ff7a00 1px solid;
@@ -126,6 +123,57 @@
         letter-spacing: 0.5px;
         font-size: 18px;
         margin-top: 8px;
+      }
+      .add-img-block {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        #img-input {
+          opacity: 0;
+          position: absolute;
+          z-index: -1;
+          width: 1px;
+        }
+        .img-input-label {
+          cursor: pointer;
+          font-family: "Proxima Nova Lt";
+          &:hover {
+            color: #ff7a00;
+          }
+        }
+      }
+    }
+    .exit-warning {
+      position: sticky;
+      margin-top: -177px;
+      top: 30%;
+      left: 0;
+      right: 0;
+      margin-left: auto;
+      margin-right: auto;
+      width: 300px;
+      padding: 20px 30px;
+      text-align: center;
+      background: #302f2d;
+      color: white;
+      font-family: "Proxima Nova Rg";
+      box-shadow: 30px 30px 48px -17px rgba(112, 112, 112, 0.69);
+      .options {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        button {
+          .button-contained();
+          width: 40%;
+          margin: 20px auto;
+          background: rgb(255, 122, 0);
+          border: none;
+          &:hover {
+            border: none !important;
+          }
+        }
       }
     }
   }

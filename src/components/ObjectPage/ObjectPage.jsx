@@ -1,12 +1,11 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./ObjectPage.less";
 import Header from "../Header/Header";
 import { useLocation } from "react-router";
-import { useState, useEffect } from "react";
 import Map from "../Map/Map";
 import Breadcrumbs from "../Breadcrumbs/Breadcrumbs";
 import Item from "../Item";
-import { getConfig } from "../../module";
+import { getConfig, mainUrl } from "../../module";
 
 const ObjectPage = ({ openPopup }) => {
   const location = useLocation();
@@ -15,11 +14,11 @@ const ObjectPage = ({ openPopup }) => {
 
   const categories = getConfig("objectCustomFields");
 
-  const currentObjectCustomFields = currentObject.custom_fields
-    ? JSON.parse(currentObject.custom_fields)
-    : null;
-
   useEffect(() => {
+    const currentObjectCustomFields = currentObject.custom_fields
+      ? JSON.parse(currentObject.custom_fields)
+      : null;
+
     for (let key in currentObjectCustomFields) {
       categories.forEach((item) => {
         key === item.key
@@ -40,8 +39,7 @@ const ObjectPage = ({ openPopup }) => {
   }, [currentObject]);
 
   async function getObject(id) {
-    fetch(`
-https://map.transsearch.net/objects/${id}`)
+    fetch(`${mainUrl}/objects/${id}`)
       .then((response) => response.json())
       .then((json) => setCurrentObject(json));
   }
@@ -70,7 +68,19 @@ https://map.transsearch.net/objects/${id}`)
           </div>
           <div className="object-title">{currentObject.title}</div>
           <div className="object-img">
-            <img src="/img/obj_page_img.png" alt="object_img" />
+            {currentObject.images &&
+              currentObject.images.map((img) => (
+                <img
+                  src={mainUrl + img.full_url}
+                  alt="object_img"
+                  key={img.id}
+                  className={
+                    currentObject.images.length > 1
+                      ? "multiple-imgs"
+                      : "single-img"
+                  }
+                />
+              ))}
           </div>
           <div className="object-address">
             <img src="/icons/address.png" alt="address_icon" />

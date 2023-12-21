@@ -1,7 +1,6 @@
 import "./SignUpFirstStep.less";
 import React from "react";
-import useValidation from "../../hooks/useValidation";
-import { useState } from "react";
+import useValidation from "../../../hooks/useValidation";
 
 const SignUpFirstStep = ({ openPopup, closePopup }) => {
   const emailRegExp =
@@ -22,6 +21,7 @@ const SignUpFirstStep = ({ openPopup, closePopup }) => {
 
   return (
     <div className="SignUpFirstRoot">
+      <div className="overlay" onClick={() => closePopup()}></div>
       <div className="sign-up-first-step-block-content">
         <div className="form-head">
           <h2 className="form-title">Sign Up</h2>
@@ -61,7 +61,13 @@ const SignUpFirstStep = ({ openPopup, closePopup }) => {
         </div>
         <div className="redirect">
           <p>
-            Already a member? <span className="redirect-link"> Sign in </span>
+            Already a member?
+            <span
+              className="redirect-link"
+              onClick={() => (closePopup(), openPopup("SignIn", { openPopup }))}
+            >
+              Sign in
+            </span>
           </p>
         </div>
       </div>

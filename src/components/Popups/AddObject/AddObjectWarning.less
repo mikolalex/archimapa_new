@@ -1,0 +1,70 @@
+@import "../../../style.less";
+
+.AddObjectWarningRoot {
+  .overlay {
+    background-color: #323232d4;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    z-index: 1000;
+  }
+  .warning-block-content {
+    position: absolute;
+    background: #fff;
+    box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.16);
+    top: 100px;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 30%;
+    height: fit-content;
+    padding: 24px 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    z-index: 1000;
+    .form-head {
+      position: relative;
+      width: 100%;
+      text-align: center;
+      img {
+        position: absolute;
+        top: -12px;
+        right: -12px;
+        cursor: pointer;
+      }
+    }
+    .form-title {
+      margin-bottom: 32px;
+      font-family: "GT Eesti Pro Display";
+      font-size: 24px;
+    }
+    .notice {
+      width: 100%;
+      font-family: "Proxima Nova Rg";
+      font-size: 14px;
+      color: #302f2d;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+    .buttons {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 24px;
+      .outlined {
+        .button-outlined();
+        margin-left: 24px;
+      }
+      .contained {
+        .button-contained();
+        margin: 0;
+      }
+    }
+  }
+}

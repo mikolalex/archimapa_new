@@ -1,14 +1,15 @@
-@import "../../style.less";
+@import "../../../style.less";
 
-.SignUpSecondRoot {
-  background-color: #323232d4;
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  z-index: 1000;
-
-  .sign-up-second-step-block-content {
+.SignInRoot {
+  .overlay {
+    background-color: #323232d4;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    z-index: 1000;
+  }
+  .sign-in-block-content {
     position: absolute;
     background: #fff;
     box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.16);
@@ -24,6 +25,7 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    z-index: 1100;
     .form-head {
       position: relative;
       width: 100%;
@@ -39,6 +41,22 @@
       margin-bottom: 32px;
       font-family: "GT Eesti Pro Display";
       font-size: 24px;
+    }
+    .google-button {
+      .google-button();
+    }
+    .or-block {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: "Proxima Nova Lt";
+      font-size: 18px;
+      letter-spacing: 0.5px;
+      color: #979797;
+      margin-bottom: 24px;
+      p {
+        margin: 0 16px;
+      }
     }
 
     form {
@@ -99,6 +117,10 @@
           margin-right: 12px;
         }
       }
+      .forgot-password-block {
+        .accent();
+        cursor: pointer;
+      }
     }
     .redirect {
       margin-bottom: 24px;
@@ -112,6 +134,7 @@
       .redirect-link {
         .accent();
         cursor: pointer;
+        margin-left: 3px;
       }
     }
   }

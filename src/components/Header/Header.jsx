@@ -3,14 +3,18 @@ import "./Header.less";
 import Button from "../Button/Button";
 import { Link } from "react-router-dom";
 
-const Header = ({ openPopup }) => {
+const Header = ({ openPopup, setIsListOpen }) => {
   const isUserSignedIn = () => {
     return sessionStorage.getItem("signInToken") ? true : false;
   };
 
   return (
     <div className="headerRoot">
-      <Link to={"/"} style={{ textDecoration: "none" }}>
+      <Link
+        to={"/"}
+        style={{ textDecoration: "none" }}
+        onClick={() => setIsListOpen(false)}
+      >
         <div className="header-logo-block">
           <img src="/logo/logo.png" alt="logo_img" className="logo-img" />
 
@@ -18,39 +22,36 @@ const Header = ({ openPopup }) => {
         </div>
       </Link>
       <div className="header-buttons-block ">
-        <Button type="outlined">
+        <div
+          className="button-content"
+          onClick={() => {
+            openPopup("AddObject", { openPopup, isUserSignedIn });
+          }}
+        >
+          <Button type="outlined"> Add Object </Button>
+        </div>
+
+        {!isUserSignedIn() && (
           <div
             className="button-content"
             onClick={() => {
-              openPopup("AddObject", { openPopup });
+              openPopup("SignUpFirstStep", {
+                openPopup,
+              });
             }}
           >
-            Add Object
+            <Button type="contained">Sign Up</Button>
           </div>
-        </Button>
-        {isUserSignedIn() ? null : (
-          <Button type="contained">
-            <div
-              className="button-content"
-              onClick={() => {
-                openPopup("SignUpFirstStep", {
-                  openPopup,
-                });
-              }}
-            >
-              Sign Up
-            </div>
-          </Button>
         )}
         {isUserSignedIn() ? (
-          <Button type="text">
-            <div
-              className="button-content"
-              onClick={() => {
-                sessionStorage.clear("signInToken");
-                location.reload();
-              }}
-            >
+          <div
+            className="button-content"
+            onClick={() => {
+              sessionStorage.clear("signInToken");
+              location.reload();
+            }}
+          >
+            <Button type="text">
               {
                 <img
                   src="/icons/log-in.png"
@@ -59,16 +60,16 @@ const Header = ({ openPopup }) => {
                 />
               }
               Log Out
-            </div>
-          </Button>
+            </Button>
+          </div>
         ) : (
-          <Button type="text">
-            <div
-              className="button-content"
-              onClick={() => {
-                openPopup("SignIn", { openPopup });
-              }}
-            >
+          <div
+            className="button-content"
+            onClick={() => {
+              openPopup("SignIn", { openPopup });
+            }}
+          >
+            <Button type="text">
               {
                 <img
                   src="/icons/log-in.png"
@@ -77,8 +78,8 @@ const Header = ({ openPopup }) => {
                 />
               }
               Sign In
-            </div>
-          </Button>
+            </Button>
+          </div>
         )}
       </div>
     </div>

@@ -1,8 +1,8 @@
 import "./SignUpSecondStep.less";
-import React from "react";
-import useValidation from "../../hooks/useValidation";
-import { useState } from "react";
-import Loading from "../Loading/Loading";
+import React, { useState } from "react";
+import useValidation from "../../../hooks/useValidation";
+import Loading from "../../Loading/Loading";
+import { mainUrl } from "../../../module";
 
 const SignUpSecondStep = ({ email, closePopup, openPopup }) => {
   const regExp = /^[0-9a-zа-я_]+$/i;
@@ -40,7 +40,7 @@ const SignUpSecondStep = ({ email, closePopup, openPopup }) => {
   const onSubmit = (e) => {
     e.preventDefault();
     if (validateUsername() && validatePassword()) {
-      postData("https://map.transsearch.net/auth/register", {
+      postData(`${mainUrl}/auth/register`, {
         email: email,
         username: username,
         password: password,
@@ -71,6 +71,7 @@ const SignUpSecondStep = ({ email, closePopup, openPopup }) => {
 
   return (
     <div className="SignUpSecondRoot">
+      <div className="overlay" onClick={() => closePopup()}></div>
       <div className="sign-up-second-step-block-content">
         <div className="form-head">
           <h2 className="form-title">Sign Up</h2>

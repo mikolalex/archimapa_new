@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import "./SignIn.less";
-import useValidation from "../../hooks/useValidation";
-import { useState } from "react";
-import Loading from "../Loading/Loading";
+import useValidation from "../../../hooks/useValidation";
+import Loading from "../../Loading/Loading";
+import { mainUrl } from "../../../module";
 
 const SignIn = ({ closePopup, openPopup }) => {
   const [email, setEmail, validateEmail, emailError] = useValidation(
@@ -57,7 +57,7 @@ const SignIn = ({ closePopup, openPopup }) => {
 
     if (validateEmail() && validatePassword()) {
       postData(
-        "https://map.transsearch.net/auth/login",
+        `${mainUrl}/auth/login`,
         objToFormData({
           username: email,
           password: password,
@@ -71,6 +71,7 @@ const SignIn = ({ closePopup, openPopup }) => {
 
   return (
     <div className="SignInRoot">
+      <div className="overlay" onClick={() => closePopup()}></div>
       <div className="sign-in-block-content">
         <div className="form-head">
           <h2 className="form-title">Sign In</h2>
@@ -134,7 +135,15 @@ const SignIn = ({ closePopup, openPopup }) => {
         </div>
         <div className="redirect">
           <p>
-            Not a member yet? <span className="redirect-link">Join now </span>
+            Not a member yet?
+            <span
+              className="redirect-link"
+              onClick={() => (
+                closePopup(), openPopup("SignUpFirstStep", { openPopup })
+              )}
+            >
+              Join now
+            </span>
           </p>
         </div>
       </div>

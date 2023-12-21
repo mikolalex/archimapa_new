@@ -1,7 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./Map.less";
-
-import PreviewCard from "../PreviewCard/PreviewCard";
+import { mainUrl } from "../../module";
 import {
   MapContainer,
   TileLayer,
@@ -12,7 +11,6 @@ import {
 } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-cluster";
 import "leaflet/dist/leaflet.css";
-import { useState, useEffect } from "react";
 
 const Map = ({ center, zoom, openPopup, previewCardPosition }) => {
   const [objects, setObjects] = useState([]);
@@ -48,7 +46,7 @@ const Map = ({ center, zoom, openPopup, previewCardPosition }) => {
 
   useEffect(() => {
     getObjects(
-      `https://map.transsearch.net/objects?north=${bounds.north}&south=${bounds.south}&east=${bounds.east}&west=${bounds.west}`
+      `${mainUrl}/objects?north=${bounds.north}&south=${bounds.south}&east=${bounds.east}&west=${bounds.west}`
     );
   }, [bounds]);
 
