@@ -1,7 +1,7 @@
 import React from "react";
 import "./Breadcrumbs.less";
 import { Link } from "react-router-dom";
-import Item from "../Item";
+// import Item from "../Item";
 
 const Breadcrumbs = ({ currentObject, itemInfo }) => {
   const breadcrumbsArrow = (
