@@ -267,11 +267,12 @@ const AddObject = ({ closePopup, openPopup, isUserSignedIn }) => {
                   onChange={(e) => setUploadedImgs(e.target.files)}
                 />
                 <label htmlFor="img-input" className="img-input-label">
-                  Завантажити фото
+                  <img src="/icons/camera.png" alt="" />
+                  <p>Завантажити фото</p>
                 </label>
                 {uploadedImgs.length && (
-                  <p>
-                    Завантажено {uploadedImgs.length}
+                  <p className="uploaded-imgs-info">
+                    Обрано {uploadedImgs.length}
                     {uploadedImgs.length === 1
                       ? " файл"
                       : uploadedImgs.length < 5

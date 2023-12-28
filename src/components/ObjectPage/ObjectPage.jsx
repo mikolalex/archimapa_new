@@ -5,7 +5,8 @@ import { useLocation } from "react-router";
 import Map from "../Map/Map";
 import Breadcrumbs from "../Breadcrumbs/Breadcrumbs";
 import Item from "../Item";
-import { getConfig, mainUrl } from "../../module";
+import { getConfig, mainUrl, adminkaUrl } from "../../module";
+import { Link } from "react-router-dom";
 
 const ObjectPage = ({ openPopup }) => {
   const location = useLocation();
@@ -63,7 +64,13 @@ const ObjectPage = ({ openPopup }) => {
           <div className="head">
             <Breadcrumbs currentObject={currentObject} />
             {isAuthorised && (
-              <button className="edit-object-button">Редагувати</button>
+              <Link
+                to={`${adminkaUrl}/objects/update/${currentObject.id}`}
+                style={{ textDecoration: "none" }}
+                target="_blank"
+              >
+                <button className="edit-object-button">Редагувати</button>
+              </Link>
             )}
           </div>
           <div className="object-title">{currentObject.title}</div>
@@ -82,10 +89,10 @@ const ObjectPage = ({ openPopup }) => {
                 />
               ))}
           </div>
-          <div className="object-address">
+          {/* <div className="object-address">
             <img src="/icons/address.png" alt="address_icon" />
             вулиця Обсерваторна, 6, Київ, 02000
-          </div>
+          </div> */}
           <div className="object-description">{currentObject.description}</div>
           <div className="map-block">
             {currentObject.latitude && (

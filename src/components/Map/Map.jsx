@@ -31,7 +31,7 @@ const Map = ({ center, zoom, openPopup, previewCardPosition }) => {
   function GetBounds() {
     const map = useMap();
     useMapEvents({
-      move() {
+      moveend() {
         const data = map.getBounds();
         setBounds({
           north: data._northEast.lat,

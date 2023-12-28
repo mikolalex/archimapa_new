@@ -31,20 +31,11 @@ const CategoryPage = ({ openPopup }) => {
     <div className="CategoryPageRoot">
       <Header openPopup={openPopup} />
       <div className="category-page-main">
-        <Breadcrumbs itemInfo={itemInfo} />
+        <Breadcrumbs />
 
         <div className="category-details">
           <h2 className="category-title">Український Архітектурний Модерн</h2>
-          <p className="category-description">
-            Украї́нський архітекту́рний моде́рн, УАМ — один з українських
-            оригінальних архітектурних стилів. Виник на початку XX століття.
-            Існував і розвивався протягом майже 40 років (з 1903 по 1941 роки).
-            В основі УАМ лежать народні традиції хатнього і церковного
-            будівництва і досягнення української професійної архітектури і перш
-            за все барокової (див. українське бароко), вплив якої, починаючи з
-            1910 року був помітним і навіть зростаючим. Сильним був також вплив
-            європейського модерну.
-          </p>
+          <p className="category-description">{itemInfo.description}</p>
         </div>
         <div className="category-objects-block">
           <ObjectsList list={objectsToDisplay} />
