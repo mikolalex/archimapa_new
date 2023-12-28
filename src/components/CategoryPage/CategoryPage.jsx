@@ -15,8 +15,6 @@ const CategoryPage = ({ openPopup }) => {
   const [objectsToDisplay, setObjectsToDisplay] = useState([]);
   const [itemInfo, setItemInfo] = useState([]);
 
-
-
   useEffect(() => {
     async function getObjects() {
       fetch(`${mainUrl}/items/${itemId}`)
@@ -33,13 +31,11 @@ const CategoryPage = ({ openPopup }) => {
     <div className="CategoryPageRoot">
       <Header openPopup={openPopup} />
       <div className="category-page-main">
-        <Breadcrumbs itemInfo={itemInfo} />
+        <Breadcrumbs />
 
         <div className="category-details">
           <h2 className="category-title">Український Архітектурний Модерн</h2>
-          <p className="category-description">
-     {itemInfo.description}
-          </p>
+          <p className="category-description">{itemInfo.description}</p>
         </div>
         <div className="category-objects-block">
           <ObjectsList list={objectsToDisplay} />

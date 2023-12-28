@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Breadcrumbs.less";
-import { Link } from "react-router-dom";
-// import Item from "../Item";
+import { Link, useLocation } from "react-router-dom";
+import { mainUrl } from "../../module";
 
-const Breadcrumbs = ({ currentObject, itemInfo }) => {
+const Breadcrumbs = ({ currentObject }) => {
   const breadcrumbsArrow = (
     <img
       src="/icons/breadcrumb-arrow.png"
@@ -11,9 +11,34 @@ const Breadcrumbs = ({ currentObject, itemInfo }) => {
       className="breadcrumb-arrow-icon"
     />
   );
+
+  let location = useLocation();
+  let itemId = location.pathname.split("/")[2];
+
+  const [parent, setParent] = useState([]);
+  const [item, setItem] = useState([]);
+
+  async function getParent() {
+    fetch(`${mainUrl}/items/${item[0].parent_id}`)
+      .then((response) => response.json())
+      .then((json) => setParent(json));
+  }
+  async function getItem() {
+    fetch(`${mainUrl}/items/${itemId}`)
+      .then((response) => response.json())
+      .then((json) => setItem(json));
+  }
+  useEffect(() => {
+    getItem();
+    setParent([]);
+  }, [location]);
+  useEffect(() => {
+    getParent();
+  }, [item]);
+
   return (
     <>
-      {((currentObject && currentObject.items) || itemInfo) && (
+      {((currentObject && currentObject.items) || item[0]) && (
         <ul className="breadcrumbs">
           <li>
             <Link
@@ -26,21 +51,17 @@ const Breadcrumbs = ({ currentObject, itemInfo }) => {
           </li>
 
           {breadcrumbsArrow}
-          {/* <Link
-        to={"/category"}
-        style={{ textDecoration: "none" }}
-        className="breadcrumb"
-      >
-        Модернізм
-      </Link>
-      {breadcrumbsArrow} */}
-          {/* <Link
-        to={"/category"}
-        style={{ textDecoration: "none" }}
-        className="breadcrumb"
-      >
-        УАМ
-      </Link> */}
+          {parent[0] && (
+            <Link
+              to={`/item/${parent[0].id}`}
+              style={{ textDecoration: "none" }}
+              className="breadcrumb"
+            >
+              {parent[0].title}
+              {breadcrumbsArrow}
+            </Link>
+          )}
+
           {currentObject && currentObject.items && (
             <Link
               to={`/item/${currentObject.items[0].id}`}
@@ -50,13 +71,13 @@ const Breadcrumbs = ({ currentObject, itemInfo }) => {
               {currentObject.items[0].name}
             </Link>
           )}
-          {itemInfo && (
+          {item[0] && (
             <Link
-              to={`/item/${itemInfo.id}`}
+              to={`/item/${item[0].id}`}
               style={{ textDecoration: "none" }}
               className="breadcrumb"
             >
-              {itemInfo.title}
+              {item[0].title}
             </Link>
           )}
           {currentObject && breadcrumbsArrow}
