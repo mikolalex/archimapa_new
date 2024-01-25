@@ -34,7 +34,7 @@ const CategoryPage = ({ openPopup }) => {
         <Breadcrumbs />
 
         <div className="category-details">
-          <h2 className="category-title">Український Архітектурний Модерн</h2>
+          <h2 className="category-title">{itemInfo.title}</h2>
           <p className="category-description">{itemInfo.description}</p>
         </div>
         <div className="category-objects-block">
