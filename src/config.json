@@ -22,12 +22,6 @@
       "type": "select",
       "field_data": { "category_id": "2" },
       "title": "Архітектурний стиль"
-    },
-    {
-      "key": "architectural_substyle",
-      "type": "select",
-      "field_data": { "category_id": "3" },
-      "title": "Архітектурний підстиль"
     }
   ],
   "categoriesConfig": [

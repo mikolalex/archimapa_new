@@ -62,7 +62,7 @@ const ObjectPage = ({ openPopup }) => {
       <main className="object-page-main">
         <div className="object-card">
           <div className="head">
-            <Breadcrumbs currentObject={currentObject} />
+            <Breadcrumbs/>
             {isAuthorised && (
               <Link
                 to={`${adminkaUrl}/objects/update/${currentObject.id}`}
