@@ -45,6 +45,7 @@ const ObjectPage = ({ openPopup }) => {
       .then((json) => setCurrentObject(json));
   }
   useEffect(() => {
+    setItemsToDisplay([]);
     getObject(location.pathname.split("/")[2]);
   }, [location]);
 
@@ -62,7 +63,7 @@ const ObjectPage = ({ openPopup }) => {
       <main className="object-page-main">
         <div className="object-card">
           <div className="head">
-            <Breadcrumbs/>
+            <Breadcrumbs currentObject={currentObject} />
             {isAuthorised && (
               <Link
                 to={`${adminkaUrl}/objects/update/${currentObject.id}`}

@@ -25,7 +25,7 @@ const CategoryPage = ({ openPopup }) => {
         });
     }
     getObjects();
-  }, []);
+  }, [location]);
 
   return (
     <div className="CategoryPageRoot">
