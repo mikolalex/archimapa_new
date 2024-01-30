@@ -4,9 +4,12 @@ import YearFilter from "./YearFilter";
 import TypeFilter from "./TypeFilter";
 import StyleFilter from "./StyleFilter";
 import ArchitectFilter from "./ArchitectFilter";
-import { mainUrl } from "../../module";
+import FilterItem from "./FilterItem";
+import { mainUrl, getConfig } from "../../module";
 
 const Filters = () => {
+  const filtersConfig = getConfig("filtersConfig");
+
   const [clearFiltersButton, setClearFiltersButton] = useState(false);
 
   const filterOnChangeHandler = () => {
@@ -49,10 +52,17 @@ const Filters = () => {
           </button>
         </div>
         <div className="filters-list">
-          <YearFilter filterOnChangeHandler={filterOnChangeHandler} />
+          {filtersConfig.map((filter) => (
+            <FilterItem
+              filter={filter}
+              filterOnChangeHandler={filterOnChangeHandler}
+              key={filter.category_id}
+            />
+          ))}
+          {/* <YearFilter filterOnChangeHandler={filterOnChangeHandler} />
           <TypeFilter filterOnChangeHandler={filterOnChangeHandler} />
           <StyleFilter filterOnChangeHandler={filterOnChangeHandler} />
-          <ArchitectFilter filterOnChangeHandler={filterOnChangeHandler} />
+          <ArchitectFilter filterOnChangeHandler={filterOnChangeHandler} /> */}
         </div>
       </div>
     </div>
