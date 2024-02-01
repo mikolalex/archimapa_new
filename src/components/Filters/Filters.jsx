@@ -1,9 +1,6 @@
 import "./Filters.less";
 import React, { useState, useEffect } from "react";
-import YearFilter from "./YearFilter";
-import TypeFilter from "./TypeFilter";
-import StyleFilter from "./StyleFilter";
-import ArchitectFilter from "./ArchitectFilter";
+// import YearFilter from "./YearFilter";
 import FilterItem from "./FilterItem";
 import { mainUrl, getConfig } from "../../module";
 
@@ -59,10 +56,7 @@ const Filters = () => {
               key={filter.category_id}
             />
           ))}
-          {/* <YearFilter filterOnChangeHandler={filterOnChangeHandler} />
-          <TypeFilter filterOnChangeHandler={filterOnChangeHandler} />
-          <StyleFilter filterOnChangeHandler={filterOnChangeHandler} />
-          <ArchitectFilter filterOnChangeHandler={filterOnChangeHandler} /> */}
+          {/* <YearFilter filterOnChangeHandler={filterOnChangeHandler} /> */}
         </div>
       </div>
     </div>
