@@ -1,8 +1,13 @@
 import "./FilterItem.less";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { mainUrl } from "../../module";
 
-const FilterItem = ({ filterOnChangeHandler, filter }) => {
+const FilterItem = ({
+  filterOnChangeHandler,
+  filter,
+  setRequiredFilters,
+  requiredFilters,
+}) => {
   const [fieldData, setFieldData] = useState([]);
 
   const [isFilterOpen, setIsFilterOpen] = useState(false);
@@ -12,7 +17,9 @@ const FilterItem = ({ filterOnChangeHandler, filter }) => {
       .then((response) => response.json())
       .then((json) => setFieldData(json));
   }
-  getFieldData();
+  useEffect(() => {
+    getFieldData();
+  }, []);
 
   const item = () => {
     switch (filter.type) {
@@ -22,7 +29,12 @@ const FilterItem = ({ filterOnChangeHandler, filter }) => {
             <select
               name=""
               id=""
-              onChange={() => filterOnChangeHandler()}
+              onChange={(e) =>
+                setRequiredFilters(
+                  (prev) =>
+                    (prev = { ...prev, [filter.title]: Number(e.target.value) })
+                )
+              }
               defaultValue={0}
             >
               <option value="0" disabled>
@@ -32,7 +44,7 @@ const FilterItem = ({ filterOnChangeHandler, filter }) => {
                 <option
                   className="select-filter-item"
                   key={item.id}
-                  value="item.id"
+                  value={item.id}
                 >
                   {item.title}
                 </option>
@@ -49,7 +61,27 @@ const FilterItem = ({ filterOnChangeHandler, filter }) => {
                   type="checkbox"
                   name=""
                   id=""
-                  onChange={() => filterOnChangeHandler()}
+                  onChange={(e) => {
+                    e.target.checked
+                      ? setRequiredFilters(
+                          (prev) =>
+                            (prev = {
+                              ...prev,
+                              [filter.title]: prev[filter.title]
+                                ? [...prev[filter.title], item.id]
+                                : [item.id],
+                            })
+                        )
+                      : setRequiredFilters(
+                          (prev) =>
+                            (prev = {
+                              ...prev,
+                              [filter.title]: prev[filter.title].filter(
+                                (id) => id !== item.id
+                              ),
+                            })
+                        );
+                  }}
                 />
                 {item.title}
               </li>

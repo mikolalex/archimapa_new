@@ -24,7 +24,7 @@ function App() {
     InfoPopup: InfoPopup,
     AddObjectMap: AddObjectMap,
     PreviewCard: PreviewCard,
-    AddObjectWarning:AddObjectWarning
+    AddObjectWarning: AddObjectWarning,
   };
 
   const openPopup = (popupName, customProps) => {

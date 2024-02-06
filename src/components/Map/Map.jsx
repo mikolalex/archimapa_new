@@ -12,15 +12,23 @@ import {
 import MarkerClusterGroup from "react-leaflet-cluster";
 import "leaflet/dist/leaflet.css";
 
-const Map = ({ center, zoom, openPopup, previewCardPosition }) => {
-  const [objects, setObjects] = useState([]);
-
+const Map = ({
+  center,
+  zoom,
+  openPopup,
+  previewCardPosition,
+  objects,
+  setObjects,
+  filteredObjects, setFilteredObjects
+}) => {
   const [bounds, setBounds] = useState({
     east: 39.46289062500001,
     north: 52.89564866211353,
     south: 44.98034238084973,
     west: 23.4228515625,
   });
+  // const [objects, setObjects] = useState([]);
+
 
   async function getObjects(link) {
     fetch(link)
@@ -49,6 +57,7 @@ const Map = ({ center, zoom, openPopup, previewCardPosition }) => {
       `${mainUrl}/objects?north=${bounds.north}&south=${bounds.south}&east=${bounds.east}&west=${bounds.west}`
     );
   }, [bounds]);
+  console.log(filteredObjects);
 
   return (
     <div className="map-block">
@@ -59,19 +68,20 @@ const Map = ({ center, zoom, openPopup, previewCardPosition }) => {
         />
         <GetBounds />
         <MarkerClusterGroup>
-          {objects.map((marker) => (
-            <Marker
-              position={[marker.latitude, marker.longitude]}
-              key={marker.id}
-              eventHandlers={{
-                click: () => {
-                  openPopup("PreviewCard", { marker, previewCardPosition });
-                },
-              }}
-            >
-              <Popup closeButton={false}></Popup>
-            </Marker>
-          ))}
+          {filteredObjects &&
+            filteredObjects.map((marker) => (
+              <Marker
+                position={[marker.latitude, marker.longitude]}
+                key={marker.id}
+                eventHandlers={{
+                  click: () => {
+                    openPopup("PreviewCard", { marker, previewCardPosition });
+                  },
+                }}
+              >
+                <Popup closeButton={false}></Popup>
+              </Marker>
+            ))}
         </MarkerClusterGroup>
       </MapContainer>
     </div>
