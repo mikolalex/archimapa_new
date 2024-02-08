@@ -16,12 +16,16 @@ const Filters = ({
 
   // const [filteredObjects, setFilteredObjects] = useState(objects)
   const [requiredFilters, setRequiredFilters] = useState({});
+  const [result, setResult] = useState([]);
+  //  objects.filter((object) => {
+
+  // console.log(objItems);
 
   const filterOnChangeHandler = () => {
     clearFiltersButton ? null : setClearFiltersButton(true);
 
-    console.log(objects);
-    console.log(requiredFilters);
+    // console.log(objects);
+    // console.log(requiredFilters);
 
     const getElementFromArray = (arr) => {
       let result;
@@ -32,29 +36,72 @@ const Filters = ({
       return result;
     };
 
-    const newArr = objects.filter((object) => {
-      const objItems = JSON.parse(object.custom_fields);
-      // console.log(
-      //   lol(requiredFilters["building_type"], objItems["building_type"])
-      // );
+    const lol = (arr) => {
+      const filteredRes = arr.filter((objCustomFields) => {
+        for (let y = 0; y < Object.keys(requiredFilters).length; y++) {
+          // console.log(Number(objItems[Object.keys(requiredFilters)[i]]))
+          // console.log(Number(requiredFilters[Object.keys(requiredFilters)[i]]))
 
-      for (let key in requiredFilters) {
-        console.log(key);
-        console.log(objItems[key]);
-        return (
-          Number(objItems[key]) ===
-          (Array.isArray(requiredFilters[key])
-            ? getElementFromArray(requiredFilters[key])
-            : requiredFilters[key])
-        );
-      }
+          return (
+            Number(objCustomFields[Object.keys(requiredFilters)[y]]) ===
+            (Array.isArray(requiredFilters[Object.keys(requiredFilters)[y]])
+              ? getElementFromArray(
+                  requiredFilters[Object.keys(requiredFilters)[y]]
+                )
+              : Number(requiredFilters[Object.keys(requiredFilters)[y]]))
+          );
+        }
+      });
+      setResult([...filteredRes]);
+    };
+    result[0] && lol(result);
 
-      // return objItems[item] === id;
-    });
-    console.log(newArr);
-    // setFilteredObjects(newArr);
-    console.log(filteredObjects);
+    const newArr = [];
+
+    // console.log(result);
+
+    //   const lol = (filterKey, elementId) => {
+
+    // }
+    // lol(Object.keys(requiredFilters), objItems[key])
+
+    // for (let key in requiredFilters) {
+    //   console.log(key);
+    //   console.log(objItems[key]);
+
+    //   if (Array.isArray(requiredFilters[key])) {
+    //     Number(objItems[key]) === getElementFromArray(requiredFilters[key])
+    //       ? newArr.push(objects[i])
+    //       : null;
+    //   } else {
+    //     Number(objItems[key]) === requiredFilters[key]
+    //       ? newArr.push(objects[i])
+    //       : null;
+    //   }
+    // }
+
+    // if (
+    //   Number(objItems[key]) ===
+    //   (Array.isArray(requiredFilters[key])
+    //     ? getElementFromArray(requiredFilters[key])
+    //     : requiredFilters[key])
+    // ) {
+    //   newArr.push(objects[i]);
+    // }
+
+    // });
+
+    // newArr[0] ? setFilteredObjects([...newArr]) : null;
   };
+  console.log(result);
+
+  useEffect(() => {
+    setResult([]);
+    objects.forEach((obj) => {
+      const ObjItems = JSON.parse(obj.custom_fields);
+      setResult((prev) => (prev = [...prev, ObjItems]));
+    });
+  }, [objects]);
 
   useEffect(() => {
     filterOnChangeHandler();

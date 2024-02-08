@@ -22,7 +22,9 @@ const Home = ({ openPopup, setPopups }) => {
         `${mainUrl}/objects?north=52.89564866211353&south=44.98034238084973&east=39.46289062500001&west=23.4228515625`
       )
         .then((response) => response.json())
-        .then((json) => {setObjects(json) , setFilteredObjects(json)});
+        .then((json) => {setObjects(json)
+          //  , setFilteredObjects(json)
+          });
     }
     getObjects();
   }, []);

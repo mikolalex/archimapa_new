@@ -19,7 +19,8 @@ const Map = ({
   previewCardPosition,
   objects,
   setObjects,
-  filteredObjects, setFilteredObjects
+  filteredObjects,
+  setFilteredObjects,
 }) => {
   const [bounds, setBounds] = useState({
     east: 39.46289062500001,
@@ -28,7 +29,6 @@ const Map = ({
     west: 23.4228515625,
   });
   // const [objects, setObjects] = useState([]);
-
 
   async function getObjects(link) {
     fetch(link)
@@ -68,20 +68,19 @@ const Map = ({
         />
         <GetBounds />
         <MarkerClusterGroup>
-          {filteredObjects &&
-            filteredObjects.map((marker) => (
-              <Marker
-                position={[marker.latitude, marker.longitude]}
-                key={marker.id}
-                eventHandlers={{
-                  click: () => {
-                    openPopup("PreviewCard", { marker, previewCardPosition });
-                  },
-                }}
-              >
-                <Popup closeButton={false}></Popup>
-              </Marker>
-            ))}
+          {(filteredObjects || objects).map((marker) => (
+            <Marker
+              position={[marker.latitude, marker.longitude]}
+              key={marker.id}
+              eventHandlers={{
+                click: () => {
+                  openPopup("PreviewCard", { marker, previewCardPosition });
+                },
+              }}
+            >
+              <Popup closeButton={false}></Popup>
+            </Marker>
+          ))}
         </MarkerClusterGroup>
       </MapContainer>
     </div>
