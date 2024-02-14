@@ -2,12 +2,7 @@ import "./FilterItem.less";
 import React, { useState, useEffect } from "react";
 import { mainUrl } from "../../module";
 
-const FilterItem = ({
-  filterOnChangeHandler,
-  filter,
-  setRequiredFilters,
-  requiredFilters,
-}) => {
+const FilterItem = ({ filter, setRequiredFilters }) => {
   const [fieldData, setFieldData] = useState([]);
 
   const [isFilterOpen, setIsFilterOpen] = useState(false);
