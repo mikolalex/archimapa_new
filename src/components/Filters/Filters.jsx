@@ -48,10 +48,10 @@ const Filters = () => {
     <div className="filtersRoot">
       <div className="objects">
         <p className="total-objects">
-          Всього{" "}
-          <span className="objects-number accent">
+          Всього 
+          <span className="objects-number accent"> 
             {objects && objects.length}
-          </span>
+          </span> 
           об'єктів
         </p>
         <p className="navigation-search-block">

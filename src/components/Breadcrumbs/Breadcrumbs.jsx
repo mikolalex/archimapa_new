@@ -1,25 +1,11 @@
 import React, { useEffect, useState } from "react";
 import "./Breadcrumbs.less";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { mainUrl } from "../../module";
+import BreadcrumbsArrow from "./BreadcrumbsArrow";
+import BreadcrumbItem from "./BreadcrumbItem";
 
 const Breadcrumbs = ({ currentObject }) => {
-  const breadcrumbsArrow = (
-    <img
-      src="/icons/breadcrumb-arrow.png"
-      alt=""
-      className="breadcrumb-arrow-icon"
-    />
-  );
-
-  const breadcrumb = (path, text) => (
-    <li>
-      <Link to={path} style={{ textDecoration: "none" }} className="breadcrumb">
-        {text}
-      </Link>
-    </li>
-  );
-
   let location = useLocation();
   let id = location.pathname.split("/")[2];
 
@@ -58,18 +44,23 @@ const Breadcrumbs = ({ currentObject }) => {
       {items[0] &&
         items.map((item) => (
           <ul className="breadcrumbs" key={item.id}>
-            {breadcrumb("/", "Головна")}
-            {breadcrumbsArrow}
-            {item.parent_id &&
-              breadcrumb(
-                `/item/${item.parent_id}`,
-                `${getParentName(item.parent_id)}`
-              )}
-            {item.parent_id && breadcrumbsArrow}
-            {breadcrumb(`/item/${item.id}`, item.title)}
-            {currentObject && breadcrumbsArrow}
-            {currentObject &&
-              breadcrumb(`/object/${currentObject.id}`, currentObject.title)}
+            {<BreadcrumbItem path="/" text="Головна" />}
+            {<BreadcrumbsArrow />}
+            {item.parent_id && (
+              <BreadcrumbItem
+                path={`/item/${item.parent_id}`}
+                text={getParentName(item[parent_id])}
+              />
+            )}
+            {item.parent_id && <BreadcrumbsArrow />}
+            <BreadcrumbItem path={`/item/${item.id}`} text={item.title} />
+            {currentObject && <BreadcrumbsArrow />}
+            {currentObject && (
+              <BreadcrumbItem
+                path={`/object/${currentObject.id}`}
+                text={currentObject.title}
+              />
+            )}
           </ul>
         ))}
     </div>
