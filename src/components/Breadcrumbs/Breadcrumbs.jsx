@@ -1,68 +1,54 @@
 import React, { useEffect, useState } from "react";
 import "./Breadcrumbs.less";
 import { useLocation } from "react-router-dom";
-import { mainUrl } from "../../module";
 import BreadcrumbsArrow from "./BreadcrumbsArrow";
 import BreadcrumbItem from "./BreadcrumbItem";
+import useBreadcrumbs from "../../hooks/useBreadcrumbs";
 
 const Breadcrumbs = ({ currentObject }) => {
   let location = useLocation();
   let id = location.pathname.split("/")[2];
 
-  const [items, setItems] = useState([]);
-  const [parentName, setParentName] = useState();
-
-  async function getItemsInfo(id) {
-    fetch(`${mainUrl}/items/${id}`)
-      .then((response) => response.json())
-      .then((json) => setItems((prev) => (prev = [...prev, json[0]])));
-  }
-
-  const getParentName = (id) => {
-    async function getData() {
-      fetch(`${mainUrl}/items/${id}`)
-        .then((response) => response.json())
-        .then((json) => setParentName(json[0].title));
-    }
-    getData();
-    return parentName;
-  };
+  const [items, getItems, setItems] = useBreadcrumbs();
 
   useEffect(() => {
-    setItems([]);
+    setItems({});
     currentObject
       ? currentObject.items
         ? currentObject.items.forEach((item) => {
-            getItemsInfo(item.id);
+            getItems(item.id, item.id);
           })
         : null
-      : getItemsInfo(id);
+      : getItems(id, id);
   }, [location, currentObject]);
 
   return (
     <div className="breadcrumbs-list">
-      {items[0] &&
-        items.map((item) => (
-          <ul className="breadcrumbs" key={item.id}>
-            {<BreadcrumbItem path="/" text="Головна" />}
-            {<BreadcrumbsArrow />}
-            {item.parent_id && (
-              <BreadcrumbItem
-                path={`/item/${item.parent_id}`}
-                text={getParentName(item[parent_id])}
-              />
-            )}
-            {item.parent_id && <BreadcrumbsArrow />}
-            <BreadcrumbItem path={`/item/${item.id}`} text={item.title} />
-            {currentObject && <BreadcrumbsArrow />}
-            {currentObject && (
+      {Object.keys(items).map((key) => (
+        <ul className="breadcrumbs" key={key}>
+          <BreadcrumbItem path="/" text="Головна" />
+          <BreadcrumbsArrow />
+          {items[key].reverse().map((item) => {
+            return (
+              <div className="breadcrumb-item" key={item.id}>
+                <BreadcrumbItem path={`/item/${item.id}`} text={item.title} />
+                {items[key].indexOf(item) < items[key].length - 1 && (
+                  <BreadcrumbsArrow />
+                )}
+              </div>
+            );
+          })}
+          {currentObject && (
+            <>
+              <BreadcrumbsArrow />
               <BreadcrumbItem
                 path={`/object/${currentObject.id}`}
                 text={currentObject.title}
               />
-            )}
-          </ul>
-        ))}
+            </>
+          )}
+        </ul>
+      ))}
     </div>
   );
 };
