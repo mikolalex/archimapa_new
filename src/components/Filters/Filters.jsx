@@ -1,40 +1,23 @@
 import "./Filters.less";
 import React, { useState, useEffect } from "react";
 import FilterItem from "./FilterItem";
-import { mainUrl, getConfig, isArrayEmpty } from "../../module";
+import { mainUrl, getConfig, getFiltersURL } from "../../module";
 
-const Filters = () => {
+const Filters = ({ bounds }) => {
   const filtersConfig = getConfig("filtersConfig");
   const [clearFiltersButton, setClearFiltersButton] = useState(false);
   const [requiredFilters, setRequiredFilters] = useState({});
   const [objects, setObjects] = useState([]);
 
-  const getFiltersURL = () => {
-    let filtersString = "";
-
-    for (let key in requiredFilters) {
-      Array.isArray(requiredFilters[key])
-        ? isArrayEmpty(requiredFilters[key])
-          ? null
-          : (filtersString += `${key}=${requiredFilters[key]}&`)
-        : (filtersString += `${key}=${requiredFilters[key]}&`);
-    }
-
-    const fullUrl = `${mainUrl}/objects?north=52.89564866211353&south=44.98034238084973&east=39.46289062500001&west=23.4228515625/${filtersString.slice(
-      0,
-      -1
-    )}`;
-    return fullUrl;
-  };
-
   useEffect(() => {
-    console.log(getFiltersURL());
+    console.log(getFiltersURL(requiredFilters, bounds));
   }, [requiredFilters]);
+
 
   useEffect(() => {
     async function getObjects() {
       fetch(
-        `${mainUrl}/objects?north=52.89564866211353&south=44.98034238084973&east=39.46289062500001&west=23.4228515625`
+        `${mainUrl}/objects?north=${bounds.north}&south=${bounds.south}&east=${bounds.east}&west=${bounds.west}`
       )
         .then((response) => response.json())
         .then((json) => {
@@ -42,16 +25,16 @@ const Filters = () => {
         });
     }
     getObjects();
-  }, []);
+  }, [bounds]);
 
   return (
     <div className="filtersRoot">
       <div className="objects">
         <p className="total-objects">
-          Всього 
-          <span className="objects-number accent"> 
+          Всього
+          <span className="objects-number accent">
             {objects && objects.length}
-          </span> 
+          </span>
           об'єктів
         </p>
         <p className="navigation-search-block">

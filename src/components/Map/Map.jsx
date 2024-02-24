@@ -12,13 +12,14 @@ import {
 import MarkerClusterGroup from "react-leaflet-cluster";
 import "leaflet/dist/leaflet.css";
 
-const Map = ({ center, zoom, openPopup, previewCardPosition }) => {
-  const [bounds, setBounds] = useState({
-    east: 39.46289062500001,
-    north: 52.89564866211353,
-    south: 44.98034238084973,
-    west: 23.4228515625,
-  });
+const Map = ({
+  center,
+  zoom,
+  openPopup,
+  previewCardPosition,
+  bounds,
+  setBounds,
+}) => {
   const [objects, setObjects] = useState([]);
 
   async function getObjects(link) {
