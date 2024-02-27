@@ -45,9 +45,10 @@ const Map = ({
   }
 
   useEffect(() => {
-    getObjects(
-      `${mainUrl}/objects?north=${bounds.north}&south=${bounds.south}&east=${bounds.east}&west=${bounds.west}`
-    );
+    bounds &&
+      getObjects(
+        `${mainUrl}/objects?north=${bounds.north}&south=${bounds.south}&east=${bounds.east}&west=${bounds.west}`
+      );
   }, [bounds]);
 
   return (
