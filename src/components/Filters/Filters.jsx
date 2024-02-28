@@ -1,31 +1,17 @@
 import "./Filters.less";
 import React, { useState, useEffect } from "react";
 import FilterItem from "./FilterItem";
-import { mainUrl, getConfig, getFiltersURL } from "../../module";
+import { getConfig, getObjects, defaultBounds } from "../../module";
 
-const Filters = ({ bounds }) => {
+const Filters = ({ setRequiredFilters, requiredFilters }) => {
   const filtersConfig = getConfig("filtersConfig");
   const [clearFiltersButton, setClearFiltersButton] = useState(false);
-  const [requiredFilters, setRequiredFilters] = useState({});
+
   const [objects, setObjects] = useState([]);
 
   useEffect(() => {
-    console.log(getFiltersURL(requiredFilters, bounds));
+    getObjects(requiredFilters, defaultBounds, setObjects);
   }, [requiredFilters]);
-
-
-  useEffect(() => {
-    async function getObjects() {
-      fetch(
-        `${mainUrl}/objects?north=${bounds.north}&south=${bounds.south}&east=${bounds.east}&west=${bounds.west}`
-      )
-        .then((response) => response.json())
-        .then((json) => {
-          setObjects(json);
-        });
-    }
-    getObjects();
-  }, [bounds]);
 
   return (
     <div className="filtersRoot">

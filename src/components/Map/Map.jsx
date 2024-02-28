@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
 import "./Map.less";
-import { mainUrl } from "../../module";
+import React, { useState, useEffect } from "react";
+import { defaultBounds, getObjects } from "../../module";
+
 import {
   MapContainer,
   TileLayer,
@@ -17,22 +18,16 @@ const Map = ({
   zoom,
   openPopup,
   previewCardPosition,
-  bounds,
-  setBounds,
+  requiredFilters,
 }) => {
-  const [objects, setObjects] = useState([]);
-
-  async function getObjects(link) {
-    fetch(link)
-      .then((response) => response.json())
-      .then((json) => setObjects(json));
-  }
+  const [bounds, setBounds] = useState(defaultBounds);
 
   function GetBounds() {
     const map = useMap();
     useMapEvents({
       moveend() {
         const data = map.getBounds();
+
         setBounds({
           north: data._northEast.lat,
           south: data._southWest.lat,
@@ -41,15 +36,13 @@ const Map = ({
         });
       },
     });
-    return null;
   }
 
+  const [objects, setObjects] = useState([]);
+
   useEffect(() => {
-    bounds &&
-      getObjects(
-        `${mainUrl}/objects?north=${bounds.north}&south=${bounds.south}&east=${bounds.east}&west=${bounds.west}`
-      );
-  }, [bounds]);
+    getObjects(requiredFilters, bounds, setObjects);
+  }, [bounds, requiredFilters]);
 
   return (
     <div className="map-block">
@@ -60,19 +53,20 @@ const Map = ({
         />
         <GetBounds />
         <MarkerClusterGroup>
-          {objects.map((marker) => (
-            <Marker
-              position={[marker.latitude, marker.longitude]}
-              key={marker.id}
-              eventHandlers={{
-                click: () => {
-                  openPopup("PreviewCard", { marker, previewCardPosition });
-                },
-              }}
-            >
-              <Popup closeButton={false}></Popup>
-            </Marker>
-          ))}
+          {objects &&
+            objects.map((marker) => (
+              <Marker
+                position={[marker.latitude, marker.longitude]}
+                key={marker.id}
+                eventHandlers={{
+                  click: () => {
+                    openPopup("PreviewCard", { marker, previewCardPosition });
+                  },
+                }}
+              >
+                <Popup closeButton={false}></Popup>
+              </Marker>
+            ))}
         </MarkerClusterGroup>
       </MapContainer>
     </div>

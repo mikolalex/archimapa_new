@@ -2,7 +2,7 @@ import "./MapBlock.less";
 import React from "react";
 import Map from "./Map";
 
-const MapBlock = ({ openPopup, bounds, setBounds }) => {
+const MapBlock = ({ openPopup, requiredFilters }) => {
   return (
     <div className="mapRoot">
       <div className="map-block">
@@ -11,8 +11,7 @@ const MapBlock = ({ openPopup, bounds, setBounds }) => {
           zoom={6}
           openPopup={openPopup}
           previewCardPosition={"topPreviewCardPosition"}
-          bounds={bounds}
-          setBounds={setBounds}
+          requiredFilters={requiredFilters}
         />
       </div>
     </div>

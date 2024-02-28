@@ -11,12 +11,7 @@ const Home = ({ openPopup, setPopups }) => {
 
   useEffect(() => setPopups([]), [isListOpen]);
 
-  const [bounds, setBounds] = useState({
-    east: 39.46289062500001,
-    north: 52.89564866211353,
-    south: 44.98034238084973,
-    west: 23.4228515625,
-  });
+  const [requiredFilters, setRequiredFilters] = useState({});
 
   return (
     <div>
@@ -30,15 +25,14 @@ const Home = ({ openPopup, setPopups }) => {
           {isListOpen ? (
             <ListBlockMainPage openPopup={openPopup} />
           ) : (
-            <MapBlock
-              openPopup={openPopup}
-              bounds={bounds}
-              setBounds={setBounds}
-            />
+            <MapBlock openPopup={openPopup} requiredFilters={requiredFilters} />
           )}
         </div>
 
-        <Filters bounds={bounds} />
+        <Filters
+          setRequiredFilters={setRequiredFilters}
+          requiredFilters={requiredFilters}
+        />
       </main>
     </div>
   );
