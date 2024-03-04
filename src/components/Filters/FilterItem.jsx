@@ -1,6 +1,6 @@
 import "./FilterItem.less";
 import React, { useState, useEffect } from "react";
-import { mainUrl } from "../../module";
+import { mainUrl } from "../../constance";
 import CheckboxItems from "./CheckboxItems";
 import SelectItems from "./SelectItems";
 import TextItems from "./TextItems";

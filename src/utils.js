@@ -1,4 +1,5 @@
 import json from "./config.json";
+import { mainUrl } from "./constance";
 
 export function getConfig(config) {
   return json[config];
@@ -8,19 +9,8 @@ export function isArrayEmpty(arr) {
   return arr.length > 0 ? false : true;
 }
 
-export const mainUrl = "https://map.transsearch.net";
-
 export const boundsUrl = (bounds) =>
   `${mainUrl}/objects?north=${bounds.north}&south=${bounds.south}&east=${bounds.east}&west=${bounds.west}`;
-
-export const adminkaUrl = "https://map.transsearch.net/admin";
-
-export const defaultBounds = {
-  east: 39.46289062500001,
-  north: 52.89564866211353,
-  south: 44.98034238084973,
-  west: 23.4228515625,
-};
 
 export async function getObjects(obj, bounds, func) {
   function getFiltersURL() {

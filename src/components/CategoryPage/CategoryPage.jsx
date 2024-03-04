@@ -5,7 +5,7 @@ import { Link, useLocation } from "react-router-dom";
 import ObjectsList from "../ObjectsList/ObjectsList";
 import Pagination from "../ObjectsList/Pagination";
 import Breadcrumbs from "../Breadcrumbs/Breadcrumbs";
-import { mainUrl } from "../../module";
+import { mainUrl } from "../../constance";
 
 const CategoryPage = ({ openPopup }) => {
   const location = useLocation();

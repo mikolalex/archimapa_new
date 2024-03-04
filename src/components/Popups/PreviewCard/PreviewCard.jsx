@@ -1,7 +1,7 @@
 import React from "react";
 import "./PreviewCard.less";
 import { Link } from "react-router-dom";
-import { mainUrl } from "../../../module";
+import { mainUrl } from "../../../constance";
 
 const PreviewCard = ({ marker, closePopup, previewCardPosition }) => {
   return (

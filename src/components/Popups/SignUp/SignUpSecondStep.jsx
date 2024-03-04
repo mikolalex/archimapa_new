@@ -2,7 +2,7 @@ import "./SignUpSecondStep.less";
 import React, { useState } from "react";
 import useValidation from "../../../hooks/useValidation";
 import Loading from "../../Loading/Loading";
-import { mainUrl } from "../../../module";
+import { mainUrl } from "../../../constance";
 
 const SignUpSecondStep = ({ email, closePopup, openPopup }) => {
   const regExp = /^[0-9a-zа-я_]+$/i;

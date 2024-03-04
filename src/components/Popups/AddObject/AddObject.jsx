@@ -1,7 +1,8 @@
 import "./AddObject.less";
 import React, { useState, useEffect } from "react";
 import useValidation from "../../../hooks/useValidation";
-import { getConfig, mainUrl } from "../../../module";
+import { getConfig } from "../../../utils";
+import { mainUrl } from "../../../constance";
 import AddObjectWarning from "./AddObjectWarning";
 
 const AddObject = ({ closePopup, openPopup, isUserSignedIn }) => {

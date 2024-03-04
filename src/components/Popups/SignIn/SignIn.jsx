@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./SignIn.less";
 import useValidation from "../../../hooks/useValidation";
 import Loading from "../../Loading/Loading";
-import { mainUrl } from "../../../module";
+import { mainUrl } from "../../../constance";
 
 const SignIn = ({ closePopup, openPopup }) => {
   const [email, setEmail, validateEmail, emailError] = useValidation(

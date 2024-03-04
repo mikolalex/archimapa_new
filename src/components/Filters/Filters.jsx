@@ -1,7 +1,8 @@
 import "./Filters.less";
 import React, { useState, useEffect } from "react";
 import FilterItem from "./FilterItem";
-import { getConfig, getObjects, defaultBounds } from "../../module";
+import { getConfig, getObjects } from "../../utils";
+import { defaultBounds } from "../../constance";
 
 const Filters = ({ setRequiredFilters, requiredFilters }) => {
   const filtersConfig = getConfig("filtersConfig");

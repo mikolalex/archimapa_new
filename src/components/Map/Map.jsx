@@ -1,6 +1,7 @@
 import "./Map.less";
 import React, { useState, useEffect } from "react";
-import { defaultBounds, getObjects } from "../../module";
+import { getObjects } from "../../utils";
+import { defaultBounds } from "../../constance";
 
 import {
   MapContainer,

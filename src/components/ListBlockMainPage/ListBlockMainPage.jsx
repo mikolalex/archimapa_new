@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import ObjectsList from "../ObjectsList/ObjectsList";
 import "./ListBlockMainPage.less";
 import Pagination from "../ObjectsList/Pagination";
-import { mainUrl } from "../../module";
+import { mainUrl } from "../../constance";
 
 const ListBlockMainPage = () => {
   const [objects, setObjects] = useState([]);

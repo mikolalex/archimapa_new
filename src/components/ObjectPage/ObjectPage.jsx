@@ -5,7 +5,9 @@ import { useLocation } from "react-router";
 import Map from "../Map/Map";
 import Breadcrumbs from "../Breadcrumbs/Breadcrumbs";
 import Item from "../Item";
-import { getConfig, mainUrl, adminkaUrl } from "../../module";
+import { getConfig } from "../../utils";
+import { mainUrl, adminkaUrl } from "../../constance";
+
 import { Link } from "react-router-dom";
 
 const ObjectPage = ({ openPopup }) => {
