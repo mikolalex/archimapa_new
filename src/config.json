@@ -63,6 +63,11 @@
       "type": "checkboxList",
       "category_id": 2,
       "title": "architectural_style"
+    },
+    {
+      "type": "text",
+      "category_id": 0,
+      "title": "date_built"
     }
   ],
   "breadcrumbs": [

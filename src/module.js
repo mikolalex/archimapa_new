@@ -31,7 +31,9 @@ export async function getObjects(obj, bounds, func) {
         ? isArrayEmpty(obj[key])
           ? null
           : (filtersString += `${key}=${obj[key]}&`)
-        : (filtersString += `${key}=${obj[key]}&`);
+        : obj[key]
+        ? (filtersString += `${key}=${obj[key]}&`)
+        : null;
     }
 
     const fullUrl =

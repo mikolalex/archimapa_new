@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { mainUrl } from "../../module";
 import CheckboxItems from "./CheckboxItems";
 import SelectItems from "./SelectItems";
+import TextItems from "./TextItems";
 
 const FilterItem = ({ filter, setRequiredFilters }) => {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
@@ -35,6 +36,10 @@ const FilterItem = ({ filter, setRequiredFilters }) => {
             setRequiredFilters={setRequiredFilters}
             fieldData={fieldData}
           />
+        );
+      case "text":
+        return (
+          <TextItems filter={filter} setRequiredFilters={setRequiredFilters} />
         );
     }
   };

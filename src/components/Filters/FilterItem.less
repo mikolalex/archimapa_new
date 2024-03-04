@@ -1,3 +1,5 @@
+@import "../../style.less";
+
 .filter-field-data {
   border-bottom: 1px solid #000000;
   background: #302f2d;
@@ -20,5 +22,32 @@
     font-family: "Proxima Nova Lt";
     border-bottom: 1px solid #000000;
     background: #302f2d;
+  }
+  .year-filter-input-block {
+    font-family: "Proxima Nova Lt";
+    padding: 24px 20px;
+    border-bottom: 1px solid #000000;
+    background: #302f2d;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    input {
+      outline: none;
+      width: 75%;
+      padding: 3px;
+      font-family: "Proxima Nova Lt";
+      background: #ffffffe3;
+      border: none;
+    }
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    p {
+      margin-bottom: 5px;
+      color: white;
+    }
   }
 }
