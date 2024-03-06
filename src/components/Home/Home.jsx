@@ -11,6 +11,8 @@ const Home = ({ openPopup, setPopups }) => {
 
   useEffect(() => setPopups([]), [isListOpen]);
 
+  const [requiredFilters, setRequiredFilters] = useState({});
+
   return (
     <div>
       <Header openPopup={openPopup} setIsListOpen={setIsListOpen} />
@@ -23,11 +25,14 @@ const Home = ({ openPopup, setPopups }) => {
           {isListOpen ? (
             <ListBlockMainPage openPopup={openPopup} />
           ) : (
-            <MapBlock openPopup={openPopup} />
+            <MapBlock openPopup={openPopup} requiredFilters={requiredFilters} />
           )}
         </div>
 
-        <Filters />
+        <Filters
+          setRequiredFilters={setRequiredFilters}
+          requiredFilters={requiredFilters}
+        />
       </main>
     </div>
   );

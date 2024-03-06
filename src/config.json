@@ -16,6 +16,12 @@
       "type": "select",
       "field_data": { "category_id": "4" },
       "title": "Архітектор"
+    },
+    {
+      "key": "architectural_style",
+      "type": "select",
+      "field_data": { "category_id": "2" },
+      "title": "Архітектурний стиль"
     }
   ],
   "categoriesConfig": [
@@ -56,7 +62,12 @@
     {
       "type": "checkboxList",
       "category_id": 2,
-      "title": "architect_style"
+      "title": "architectural_style"
+    },
+    {
+      "type": "text",
+      "category_id": 0,
+      "title": "date_built"
     }
   ],
   "breadcrumbs": [

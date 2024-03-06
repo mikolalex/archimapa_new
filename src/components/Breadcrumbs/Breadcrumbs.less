@@ -1,17 +1,28 @@
 @import "../../style.less";
-
-.breadcrumbs {
+.breadcrumbs-list{
   display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  cursor: pointer;
-  font-family: "Proxima Nova Rg";
-  list-style: none;
-
-  a:visited {
-    color: #302f2d;
-  }
-  .breadcrumb-arrow-icon {
-    margin: 0 4px;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+  .breadcrumbs {
+    .breadcrumb-item{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    cursor: pointer;
+    font-family: "Proxima Nova Rg";
+    list-style: none;
+  
+    a:visited {
+      color: #302f2d;
+    }
+    .breadcrumb-arrow-icon {
+      margin: 0 4px;
+    }
   }
 }
+

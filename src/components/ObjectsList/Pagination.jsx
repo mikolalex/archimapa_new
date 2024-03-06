@@ -17,6 +17,7 @@ const Pagination = ({ objects, setObjectsToDisplay }) => {
   }, [objects, currentPage]);
 
   useEffect(() => {
+    setPagesQty([]);
     const pages = Math.ceil((objects.length - 1) / displayedObjectsQty);
     for (let i = 1; i <= pages; i++) {
       setPagesQty((prev) => [...prev, i]);

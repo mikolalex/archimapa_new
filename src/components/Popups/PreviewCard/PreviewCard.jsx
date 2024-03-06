@@ -1,7 +1,7 @@
 import React from "react";
 import "./PreviewCard.less";
 import { Link } from "react-router-dom";
-import { mainUrl } from "../../../module";
+import { mainUrl } from "../../../constance";
 
 const PreviewCard = ({ marker, closePopup, previewCardPosition }) => {
   return (
@@ -31,10 +31,10 @@ const PreviewCard = ({ marker, closePopup, previewCardPosition }) => {
         >
           <h2 className="preview-card-title">{marker.title}</h2>
         </Link>
-        <p className="preview-card-address">
+        {/* <p className="preview-card-address">
           <img src="/icons/address.png" alt="address_icon" /> вулиця
           Обсерваторна, 6, Київ, 02000
-        </p>
+        </p> */}
         <p className="preview-card-year">
           <span className="preview-card-bold-title">Роки побудови</span> 1891
         </p>

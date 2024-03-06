@@ -1,73 +1,55 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Breadcrumbs.less";
-import { Link } from "react-router-dom";
-import Item from "../Item";
+import { useLocation } from "react-router-dom";
+import BreadcrumbsArrow from "./BreadcrumbsArrow";
+import BreadcrumbItem from "./BreadcrumbItem";
+import useBreadcrumbs from "../../hooks/useBreadcrumbs";
 
-const Breadcrumbs = ({ currentObject, itemInfo }) => {
-  const breadcrumbsArrow = (
-    <img
-      src="/icons/breadcrumb-arrow.png"
-      alt=""
-      className="breadcrumb-arrow-icon"
-    />
-  );
+const Breadcrumbs = ({ currentObject }) => {
+  let location = useLocation();
+  let id = location.pathname.split("/")[2];
+
+  const [items, getItems, setItems] = useBreadcrumbs();
+
+  useEffect(() => {
+    setItems({});
+    currentObject
+      ? currentObject.items
+        ? currentObject.items.forEach((item) => {
+            getItems(item.id, item.id);
+          })
+        : null
+      : getItems(id, id);
+  }, [location, currentObject]);
+
   return (
-    <>
-      {((currentObject && currentObject.items) || itemInfo) && (
-        <ul className="breadcrumbs">
-          <li>
-            <Link
-              to={"/"}
-              style={{ textDecoration: "none" }}
-              className="breadcrumb"
-            >
-              Головна
-            </Link>
-          </li>
-
-          {breadcrumbsArrow}
-          {/* <Link
-        to={"/category"}
-        style={{ textDecoration: "none" }}
-        className="breadcrumb"
-      >
-        Модернізм
-      </Link>
-      {breadcrumbsArrow} */}
-          {/* <Link
-        to={"/category"}
-        style={{ textDecoration: "none" }}
-        className="breadcrumb"
-      >
-        УАМ
-      </Link> */}
-          {currentObject && currentObject.items && (
-            <Link
-              to={`/item/${currentObject.items[0].id}`}
-              style={{ textDecoration: "none" }}
-              className="breadcrumb"
-            >
-              {currentObject.items[0].name}
-            </Link>
-          )}
-          {itemInfo && (
-            <Link
-              to={`/item/${itemInfo.id}`}
-              style={{ textDecoration: "none" }}
-              className="breadcrumb"
-            >
-              {itemInfo.title}
-            </Link>
-          )}
-          {currentObject && breadcrumbsArrow}
+    <div className="breadcrumbs-list">
+      {Object.keys(items).map((key) => (
+        <ul className="breadcrumbs" key={key}>
+          <BreadcrumbItem path="/" text="Головна" />
+          <BreadcrumbsArrow />
+          {items[key].reverse().map((item) => {
+            return (
+              <div className="breadcrumb-item" key={item.id}>
+                <BreadcrumbItem path={`/item/${item.id}`} text={item.title} />
+                {items[key].indexOf(item) < items[key].length - 1 && (
+                  <BreadcrumbsArrow />
+                )}
+              </div>
+            );
+          })}
           {currentObject && (
-            <Link style={{ textDecoration: "none" }} className="breadcrumb">
-              {currentObject.title}
-            </Link>
+            <>
+              <BreadcrumbsArrow />
+              <BreadcrumbItem
+                path={`/object/${currentObject.id}`}
+                text={currentObject.title}
+              />
+            </>
           )}
         </ul>
-      )}
-    </>
+      ))}
+    </div>
   );
 };
 
