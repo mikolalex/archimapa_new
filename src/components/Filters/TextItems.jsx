@@ -1,13 +1,13 @@
 import React from "react";
 
-const TextItems = ({ setRequiredFilters, filter }) => {
+const TextItems = ({ setRequestedFilters, filter }) => {
   return (
     <div className="year-filter-input-block">
       <p>enter the date</p>
       <input
         type="number"
         onChange={(e) =>
-          setRequiredFilters(
+          setRequestedFilters(
             (prev) =>
               (prev = {
                 ...prev,

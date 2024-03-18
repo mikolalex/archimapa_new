@@ -19,7 +19,7 @@ const Map = ({
   zoom,
   openPopup,
   previewCardPosition,
-  requiredFilters,
+  requestedFilters,
 }) => {
   const [bounds, setBounds] = useState(defaultBounds);
 
@@ -42,8 +42,8 @@ const Map = ({
   const [objects, setObjects] = useState([]);
 
   useEffect(() => {
-    getObjects(requiredFilters, bounds, setObjects);
-  }, [bounds, requiredFilters]);
+    getObjects(requestedFilters, bounds, setObjects);
+  }, [bounds, requestedFilters]);
 
   return (
     <div className="map-block">

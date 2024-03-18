@@ -1,6 +1,6 @@
 import React from "react";
 
-const CheckboxItems = ({ setRequiredFilters, filter, fieldData }) => {
+const CheckboxItems = ({ setRequestedFilters, filter, fieldData }) => {
   return (
     <ul className="checkbox-items-list">
       {fieldData.map((item) => (
@@ -11,7 +11,7 @@ const CheckboxItems = ({ setRequiredFilters, filter, fieldData }) => {
             id=""
             onChange={(e) => {
               e.target.checked
-                ? setRequiredFilters(
+                ? setRequestedFilters(
                     (prev) =>
                       (prev = {
                         ...prev,
@@ -20,7 +20,7 @@ const CheckboxItems = ({ setRequiredFilters, filter, fieldData }) => {
                           : [item.id],
                       })
                   )
-                : setRequiredFilters(
+                : setRequestedFilters(
                     (prev) =>
                       (prev = {
                         ...prev,

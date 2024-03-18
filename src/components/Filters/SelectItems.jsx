@@ -1,13 +1,13 @@
 import React from "react";
 
-const SelectItems = ({ setRequiredFilters, filter, fieldData }) => {
+const SelectItems = ({ setRequestedFilters, filter, fieldData }) => {
   return (
     <div className="select-items-list">
       <select
         name=""
         id=""
         onChange={(e) =>
-          setRequiredFilters(
+          setRequestedFilters(
             (prev) =>
               (prev = { ...prev, [filter.title]: Number(e.target.value) })
           )

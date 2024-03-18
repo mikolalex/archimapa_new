@@ -4,15 +4,15 @@ import FilterItem from "./FilterItem";
 import { getConfig, getObjects } from "../../utils";
 import { defaultBounds } from "../../constance";
 
-const Filters = ({ setRequiredFilters, requiredFilters }) => {
+const Filters = ({ setRequestedFilters, requestedFilters }) => {
   const filtersConfig = getConfig("filtersConfig");
   const [clearFiltersButton, setClearFiltersButton] = useState(false);
 
   const [objects, setObjects] = useState([]);
 
   useEffect(() => {
-    getObjects(requiredFilters, defaultBounds, setObjects);
-  }, [requiredFilters]);
+    getObjects(requestedFilters, defaultBounds, setObjects);
+  }, [requestedFilters]);
 
   return (
     <div className="filtersRoot">
@@ -44,7 +44,7 @@ const Filters = ({ setRequiredFilters, requiredFilters }) => {
             <FilterItem
               filter={filter}
               key={filter.category_id}
-              setRequiredFilters={setRequiredFilters}
+              setRequestedFilters={setRequestedFilters}
             />
           ))}
         </div>

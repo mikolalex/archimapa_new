@@ -5,7 +5,7 @@ import CheckboxItems from "./CheckboxItems";
 import SelectItems from "./SelectItems";
 import TextItems from "./TextItems";
 
-const FilterItem = ({ filter, setRequiredFilters }) => {
+const FilterItem = ({ filter, setRequestedFilters }) => {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   const [fieldData, setFieldData] = useState([]);
@@ -25,7 +25,7 @@ const FilterItem = ({ filter, setRequiredFilters }) => {
         return (
           <SelectItems
             filter={filter}
-            setRequiredFilters={setRequiredFilters}
+            setRequestedFilters={setRequestedFilters}
             fieldData={fieldData}
           />
         );
@@ -33,13 +33,16 @@ const FilterItem = ({ filter, setRequiredFilters }) => {
         return (
           <CheckboxItems
             filter={filter}
-            setRequiredFilters={setRequiredFilters}
+            setRequestedFilters={setRequestedFilters}
             fieldData={fieldData}
           />
         );
       case "text":
         return (
-          <TextItems filter={filter} setRequiredFilters={setRequiredFilters} />
+          <TextItems
+            filter={filter}
+            setRequestedFilters={setRequestedFilters}
+          />
         );
     }
   };
